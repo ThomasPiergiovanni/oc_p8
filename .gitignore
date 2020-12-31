@@ -1,0 +1,16 @@
+#  venv repo
+env/
+
+# file containing private settings
+# configuration/env.py
+
+#  pychache repos
+__pycache__/
+
+# Repo containing various undeliverable files
+99_other/
+
+# Other unwanted file. to remove at the end
+main.py
+.coverage
+
