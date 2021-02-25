@@ -12,5 +12,4 @@ __pycache__/
 
 # Other unwanted file. to remove at the end
 main.py
-.coverage
 
