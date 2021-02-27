@@ -17,6 +17,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+        <link href="css/my_styles.css" rel="stylesheet" />
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -27,10 +28,13 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto my-2 my-lg-0 align-items-center">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#search">Recherche</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Mon compte</a></li>
-                        <li class="nav-item"><a href="#portfolio"><img src="assets/img/noun_Carrot_29691_copy.png" class="nav-link js-scroll-trigger" width="70"></a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Déconnexion</a></li>
+                        <form class="d-flex" action="index.html" method="post" novalidate>
+                            <input type="text" id="question" class="form-control mybox" value="Chercher"
+                                aria-label="Search" required>
+                        </form>
+                        <li class="nav-item"><a href="#services"><img class="nav-link js-scroll-trigger" src="assets/img/user.png" width="60" alt="user logo"></a></li>
+                        <li class="nav-item"><a href="#portfolio"><img class="nav-link js-scroll-trigger" src="assets/img/carrot.png" width="70" alt="carrot logo"></a></li>
+                        <li class="nav-item"><a href="#contact"><img class="nav-link js-scroll-trigger" src="assets/img/exit.png" width="40" alt="exit logo"></a></li>
                     </ul>
                 </div>
             </div>
@@ -48,12 +52,14 @@
                     </div>
                     <div class="col-10 col-md-8 col-lg-5  align-self-start">
                         <form action="index.html" method="post" novalidate>
-                            <div class="form-group">
-                                <div class="border border-secondary mt-4 rounded">
-                                    <input type="text" id="question" class="form-control" value="Produit" required>
-                                </div>
-                                <div class="text-right">
-                                    <button type="button" id="ask_button" class="btn btn-primary mt-2">Chercher</button>
+                            <div class="form-group align-content-end">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <input type="text" id="question" class="form-control" value="Produit" required>
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="button" id="ask_button" class="btn btn-primary">Chercher</button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
