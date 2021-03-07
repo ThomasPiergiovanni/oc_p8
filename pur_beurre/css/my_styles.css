@@ -203,22 +203,25 @@ header.searchhead h1 {
 
 .nutriscore-circle {
   position: absolute;
-  top: -0.3rem;
+  top: 0.1rem;
   right: -4.0rem;
   font-weight: bold;
   font-size: 4rem;
-  color: rgb(20, 238, 20);
+  color: rgb(16, 104, 23);
+  opacity :0.77;
   transform: translate(-50%,-50%);
   -ms-transform: translate(-50%,-50%);
 }
 
 .nutriscore-letter {
   position: absolute;
-  top: 0.0rem;
+  top: 0.5rem;
   right: -2.85rem;
   font-weight: bold;
   font-size: 4.0rem;
-  color: rgb(20, 238, 20);
+  color: white;
+  opacity :0.77;
   transform: translate(-50%,-50%);
   -ms-transform: translate(-50%,-50%);
 }
+
