@@ -196,3 +196,29 @@ header.searchhead h1 {
   color:#212529;
   font-size: 1rem;
 }
+
+.results-image{
+  position: relative;
+}
+
+.nutriscore-circle {
+  position: absolute;
+  top: -0.3rem;
+  right: -4.0rem;
+  font-weight: bold;
+  font-size: 4rem;
+  color: rgb(20, 238, 20);
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
+.nutriscore-letter {
+  position: absolute;
+  top: 0.0rem;
+  right: -2.85rem;
+  font-weight: bold;
+  font-size: 4.0rem;
+  color: rgb(20, 238, 20);
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
