@@ -2,7 +2,7 @@
 env/
 
 # file containing private settings
-# configuration/env.py
+pur_beurre_project/pur_beurre/settings.py
 
 #  pychache repos
 __pycache__/
@@ -11,5 +11,5 @@ __pycache__/
 99_other/
 
 # Other unwanted file. to remove at the end
-main.py
+
 
