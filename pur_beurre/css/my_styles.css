@@ -333,8 +333,8 @@ header.searchhead h1 {
   position: relative;
   display: block;
   padding: 0.75rem 1.25rem;
-  background-color: #fff;
-  border: 0px solid rgba(0, 0, 0, 0.125);
+  background-color: #e8a75d;
+  border: 1px solid rgba(52, 90, 97 , 0.7);
 }
 
 .bg-primary {
@@ -582,4 +582,3 @@ a:not([href]):not([class]):hover {
 } */
 
 /* aliment from aliment list in rsult page*/
-
