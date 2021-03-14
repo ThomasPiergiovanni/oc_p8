@@ -8,3 +8,9 @@ def index(request):
 
 def results(request):
     return render(request, 'supersub/results.html')
+
+def account(request):
+    return render(request, 'supersub/account.html')
+
+def aliment(request):
+    return render(request, 'supersub/aliment.html')

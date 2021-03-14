@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+    {% load static %}
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>P8 - Pur-beurre</title>
-        {% load static %}
+        
         <!-- Favicon-->
         <!-- <link rel="icon" type="image/x-icon" href="assets/img/logo_pur_beurre-favicon.ico" /> -->
         <link rel="icon" type="image/x-icon" href="{% static 'supersub/assets/img/logo_pur_beurre-favicon.ico' %}" />
@@ -53,8 +54,11 @@
                 </div>
             </div>
         </nav>
+
         <!-- Block content-->
-        {% block content %}{% endblock %}
+        <div>
+            {% block content %}{% endblock %}
+        </div>
         <!-- Footer-->
         <footer class="bg-dark py-5">
             <div class="container">
@@ -75,6 +79,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <script src="{% static 'supersub/js/scripts.js' %}"></script>
     </body>
 </html>
