@@ -20,13 +20,13 @@ class Product(models.Model):
     salt = models.DecimalField(max_digits=8, decimal_places=3, null=True)
     image = models.URLField(max_length=200, null=True)
     url = models.URLField(max_length=200, null=True)
-    compose_product_category = models.ManyToManyField(Category, through='ProductCategory')
+    product_category = models.ManyToManyField(Category, through='Products')
 
     def __str__(self):
         return self.name
 
 
-class ProductCategory(models.Model):
+class Products(models.Model):
     product = models.ForeignKey(Product, models.CASCADE)
     category = models.ForeignKey(Category, models.CASCADE)
 
@@ -38,14 +38,14 @@ class User(models.Model):
     first_name = models.CharField(max_length=200)
     email = models.EmailField(max_length=254)
     password = models.CharField(max_length=200)
-    compose_favorites = models.ManyToManyField(ProductCategory, through='Favorites')
+    user_products = models.ManyToManyField(Products, through='Favorites')
 
     def __str__(self):
         return self.email
 
 class Favorites(models.Model):
     user = models.ForeignKey(User, models.CASCADE)
-    favorites = models.ForeignKey(ProductCategory, models.CASCADE)
+    products = models.ForeignKey(Products, models.CASCADE)
 
     def __str__(self):
         return self.user.email
