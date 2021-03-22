@@ -14,6 +14,7 @@ class ConnectionManager:
     def __init__(self):
         self.endpoint = None
         self.params = None
+        self.cat_response = None
 
     def download_categories(self):
         """
@@ -23,8 +24,8 @@ class ConnectionManager:
             payload = {}
             header = {}
             response = requests.get(endpoint, headers=header, data=payload)
-            response_json = response.json()
-            print(response_json)
+            self.cat_response = response.json()
+            # print(self.cat_response)
         except:
             pass
             print("problem")
@@ -42,9 +43,22 @@ class ConnectionManager:
         except:
             pass
     
+    def filter_categories(self):
+        for category in self.cat_response:
+            try:
+                if category["id"] in SELECTED_CATEGORIES and \
+                        category["name"] and category["url"]:
+                    valid_category = (
+                        category["id"], category["name"], category["url"])
+                    print(category["name"])
+            except KeyError:
+                pass
+
+    
 
 
 
 if __name__ == "__main__":
     connection_manager = ConnectionManager()
     connection_manager.download_categories()
+    connection_manager.filter_categories()
