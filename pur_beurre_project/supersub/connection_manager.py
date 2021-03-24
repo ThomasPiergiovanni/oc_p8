@@ -30,6 +30,27 @@ class ConnectionManager:
             pass
             print("problem")
 
+#{'known': 0, 'id': 'fr:vinaigre-au-combava', 'name': 'vinaigre-au-combava', 'url': 'https://fr.openfoodfacts.org/categorie/vinaigre-au-combava', 'products': 2}
+
+    def filter_categories(self, selected_categories = SELECTED_CATEGORIES):
+        
+        try:
+            for categories in self.cat_response["tags"]:
+                if categories["id"] in selected_categories and \
+                        categories["name"] and categories["url"]:
+                    valid_category = (
+                        categories["id"], categories["name"], categories["url"])
+                    print(valid_category)
+            # for category in categories:
+            #     print(category)
+                # if category["id"] in SELECTED_CATEGORIES and \
+                #         category["name"] and category["url"]:
+                #     valid_category = (
+                #         category["id"], category["name"], category["url"])
+                #     print(category["name"])
+        except KeyError:
+            pass
+
     def download_products(self):
         """
         """
@@ -43,19 +64,6 @@ class ConnectionManager:
         except:
             pass
     
-    def filter_categories(self):
-        for category in self.cat_response:
-            try:
-                if category["id"] in SELECTED_CATEGORIES and \
-                        category["name"] and category["url"]:
-                    valid_category = (
-                        category["id"], category["name"], category["url"])
-                    print(category["name"])
-            except KeyError:
-                pass
-
-    
-
 
 
 if __name__ == "__main__":
