@@ -6,7 +6,6 @@ app_name = 'supersub'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('account/', views.account, name='account'),
     path('aliment/', views.aliment, name='aliment'),
     path('create_account/', views.create_account, name='create_account'),
     path('login/', views.login, name='login'),

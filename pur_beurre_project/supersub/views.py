@@ -6,8 +6,8 @@ from django.shortcuts import render
 def index(request):
     return render(request, 'supersub/index.html')
 
-def account(request):
-    return render(request, 'supersub/account.html')
+# def account(request):
+#     return render(request, 'supersub/account.html')
 
 def aliment(request):
     return render(request, 'supersub/aliment.html')

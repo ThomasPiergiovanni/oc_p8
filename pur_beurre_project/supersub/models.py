@@ -1,13 +1,8 @@
 from django.db import models
 
-# Create your models here.
-class Category(models.Model):
-    id_origin = models.CharField(max_length=200)
-    name = models.CharField(max_length=200)
-    url = models.URLField(max_length=200)
+from authentification.models import User
 
-    def __str__(self):
-        return self.name
+# Create your models here.
 
 
 class Product(models.Model):
@@ -20,32 +15,15 @@ class Product(models.Model):
     salt = models.DecimalField(max_digits=8, decimal_places=3, null=True)
     image = models.URLField(max_length=200, null=True)
     url = models.URLField(max_length=200, null=True)
-    product_category = models.ManyToManyField(Category, through='Products')
+    relation_user = models.ManyToManyField(User, through='Favorites')
 
     def __str__(self):
         return self.name
 
 
-class Products(models.Model):
-    product = models.ForeignKey(Product, models.CASCADE)
-    category = models.ForeignKey(Category, models.CASCADE)
-
-    def __str__(self):
-        return self.product.name
-
-
-class User(models.Model):
-    first_name = models.CharField(max_length=200)
-    email = models.EmailField(max_length=254)
-    password = models.CharField(max_length=200)
-    user_products = models.ManyToManyField(Products, through='Favorites')
-
-    def __str__(self):
-        return self.email
-
 class Favorites(models.Model):
     user = models.ForeignKey(User, models.CASCADE)
-    products = models.ForeignKey(Products, models.CASCADE)
+    product = models.ForeignKey(Product, models.CASCADE)
 
     def __str__(self):
         return self.user.email
