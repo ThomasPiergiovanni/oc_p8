@@ -1,6 +1,8 @@
 """ Connection manager module
 """
+
 import requests
+
 
 
 class ConnectionManager:
@@ -51,22 +53,33 @@ class ConnectionManager:
         except KeyError:
             pass
 
-    def download_products(self):
+    def download_products(
+            self, selected_categories = SELECTED_CATEGORIES,
+            product_amount = PRODUCTS_AMOUNT):
         """
         """
         try:
-            self.endpoint = "https://fr.openfoodfacts.org/cgi/search.pl"
-            self.params = {
-            "action": "process", "tagtype_0": "categories",
-            "tag_contains_0": "contains", "tag_0": category.id_origin,
-            "json": 1, "page": 1, "page_size": PRODUCTS_AMOUNT}
-            pass
-        except:
+            # for category in selected_categories:
+            endpoint = "https://fr.openfoodfacts.org/cgi/search.pl?"  
+            params = {
+                "action": "process", "tagtype_0": "categories",
+                "tag_contains_0": "contains", "tag_0": "en:snacks",
+                "json": 1, "page": 1, "page_size": 1}
+            header = {}
+            response_api = requests.get(endpoint, headers=header, params=params)
+            
+            result = response_api.json()
+            print(result)
+
+
+        except TypeError as error:
+            print(error)
             pass
     
 
 
 if __name__ == "__main__":
     connection_manager = ConnectionManager()
-    connection_manager.download_categories()
-    connection_manager.filter_categories()
+    # connection_manager.download_categories()
+    # connection_manager.filter_categories()
+    connection_manager.download_products()
