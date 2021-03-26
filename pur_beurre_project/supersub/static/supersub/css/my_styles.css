@@ -4,6 +4,7 @@
   
 }
 
+
 /* Merriweather Sans => Open Sans */
 /* Merriweather => Scope One */
 
@@ -583,3 +584,7 @@ a:not([href]):not([class]):hover {
 } */
 
 /* aliment from aliment list in rsult page*/
+
+.min-vh-75 {
+  min-height: 75vh !important;
+}
