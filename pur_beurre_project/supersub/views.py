@@ -12,19 +12,6 @@ def index(request):
 def aliment(request):
     return render(request, 'supersub/aliment.html')
 
-def create_account(request):
-    context ={
-        'message': "Créer un compte",
-        'button_message': "Créer"
-    }
-    return render(request, 'supersub/create_account.html', context)
-
-def login(request):
-    context ={
-        'message': "Se connecter",
-        'button_message': "Se connecter"
-    }
-    return render(request, 'supersub/login.html', context)
 
 def registered_aliments(request):
     return render(request, 'supersub/registered_aliments.html')
