@@ -7,7 +7,7 @@ from authentification.models import User
 
 class Product(models.Model):
     id_origin = models.CharField(max_length=200)
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
     nutriscore_grade = models.CharField(max_length=8)
     fatty_acids = models.DecimalField(max_digits=8, decimal_places=3, null=True)
     saturated_fatty_acids = models.DecimalField(max_digits=8, decimal_places=3, null=True)
@@ -15,6 +15,7 @@ class Product(models.Model):
     salt = models.DecimalField(max_digits=8, decimal_places=3, null=True)
     image = models.URLField(max_length=200, null=True)
     url = models.URLField(max_length=200, null=True)
+    categories = models.CharField(max_length=200, null=True)
     relation_user = models.ManyToManyField(User, through='Favorites')
 
     def __str__(self):
