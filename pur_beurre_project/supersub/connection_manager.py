@@ -59,17 +59,16 @@ class ConnectionManager:
         """
         """
         try:
-            # for category in selected_categories:
-            endpoint = "https://fr.openfoodfacts.org/cgi/search.pl?"  
-            params = {
-                "action": "process", "tagtype_0": "categories",
-                "tag_contains_0": "contains", "tag_0": "en:snacks",
-                "json": 1, "page": 1, "page_size": 1}
-            header = {}
-            response_api = requests.get(endpoint, headers=header, params=params)
-            
-            result = response_api.json()
-            print(result)
+            for category in selected_categories:
+                endpoint = "https://fr.openfoodfacts.org/cgi/search.pl?"  
+                params = {
+                    "action": "process", "tagtype_0": "categories",
+                    "tag_contains_0": "contains", "tag_0": category,
+                    "json": 1, "page": 1, "page_size": PRODUCTS_AMOUNT}
+                header = {}
+                response_api = requests.get(endpoint, headers=header, params=params)
+                result = response_api.json()
+                print(result)
 
 
         except TypeError as error:
