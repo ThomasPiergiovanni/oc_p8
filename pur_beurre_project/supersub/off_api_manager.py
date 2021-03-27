@@ -4,7 +4,6 @@
 import requests
 
 
-
 class OffApiManager:
     """
     """
