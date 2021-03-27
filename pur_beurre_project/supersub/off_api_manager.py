@@ -1,11 +1,11 @@
-""" Connection manager module
+""" Off api manager manager module
 """
 
 import requests
 
 
 
-class ConnectionManager:
+class OffApiManager:
     """
     """
     CATEGORIES_ENDPOINT = "https://fr.openfoodfacts.org/categories.json"
@@ -64,7 +64,7 @@ class ConnectionManager:
                 params = {
                     "action": "process", "tagtype_0": "categories",
                     "tag_contains_0": "contains", "tag_0": category,
-                    "json": 1, "page": 1, "page_size": PRODUCTS_AMOUNT}
+                    "json": 1, "page": 1, "page_size": product_amount}
                 header = {}
                 response_api = requests.get(endpoint, headers=header, params=params)
                 result = response_api.json()
@@ -78,7 +78,7 @@ class ConnectionManager:
 
 
 if __name__ == "__main__":
-    connection_manager = ConnectionManager()
+    off_api_manager = OffApiManager()
     # connection_manager.download_categories()
     # connection_manager.filter_categories()
-    connection_manager.download_products()
+    off_api_manager.download_products()
