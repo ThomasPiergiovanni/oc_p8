@@ -12,14 +12,15 @@ class DbManager():
         off_api_manager = OffApiManager()
         off_api_manager.download_products()
         self.source_data = off_api_manager.products
+        self.products_in_db = []
 
     def insert_products(self):
-        inserted_products = []
+        self.get_products()
         for category in self.source_data:
             for raw_product in category['products']:
                 try:
                     if (
-                            raw_product['product_name'] not in inserted_products and
+                            raw_product['product_name'] not in self.products_in_db and
                             raw_product['id'] and
                             raw_product['product_name'] and
                             raw_product['nutriscore_grade'] and
@@ -43,22 +44,12 @@ class DbManager():
                             url=raw_product['url'],
                             categories=raw_product['categories_tags']
                         )
-                        # print(
-                        #     product.id_origin,
-                        #     product.name,
-                        #     product.nutriscore_grade,
-                        #     product.fat,
-                        #     product.saturated_fat,
-                        #     product.sugar,
-                        #     product.salt,
-                        #     product.image,
-                        #     product.url,
-                        #     product.categories
-                        # )
-                        inserted_products.append(product.name)
+                        self.products_in_db.append(product.name)
                         product.save()
                 except KeyError:
                     pass
     
     def get_products(self):
-        pass
+        all_product = Product.objects.all()
+        for product in all_product:
+            self.products_in_db.append(product.name)
