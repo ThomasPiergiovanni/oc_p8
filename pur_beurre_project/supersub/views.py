@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
+
+from .models import Product
 
 
 
@@ -17,4 +19,10 @@ def registered_aliments(request):
     return render(request, 'supersub/registered_aliments.html')
 
 def results(request):
-    return render(request, 'supersub/results.html')
+    return render(request, 'supersub/results.html', context)
+
+def test_results(request):
+    context = {
+        'product': "mon produit"
+    }
+    return render(request, 'supersub/test_results.html', context)

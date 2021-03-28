@@ -15,15 +15,15 @@
                         consommez tous les jours!</h2>
                 </div>
                 <div class="col-10 col-md-8 col-lg-5  align-self-start">
-                    <form action="" method="post" novalidate>
+                    <form action="{% url 'supersub:test_results'%}" method="get" novalidate>
+                        {% csrf_token %}
                         <div class="form-group align-content-end">
                             <div class="row">
                                 <div class="col-8">
-                                    <input type="text" id="question" class="form-control text-dark" value="Produit"
-                                        required>
+                                    <input type="text" name ="product_id" id="question" class="form-control text-dark" required>
                                 </div>
                                 <div class="col-4">
-                                    <button type="button" id="ask_button" class="btn btn-primary">Chercher</button>
+                                    <input type="submit" id="ask_button" class="btn btn-primary" value="Chercher">
                                 </div>
                             </div>
                         </div>
