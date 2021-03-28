@@ -15,7 +15,7 @@
                         consommez tous les jours!</h2>
                 </div>
                 <div class="col-10 col-md-8 col-lg-5  align-self-start">
-                    <form action="{% url 'supersub:test_results'%}" method="get" novalidate>
+                    <form action="{% url 'supersub:test_results'%}" method="post" novalidate>
                         {% csrf_token %}
                         <div class="form-group align-content-end">
                             <div class="row">

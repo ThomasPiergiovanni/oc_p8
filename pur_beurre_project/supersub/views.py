@@ -22,7 +22,8 @@ def results(request):
     return render(request, 'supersub/results.html', context)
 
 def test_results(request):
+    selected_id = request.POST['product_id']
     context = {
-        'product': "mon produit"
+        'product': selected_id
     }
     return render(request, 'supersub/test_results.html', context)
