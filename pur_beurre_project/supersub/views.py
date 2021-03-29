@@ -22,9 +22,17 @@ def results(request):
     return render(request, 'supersub/results.html', context)
 
 def test_results(request):
-    product= get_object_or_404(Product, name__contains=request.POST['product'])
-    context = {
-        'name': product.name,
-        'image': product.image
-    }
-    return render(request, 'supersub/test_results.html', context)
+    
+    # product = pRODUCTget_object_or_404(Product, name__contains=request.POST['product'])
+    try:
+        product = Product.objects.get(name__contains=request.POST['product'])
+        context = {
+            'name': product.name,
+            'image': product.image
+        }
+        return render(request, 'supersub/test_results.html', context)
+    except:
+        context = {
+            'error_message': "No such product in DB"
+        }
+        return render(request, 'supersub/test_results.html', context)
