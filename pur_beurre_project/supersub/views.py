@@ -22,8 +22,9 @@ def results(request):
     return render(request, 'supersub/results.html', context)
 
 def test_results(request):
-    selected_id = request.POST['product_id']
+    product= get_object_or_404(Product, name__contains=request.POST['product'])
     context = {
-        'product': selected_id
+        'name': product.name,
+        'image': product.image
     }
     return render(request, 'supersub/test_results.html', context)
