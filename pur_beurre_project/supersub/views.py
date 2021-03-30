@@ -26,9 +26,11 @@ def test_results(request):
     # product = pRODUCTget_object_or_404(Product, name__contains=request.POST['product'])
     try:
         product = Product.objects.get(name__contains=request.POST['product'])
+        products_in_catgeories = Product.objects.filter(categories=product.categories)
         context = {
             'name': product.name,
-            'image': product.image
+            'image': product.image,
+            'products_in_categories': products_in_catgeories
         }
         return render(request, 'supersub/test_results.html', context)
     except:

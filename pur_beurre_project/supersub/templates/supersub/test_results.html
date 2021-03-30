@@ -2,4 +2,8 @@
 {% if name %}
     <p>{{ name }}</p>
     <img src='{{ image }}'>
+    <!-- <p>{{ products_in_categories }}</p> -->
+    {% for product in products_in_categories %}
+        <p>{{ product.name }}</p>
+    {% endfor %}
 {% endif %}
