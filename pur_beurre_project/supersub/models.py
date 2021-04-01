@@ -4,6 +4,11 @@ from authentification.models import User
 
 # Create your models here.
 
+class Category(models.Model):
+    id_origin = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, unique=True)
+    url = models.URLField(max_length=200, null=True)
+
 
 class Product(models.Model):
     id_origin = models.CharField(max_length=200)
@@ -16,6 +21,7 @@ class Product(models.Model):
     image = models.URLField(max_length=200, null=True)
     url = models.URLField(max_length=200, null=True)
     categories = models.TextField(null=True)
+    category = models.ForeignKey(Category, models.CASCADE, default=9999999999)
     relation_user = models.ManyToManyField(User, through='Favorites')
 
     def __str__(self):
