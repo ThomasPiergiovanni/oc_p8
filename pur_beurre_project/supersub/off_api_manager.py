@@ -8,13 +8,24 @@ class OffApiManager:
     """
     """
     def __init__(self):
+        self.category_endpoint = "https://fr.openfoodfacts.org/categories.json"
         self.product_endpoint = "https://fr.openfoodfacts.org/cgi/search.pl?"
         self.header = {}
-        self.parameters = None
+        self.parameters = {}
         self.categories = ["en:snacks", "en:desserts", "en:breads",
                        "en:breakfast-cereals", "en:meals"]
         self.products_amount = 1
+        self.categories = []
         self.products = []
+    
+    def download_categories(self):
+        """
+        """
+        for category in self.categories:
+            response = requests.get(
+                self.category_endpoint, headers=self.header, params=self.parameters)
+            response = response.json()
+            self.categories.append(response)
 
     def download_products(self):
         """
