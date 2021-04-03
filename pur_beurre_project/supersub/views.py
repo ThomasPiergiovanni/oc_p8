@@ -26,7 +26,7 @@ def test_results(request):
     # product = pRODUCTget_object_or_404(Product, name__contains=request.POST['product'])
     try:
         product = Product.objects.get(name__contains=request.POST['product'])
-        products_in_catgeories = Product.objects.filter(categories=product.categories)
+        products_in_catgeories = Product.objects.filter(category_id=product.category_id).exclude(id__exact=product.id).order_by('nutriscore_grade')[:6]
         context = {
             'name': product.name,
             'image': product.image,
