@@ -323,7 +323,7 @@ header.searchhead h1 {
 .nutriscore-letter {
   position: absolute;
   top: 0.5rem;
-  right: -2.85rem;
+  right: -2.0rem;
   font-weight: bold;
   font-size: 4.0rem;
   color: white;
@@ -413,7 +413,6 @@ hr.divider {
 } */
 
 
-}
 #mainNav .navbar-nav .nav-item .nav-link {
   color: #6c757d;
   font-family: "Open Sans", sans-serif, Arial;
