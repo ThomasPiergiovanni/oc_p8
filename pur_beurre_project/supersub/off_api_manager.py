@@ -33,9 +33,13 @@ class OffApiManager:
         self.parameters = {
             "action": "process", "tagtype_0": "categories",
             "tag_contains_0": "contains", "tag_0": category.id_origin,
-            "json": 1, "page": 1, "page_size": self.products_amount} 
+            "json": 1, "page": 1, "page_size": self.products_amount
+        } 
         response = requests.get(
-            self.product_endpoint, headers=self.header, params=self.parameters)
+            self.product_endpoint,
+            headers=self.header,
+            params=self.parameters
+        )
         response = response.json()
         self.products.append(response)
 
