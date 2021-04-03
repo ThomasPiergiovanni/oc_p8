@@ -34,7 +34,8 @@ def results(request):
     """
     """
     try:
-        product = Product.objects.get(name__contains=request.POST['product'])
+        products = Product.objects.filter(name__contains=request.POST['product'])
+        product = products[0]
         products_in_catgeories = (
             Product.objects.filter(category_id=product.category_id)
             .filter(nutriscore_grade__lte=product.nutriscore_grade)
