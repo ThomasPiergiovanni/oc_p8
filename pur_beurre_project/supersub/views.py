@@ -15,6 +15,12 @@ def aliment(request, id_product):
     product = Product.objects.get(pk=id_product)
     context = {
         'name': product.name,
+        'nutriscore_grade': product.nutriscore_grade,
+        'fat': product.fat,
+        'saturated_fat': product.saturated_fat,
+        'sugar': product.sugar,
+        'salt': product.salt,
+        'image': product.image
     }
 
     return render(request, 'supersub/aliment.html', context)

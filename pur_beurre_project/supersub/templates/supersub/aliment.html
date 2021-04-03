@@ -2,15 +2,27 @@
 
 {% block content %}
     <!-- Masthead-->
-    <header class="searchhead" id="searched">
-        <div class="container h-100">
-            <div class="row h-100 align-items-center justify-content-center text-center"> 
-                <div class="col-lg-8 align-self-center mb-2">
-                    <h2 class="text-white-75 mb-4">[ {{ name }} ]</h2>
+        <header 
+            style="
+                padding-top: 10rem;
+                padding-bottom: calc(10rem - 4.5rem);
+                background: 
+                    linear-gradient(
+                        to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%
+                    ),
+                    url('{{image}}');
+                background-position: center;
+                background-attachment: scroll;
+                background-size: cover;"
+            class="searchhead" id="searchhead">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center justify-content-center text-center"> 
+                    <div class="col-lg-8 align-self-center mb-2">
+                        <h2 class="text-white-75 mb-4">[ {{ name }} ]</h2>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
     <!-- Aliment dipslay section-->
     <section class="page-section bg-white text-dark" id="services">
         <div class="container">
@@ -18,16 +30,16 @@
                 <div class="col-md-6 text-center">
                     <p class="h5 m-2">Nutriscore</p>
                     <ul class="list-group">
-                        <h4 class="list-group-item-heading font-weight-bold">[A]</h4>
+                        <h4 class="list-group-item-heading font-weight-bold text-uppercase"> {{ nutriscore_grade }} </h4>
                     </ul>
                 </div>
                 <div class="col-md-6 text-center">
-                        <p class="h5 m-2">Repère nutritionnel pour 100g</p>
+                        <p class="h5 m-2">Repères nutritionnels pour 100g</p>
                         <ul class="list-group">
-                            <li class="list-group-item">[30.9g] <span class="font-weight-bold">matière grasse</span></li>
-                            <li class="list-group-item">[10.6g] <span class="font-weight-bold">acides gras saturés</span></li>
-                            <li class="list-group-item">[56.3g] <span class="font-weight-bold">sucres</span></li>
-                            <li class="list-group-item">[0.107g <span class="font-weight-bold">sel</span></li>
+                            <li class="list-group-item">{{ fat|floatformat:"1" }}g <span class="font-weight-bold">de matière grasse</span></li>
+                            <li class="list-group-item">{{ saturated_fat|floatformat:"1" }}g <span class="font-weight-bold">d'acides gras saturés</span></li>
+                            <li class="list-group-item">{{ sugar|floatformat:"1" }}g <span class="font-weight-bold">de sucre</span></li>
+                            <li class="list-group-item">{{ salt|floatformat:"1" }}g <span class="font-weight-bold">de sel</span></li>
                         </ul>
                 </div>
             </div>
