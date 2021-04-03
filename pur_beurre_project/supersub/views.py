@@ -18,12 +18,11 @@ def aliment(request):
 def registered_aliments(request):
     return render(request, 'supersub/registered_aliments.html')
 
-def results(request):
-    return render(request, 'supersub/results.html', context)
+# def results(request):
+#     return render(request, 'supersub/results.html', context)
 
-def test_results(request):
+def results(request):
     
-    # product = pRODUCTget_object_or_404(Product, name__contains=request.POST['product'])
     try:
         product = Product.objects.get(name__contains=request.POST['product'])
         products_in_catgeories = Product.objects.filter(category_id=product.category_id).exclude(id__exact=product.id).order_by('nutriscore_grade')[:6]
@@ -32,9 +31,9 @@ def test_results(request):
             'image': product.image,
             'products_in_categories': products_in_catgeories
         }
-        return render(request, 'supersub/test_results.html', context)
+        return render(request, 'supersub/results.html', context)
     except:
         context = {
-            'error_message': "No such product in DB"
+            'error_message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
         }
-        return render(request, 'supersub/test_results.html', context)
+        return render(request, 'supersub/index.html', context)

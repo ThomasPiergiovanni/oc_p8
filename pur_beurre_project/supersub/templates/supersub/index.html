@@ -15,7 +15,14 @@
                         consommez tous les jours!</h2>
                 </div>
                 <div class="col-10 col-md-8 col-lg-5  align-self-start">
-                    <form action="{% url 'supersub:test_results'%}" method="post" novalidate>
+                    {% if error_message %}
+                        <div class="row">
+                            <div class="col">
+                                <p class=text-primary>{{ error_message }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <form action="{% url 'supersub:results'%}" method="post" novalidate>
                         {% csrf_token %}
                         <div class="form-group align-content-end">
                             <div class="row">

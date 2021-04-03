@@ -1,8 +1,6 @@
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 {% if name %}
     <p>{{ name }}</p>
     <img src='{{ image }}'>
-    <!-- <p>{{ products_in_categories }}</p> -->
     <ul>
     {% for product in products_in_categories %}
         <li>{{ product.name }}</li>
