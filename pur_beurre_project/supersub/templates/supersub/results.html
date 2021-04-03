@@ -9,7 +9,11 @@
         <header style="
             padding-top: 10rem;
             padding-bottom: calc(10rem - 4.5rem);
-            background: linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%),url('{{image}}');
+            background: 
+                linear-gradient(
+                    to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%
+                ),
+                url('{{image}}');
             background-position: center;
             background-attachment: scroll;
             background-size: contain;
@@ -28,141 +32,32 @@
                 <h4 class="text-dark text-center text-secondary-50 mb-4"> Vous pouvez remplacer cet aliment par:  </h4>
                 <hr class="divider my-4" />
                 <div class="row">
-                    <div class="col-lg-4 col-sm-6 text-center">
-                        <div class="m-4 results-image">
-                            <a href="" class="ele_dark_href">
-                                <img class="img-fluid" src="{% static 'supersub/assets/img/portfolio/thumbnails/1.jpg' %}" alt="" />
-                                <p class=" h4 m-1"> aliment 1</p>
-                            </a>
-                            <div class="nutriscore-circle">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="nutriscore-letter">
-                                <p>A</p>
-                            </div>
-                            <a href="" class="ele_dark_href">
-                                <p class="mb-0">
-                                    <span>
-                                        <i class="fas fa-save"></i>
-                                    </span>
-                                    Sauvegarder
-                                </p>
-                            </a>
+                    {% for product in products_in_categories %}
+                        <div class="col-lg-4 col-sm-6 text-center">
+                            <div class="m-4 results-image">
+                                <a href="" class="ele_dark_href">
+                                    <img style="max-height: 80px;"  src=" {{ product.image }} " alt="" />
+                                    <p class="h4 m-1"> {{ product.name }} </p>
+                                </a>
+                                <div class="nutriscore-circle">
+                                    <i class="fas fa-circle"></i>
+                                </div>
+                                <div class="nutriscore-letter text-uppercase">
+                                    <p>{{ product.nutriscore_grade }}</p>
+                                </div>
+                                <a href="" class="ele_dark_href">
+                                    <p class="mb-0">
+                                        <span>
+                                            <i class="fas fa-save"></i>
+                                        </span>
+                                        Sauvegarder
+                                    </p>
+                                </a>
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 text-center">
-                        <div class="m-4 results-image">
-                            <a href="" class="ele_dark_href">
-                                <img class="img-fluid" src="{% static 'supersub/assets/img/portfolio/thumbnails/1.jpg' %}" alt="" />
-                                <p class="h4 m-1"> aliment 2</p>
-                            </a>
-                            <div class="nutriscore-circle">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="nutriscore-letter">
-                                <p>A</p>
-                            </div>
-                            <a href="" class="ele_dark_href">
-                                <p class="mb-0" href=>
-                                    <span>
-                                        <i class="fas fa-save"></i>
-                                    </span>
-                                    Sauvegarder
-                                </p>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 text-center">
-                        <div class="m-4 results-image">
-                            <a href="" class="ele_dark_href">
-                                <img class="img-fluid" src="{% static 'supersub/assets/img/portfolio/thumbnails/1.jpg' %}" alt="" />
-                                <p class="h4 m-1"> aliment 3</p>
-                            </a>
-                            <div class="nutriscore-circle">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="nutriscore-letter">
-                                <p>A</p>
-                            </div>
-                            <a href="" class="ele_dark_href">
-                                <p class="mb-0" href=>
-                                    <span>
-                                        <i class="fas fa-save"></i>
-                                    </span>
-                                    Sauvegarder
-                                </p>
-                            </a>
-                    
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 text-center">
-                        <div class="m-4 results-image">
-                            <a href="" class="ele_dark_href">
-                                <img class="img-fluid" src="{% static 'supersub/assets/img/portfolio/thumbnails/1.jpg' %}" alt="" />
-                                <p class="h4 m-1"> aliment 4</p>
-                            </a>
-                            <div class="nutriscore-circle">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="nutriscore-letter">
-                                <p>A</p>
-                            </div>
-                            <a href="" class="ele_dark_href">
-                                <p class="mb-0" href=>
-                                    <span>
-                                        <i class="fas fa-save"></i>
-                                    </span>
-                                    Sauvegarder
-                                </p>
-                            </a>                    
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 text-center">
-                        <div class="m-4 results-image">
-                            <a href="" class="ele_dark_href">
-                                <img class="img-fluid" src="{% static 'supersub/assets/img/portfolio/thumbnails/1.jpg' %}" alt="" />
-                                <p class="h4 m-1"> aliment 5</p>
-                            </a>
-                            <div class="nutriscore-circle">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="nutriscore-letter">
-                                <p>A</p>
-                            </div>
-                            <a href="" class="ele_dark_href">
-                                <p class="mb-0" href=>
-                                    <span>
-                                        <i class="fas fa-save"></i>
-                                    </span>
-                                    Sauvegarder
-                                </p>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-sm-6 text-center">
-                        <div class="m-4 results-image">
-                            <a href="" class="ele_dark_href">
-                                <img class="img-fluid" src="{% static 'supersub/assets/img/portfolio/thumbnails/1.jpg' %}" alt="" />
-                                <p class="h4 m-1"> aliment 6</p>
-                            </a>
-                            <div class="nutriscore-circle">
-                                <i class="fas fa-circle"></i>
-                            </div>
-                            <div class="nutriscore-letter">
-                                <p>A</p>
-                            </div>
-                            <a href="" class="ele_dark_href">
-                                <p class="mb-0" href=>
-                                    <span>
-                                        <i class="fas fa-save"></i>
-                                    </span>
-                                    Sauvegarder
-                                </p>
-                            </a>
-                    
-                        </div>
-                    </div>
+                    {% endfor %}
+
                 </div>
             </div>
         </section>
