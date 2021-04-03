@@ -21,7 +21,7 @@ class Product(models.Model):
     image = models.URLField(max_length=200, null=True)
     url = models.URLField(max_length=200, null=True)
     categories = models.TextField(null=True)
-    category = models.ForeignKey(Category, models.CASCADE, default=9999999999)
+    category = models.ForeignKey(Category, models.CASCADE, default=0)
     relation_user = models.ManyToManyField(User, through='Favorites')
 
     def __str__(self):

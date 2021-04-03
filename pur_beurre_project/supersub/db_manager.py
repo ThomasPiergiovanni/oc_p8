@@ -9,21 +9,24 @@ class DbManager():
     """
     """
     def __init__(self):
-        off_api_manager = OffApiManager()
-        off_api_manager.download_categories()
-        off_api_manager.download_products()
-        self.drop_categories()
-        self.drop_products()
-        self.off_categories = off_api_manager.categories
+        self.selected_categories = ["en:snacks", "en:desserts", "en:breads",
+                "en:breakfast-cereals", "en:meals"]
         self.categories_in_db = []
-        self.products = off_api_manager.products
-        self.products_in_db = []
+        self.drop_categories()
+        self.get_categories()
+        self.insert_categories()
+
+        # self.drop_products()
+        # self.products_in_db = []
     
     def drop_categories(self):
+
         all_categories = Category.objects.all()
         all_categories.delete()
+
     
     def get_categories(self):
+        self.categories_in_db = []
         all_categories = Category.objects.all()
         for category in all_categories:
             self.categories_in_db.append(category)
@@ -31,11 +34,14 @@ class DbManager():
     def insert_categories(self):
         """
         """
-        self.get_categories()
+        off_api_manager = OffApiManager()
+        off_api_manager.download_categories()
+        self.off_categories = off_api_manager.categories
         for category in self.off_categories:
             for raw_category in category['tags']:
                 try:
                     if (
+                        raw_category['id'] in self.selected_categories and
                         raw_category['id'] not in self.categories_in_db and
                         raw_category['id'] and
                         raw_category['name'] and
@@ -48,7 +54,7 @@ class DbManager():
                         )
                         self.categories_in_db.append(category.name)
                         category.save()
-                except Error as error:
+                except KeyError as error:
                     print(error)
 
     def drop_products(self):
@@ -58,6 +64,7 @@ class DbManager():
         all_products.delete()
 
     def get_products(self):
+        self.products_in_db = []
         all_product = Product.objects.all()
         for product in all_product:
             self.products_in_db.append(product.name)
@@ -65,10 +72,11 @@ class DbManager():
     def insert_products(self):
         self.get_categories()
         self.get_products()
-        for category in categories_in_db:
-
-        for category in self.products:
-            for raw_product in category['products']:
+        for category in self.categories_in_db:
+            off_api_manager = OffApiManager()
+            off_api_manager.download_products(category)
+            self.products = off_api_manager.products
+            for raw_product in self.products['products']:
                 try:
                     if (
                             raw_product['product_name'] not in self.products_in_db and
@@ -82,24 +90,22 @@ class DbManager():
                             raw_product['image_small_url'] and
                             raw_product['url'] and
                             raw_product['categories_hierarchy']
-                    ):
-                        category_id = [category.id_origin for category in self.categories_in_db if category.origin_id == raw_product['categories_hierarchy'][0]]
-                        print(category_id)
-                        product = Product(
-                            id_origin=raw_product['id'],
-                            name=raw_product['product_name'],
-                            nutriscore_grade=raw_product['nutriscore_grade'],
-                            fat=raw_product['nutriments']['fat_100g'],
-                            saturated_fat=raw_product['nutriments']['saturated-fat_100g'],
-                            sugar=raw_product['nutriments']['sugars_100g'],
-                            salt=raw_product['nutriments']['salt_100g'],
-                            image=raw_product['image_small_url'],
-                            url=raw_product['url'],
-                            categories=raw_product['categories_hierarchy']
-                            category_id=category_id
-                        )
-                        self.products_in_db.append(product.name)
-                        product.save()
+                        ):
+                            
+                            product = Product(
+                                id_origin = raw_product['id'],
+                                name = raw_product['product_name'],
+                                nutriscore_grade = raw_product['nutriscore_grade'],
+                                fat = raw_product['nutriments']['fat_100g'],
+                                saturated_fat = raw_product['nutriments']['saturated-fat_100g'],
+                                sugar=raw_product['nutriments']['sugars_100g'],
+                                salt=raw_product['nutriments']['salt_100g'],
+                                image=raw_product['image_small_url'],
+                                url=raw_product['url'],
+                                categories=raw_product['categories_hierarchy'],
+                                category_id=category.id
+                            )
+                            self.products_in_db.append(product.name)
+                            product.save()
                 except Error as error:
                     print(error)
-

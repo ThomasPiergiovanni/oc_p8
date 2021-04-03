@@ -12,8 +12,6 @@ class OffApiManager:
         self.product_endpoint = "https://fr.openfoodfacts.org/cgi/search.pl?"
         self.header = {}
         self.parameters = {}
-        self.categories = ["en:snacks", "en:desserts", "en:breads",
-                       "en:breakfast-cereals", "en:meals"]
         self.products_amount = 1
         self.categories = []
         self.products = []
@@ -21,24 +19,25 @@ class OffApiManager:
     def download_categories(self):
         """
         """
-        for category in self.categories:
-            response = requests.get(
-                self.category_endpoint, headers=self.header, params=self.parameters)
-            response = response.json()
-            self.categories.append(response)
+        response = requests.get(
+            self.category_endpoint,
+            headers=self.header,
+            params=self.parameters
+        )
+        response = response.json()
+        self.categories.append(response)
 
-    def download_products(self):
+    def download_products(self, category):
         """
         """
-        for category in self.categories:
-            self.parameters = {
-                "action": "process", "tagtype_0": "categories",
-                "tag_contains_0": "contains", "tag_0": category,
-                "json": 1, "page": 1, "page_size": self.products_amount} 
-            response = requests.get(
-                self.product_endpoint, headers=self.header, params=self.parameters)
-            response = response.json()
-            self.products.append(response)
+        self.parameters = {
+            "action": "process", "tagtype_0": "categories",
+            "tag_contains_0": "contains", "tag_0": category.id_origin,
+            "json": 1, "page": 1, "page_size": self.products_amount} 
+        response = requests.get(
+            self.product_endpoint, headers=self.header, params=self.parameters)
+        response = response.json()
+        self.products.append(response)
 
 if __name__ == "__main__":
     off_api_manager = OffApiManager()

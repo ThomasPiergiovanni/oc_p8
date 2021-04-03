@@ -23,6 +23,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='product',
             name='category',
-            field=models.ForeignKey(default=9999999999, on_delete=django.db.models.deletion.CASCADE, to='supersub.category'),
+            field=models.ForeignKey(default=0, on_delete=django.db.models.deletion.CASCADE, to='supersub.category'),
         ),
     ]
