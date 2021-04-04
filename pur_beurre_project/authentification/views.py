@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 def create_account(request):
     context ={
-        'message': "Créer un compte",
+        'message': "Connection",
         'button_message': "Créer"
     }
     return render(request, 'authentification/create_account.html', context)
