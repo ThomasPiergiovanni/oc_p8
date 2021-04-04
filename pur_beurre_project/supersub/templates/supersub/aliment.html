@@ -29,18 +29,25 @@
             <div class="row">
                 <div class="col-md-6 text-center">
                     <p class="h5 m-2">Nutriscore</p>
-                    <ul class="list-group">
+                    <ul class="list-group mt-4">
                         <h4 class="list-group-item-heading font-weight-bold text-uppercase"> {{ nutriscore_grade }} </h4>
                     </ul>
                 </div>
                 <div class="col-md-6 text-center">
                         <p class="h5 m-2">Repères nutritionnels pour 100g</p>
-                        <ul class="list-group">
+                        <ul class="list-group mt-4">
                             <li class="list-group-item">{{ fat|floatformat:"1" }}g <span class="font-weight-bold">de matière grasse</span></li>
                             <li class="list-group-item">{{ saturated_fat|floatformat:"1" }}g <span class="font-weight-bold">d'acides gras saturés</span></li>
                             <li class="list-group-item">{{ sugar|floatformat:"1" }}g <span class="font-weight-bold">de sucre</span></li>
                             <li class="list-group-item">{{ salt|floatformat:"1" }}g <span class="font-weight-bold">de sel</span></li>
                         </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col pt-5 text-center">
+                    <a href='{{ url }}'>
+                        <button type="button" id="off_aliment" class="btn btn-primary" value="Voir la fiche d'OpenFoodFacts">Voir la fiche d'OpenFoodFacts</button>
+                    </a>
                 </div>
             </div>
         </div>

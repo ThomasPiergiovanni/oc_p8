@@ -20,7 +20,8 @@ def aliment(request, id_product):
         'saturated_fat': product.saturated_fat,
         'sugar': product.sugar,
         'salt': product.salt,
-        'image': product.image
+        'image': product.image,
+        'url': product.url
     }
 
     return render(request, 'supersub/aliment.html', context)
