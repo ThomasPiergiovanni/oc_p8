@@ -15,19 +15,21 @@
     <section class="page-section bg-white" id="services">
         <div class="container">
             <div class="row justify-content-center">
-                <form action="{% url 'authentification:account'%}" method="post" novalidate>
+                {% if error_message %}
+
+                    <div class="col-8 col-lg-10 text-center">
+                        <h6 class="text-primary pb-4">{{ error_message }}</h6>
+                    </div>
+
+                {% endif %}
+                <form action="{% url 'authentification:login'%}" method="post">
                     {% csrf_token %}
                     <div class="form-group align-content-center">
                         <div class="row justify-content-center">
-                            <div class="col-8 col-lg-7 pl-2">
-                                <label for="email" class="text-dark">Email</label>
-                                <input type="email" id="login_email" class="form-control" required>
+                            <div class="col-8 col-lg-10 pl-2 text-dark w-100">
+                                {{login_form}}
                             </div>
-                            <div class="col-8 col-lg-7 pl-2 pt-4">
-                                <label for="pwd" class="text-dark">Mot de passe</label>
-                                <input type="password" id="login_password" class="form-control text-dark" required>
-                            </div>
-                            <div class="col-8 col-lg-7 pl-2 pt-5">
+                            <div class="col-8 col-lg-10 pl-2 pt-5">
                                 <button type="submit" id="login_button" class=" btn btn-primary mb-4">Se connecter</button>
                                 <a href="{% url 'authentification:create_account'%}" id="go_to_create_account" class="text-dark text-center">
                                     <p class="pt-4">Pas de compte? Créer un compte</p>
@@ -35,8 +37,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </section>
 {% endblock %}
