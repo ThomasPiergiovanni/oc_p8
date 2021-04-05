@@ -1,9 +1,19 @@
 from django.shortcuts import render
 
+from authentification.user_session_manager import UserSessionManager
+
 # Create your views here.
 
 def account(request):
-    return render(request, 'authentification/account.html')
+    user_session = UserSessionManager()
+    if user_session.active:
+        return render(request, 'authentification/account.html')
+    else:
+        # context ={
+        #     'message': "Se connecter",
+        #     'button_message': "Se connecter"
+        # }
+        return login(request)
 
 def create_account(request):
     context ={
