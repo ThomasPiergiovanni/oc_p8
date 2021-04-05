@@ -2,6 +2,9 @@ from django.shortcuts import render
 
 # Create your views here.
 
+def account(request):
+    return render(request, 'authentification/account.html')
+
 def create_account(request):
     context ={
         'message': "Connection",
@@ -17,5 +20,3 @@ def login(request):
     return render(request, 'authentification/login.html', context)
 
 
-def account(request):
-    return render(request, 'authentification/account.html')
