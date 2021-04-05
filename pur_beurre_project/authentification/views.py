@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from authentification.user_session_manager import UserSessionManager
 from authentification.models import User
-from authentification.forms import UserForm
+from authentification.forms import CreateAccountForm
 
 # Create your views here.
 
@@ -55,14 +55,14 @@ def account(request):
 def create_account(request):
 
     if request.method == 'POST':
-        user_form = UserForm(request.POST)
+        user_form = CreateAccountForm(request.POST)
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             try:
                 existing_user = User.objects.get(email__iexact=email)
-                form = UserForm()
+                form = CreateAccountForm()
                 context = {
                     'form' : form,
                     'error_message': " est déja utilisé. Choissisez un autre nom.",
@@ -82,7 +82,7 @@ def create_account(request):
                 }
                 return render(request, 'authentification/create_account.html', context)
     else:
-        form = UserForm()
+        form = CreateAccountForm()
         context = {
             'form' : form
         }
