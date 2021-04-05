@@ -55,16 +55,15 @@ def account(request):
 def create_account(request):
 
     if request.method == 'POST':
-        user_form = CreateAccountForm(request.POST)
-        if form.is_valid():
-            first_name = form.cleaned_data['first_name']
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
+        create_account_form = CreateAccountForm(request.POST)
+        if create_account_form.is_valid():
+            first_name = create_account_form.cleaned_data['first_name']
+            email = create_account_form.cleaned_data['email']
+            password = create_account_form.cleaned_data['password']
             try:
                 existing_user = User.objects.get(email__iexact=email)
-                form = CreateAccountForm()
                 context = {
-                    'form' : form,
+                    'create_account_form' : create_account_form,
                     'error_message': " est déja utilisé. Choissisez un autre nom.",
                     'email': existing_user.email
                 }
@@ -77,14 +76,16 @@ def create_account(request):
                 )
                 user.save()
                 context = {
-                    'error_message': " n'est pas utilisé",
+                    'create_account_form' : create_account_form,
+                    'error_message': " n'est pas utilisé et a été créer",
                     'email': email,
                 }
                 return render(request, 'authentification/create_account.html', context)
+
     else:
-        form = CreateAccountForm()
+        create_account_form = CreateAccountForm()
         context = {
-            'form' : form
+            'create_account_form' : create_account_form
         }
         return render(request, 'authentification/create_account.html', context) 
 
