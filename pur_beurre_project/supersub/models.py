@@ -1,6 +1,6 @@
 from django.db import models
 
-from authentification.models import User
+from authentication.models import User
 
 # Create your models here.
 
@@ -14,14 +14,14 @@ class Product(models.Model):
     id_origin = models.CharField(max_length=200)
     name = models.CharField(max_length=200, unique=True)
     nutriscore_grade = models.CharField(max_length=8)
-    fat = models.DecimalField(max_digits=8, decimal_places=3, null=True)
-    saturated_fat = models.DecimalField(max_digits=8, decimal_places=3, null=True)
-    sugar = models.DecimalField(max_digits=8, decimal_places=3, null=True)
-    salt = models.DecimalField(max_digits=8, decimal_places=3, null=True)
-    image = models.URLField(max_length=200, null=True)
-    url = models.URLField(max_length=200, null=True)
-    categories = models.TextField(null=True)
-    category = models.ForeignKey(Category, models.CASCADE, default=0)
+    fat = models.DecimalField(max_digits=8, decimal_places=3)
+    saturated_fat = models.DecimalField(max_digits=8, decimal_places=3)
+    sugar = models.DecimalField(max_digits=8, decimal_places=3)
+    salt = models.DecimalField(max_digits=8, decimal_places=3)
+    image = models.URLField(max_length=200)
+    url = models.URLField(max_length=200)
+    categories = models.TextField()
+    category = models.ForeignKey(Category, models.CASCADE)
     relation_user = models.ManyToManyField(User, through='Favorites')
 
     def __str__(self):

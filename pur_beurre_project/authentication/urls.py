@@ -2,7 +2,7 @@ from django.urls import path
 
 from . import views
 
-app_name = 'authentification'
+app_name = 'authentication'
 
 urlpatterns = [
     path('create_account/', views.create_account, name='create_account'),

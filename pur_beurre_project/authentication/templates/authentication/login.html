@@ -22,7 +22,7 @@
                     </div>
 
                 {% endif %}
-                <form action="{% url 'authentification:login'%}" method="post">
+                <form action="{% url 'authentication:login'%}" method="post">
                     {% csrf_token %}
                     <div class="form-group align-content-center">
                         <div class="row justify-content-center">
@@ -31,7 +31,7 @@
                             </div>
                             <div class="col-8 col-lg-10 pl-2 pt-5">
                                 <button type="submit" id="login_button" class=" btn btn-primary mb-4">Se connecter</button>
-                                <a href="{% url 'authentification:create_account'%}" id="go_to_create_account" class="text-dark text-center">
+                                <a href="{% url 'authentication:create_account'%}" id="go_to_create_account" class="text-dark text-center">
                                     <p class="pt-4">Pas de compte? Créer un compte</p>
                                 </a>
                             </div>

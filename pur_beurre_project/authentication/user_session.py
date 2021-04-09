@@ -1,6 +1,6 @@
 """ Use session manager module
 """
-from authentification.models import User
+from authentication.models import User
 
 
 class UserSession():

@@ -2,9 +2,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from authentification.user_session import UserSession
-from authentification.models import User
-from authentification.forms import CreateAccountForm, LoginForm
+from authentication.user_session import UserSession
+from authentication.models import User
+from authentication.forms import CreateAccountForm, LoginForm
 
 # Create your views here.
 
@@ -28,7 +28,7 @@ def create_account(request):
         if create_account_form.is_valid():
             first_name = create_account_form.cleaned_data['first_name']
             email = create_account_form.cleaned_data['email']
-            password = create_account_form.cleaned_data['password']
+            password = create_account_form.cleaned_data['password1']
             try:
                 existing_user = User.objects.get(email__iexact=email)
                 context = {
@@ -36,7 +36,7 @@ def create_account(request):
                     'error_message': " est déja utilisé. Choissisez un autre nom.",
                     'email': existing_user.email
                 }
-                return render(request, 'authentification/create_account.html', context)
+                return render(request, 'authentication/create_account.html', context)
             except:
                 user = User(
                     first_name=first_name,
@@ -56,7 +56,7 @@ def create_account(request):
         context = {
             'create_account_form' : create_account_form
         }
-        return render(request, 'authentification/create_account.html', context) 
+        return render(request, 'authentication/create_account.html', context) 
 
 # def login(request):
 #     """
@@ -86,19 +86,19 @@ def login(request):
                     'login_form' : login_form,
                     'error_message': "Email et/ou mot de passe incorrect"
                 }
-                return render(request, 'authentification/login.html', context)
+                return render(request, 'authentication/login.html', context)
         else:
             login_form = LoginForm()
             context = {
                 'login_form' : login_form,
                 'error_message': "L\'adresse email n'est pas valide"
             }
-            return render(request, 'authentification/login.html', context)
+            return render(request, 'authentication/login.html', context)
     else:
         login_form = LoginForm()
         context = {
             'login_form' : login_form
         }
-        return render(request, 'authentification/login.html', context) 
+        return render(request, 'authentication/login.html', context) 
 
 
