@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.utils.translation import gettext_lazy as _
 
 from authentication.models import User
 
@@ -8,7 +9,9 @@ class CreateAccountForm(UserCreationForm):
     """
     class Meta(UserCreationForm):
         model = User
-        fields = ['first_name','email']
+        fields = ['email', 'password1', 'password2' ]
+
+
 
         
         
