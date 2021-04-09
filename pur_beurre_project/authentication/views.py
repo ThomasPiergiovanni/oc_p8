@@ -54,7 +54,10 @@ def create_account(request):
     else:
         create_account_form = CreateAccountForm()
         context = {
-            'create_account_form' : create_account_form
+            'first_name' : create_account_form['first_name'],
+            'email' : create_account_form['email'],
+            'password1' : create_account_form['password1'],
+            'password2' : create_account_form['password2'],
         }
         return render(request, 'authentication/create_account.html', context) 
 

@@ -9,11 +9,8 @@ class CreateAccountForm(UserCreationForm):
     """
     class Meta(UserCreationForm):
         model = User
-        fields = ['email', 'password1', 'password2' ]
-
-
-
-        
+        fields = ['first_name', 'email', 'password1', 'password2' ]
+    
         
     # first_name = forms.CharField(label='Prénom', widget=forms.TextInput(attrs={'class': 'form-control mb-3'}))
     # email = forms.EmailField(label='Email', widget=forms.TextInput(attrs={'class': 'form-control mb-3'}))
