@@ -30,27 +30,17 @@ def create_account(request):
             email = create_account_form.cleaned_data['email']
             password1 = create_account_form.cleaned_data['password1']
             password2 = create_account_form.cleaned_data['password2']
-            try:
-                user = User(
+            user = User(
                 first_name=first_name,
                 email=email,
-                password=password1
-                )
-                user.save()
-                return HttpResponseRedirect(reverse('supersub:index'))
-            except:
-                create_account_form = CreateAccountForm()
-                context = {
-                    'form' : create_account_form
-                }
-                return render(request, 'authentication/create_account.html', context)
+                password=password1)
+            user.save()
+            return HttpResponseRedirect(reverse('supersub:index'))
         else:
             context = {
                 'form' : create_account_form
             }
-            return render(request, 'authentication/create_account.html', context)
-
-            
+            return render(request, 'authentication/create_account.html', context)   
     else:
         create_account_form = CreateAccountForm()
         context = {
