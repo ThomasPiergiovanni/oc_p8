@@ -15,20 +15,21 @@
     <section class="page-section bg-white" id="services">
         <div class="container">
             <div class="row justify-content-center">
-                {% if error_message %}
-                    <div class="col-8 col-lg-10 text-center">
-                        <h6 class="text-primary pb-4"> {{ email}} {{ error_message }}</h6>
-                    </div>
-                {% endif %}
                 <form action="{% url 'authentication:create_account' %}" method="post">
                     {% csrf_token %}
                     <div class="form-group align-content-center">
                         <div class="row justify-content-center">
                             <div class="col-8 col-lg-10 pl-2 text-dark w-100">
-                                {{ first_name.label }} {{ first_name }}
-                                {{ email.label }} {{ email }} 
-                                {{ password1.label }} {{ password1 }}
-                                {{ password2.label }} {{ password2 }}
+                                {% for field in form %}
+                                <p>
+                                    {{ field.label_tag }}<br>
+                                    {{ field }}
+                                    {% for error in field.errors %}
+                                    <p class="text-primary"> {{ error }}</p>
+                                    {% endfor %}
+                                </p>
+                                {% endfor %}
+
 
                             </div>
                             <div class="col-8 col-lg-10 pl-2 pt-5">

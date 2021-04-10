@@ -28,36 +28,33 @@ def create_account(request):
         if create_account_form.is_valid():
             first_name = create_account_form.cleaned_data['first_name']
             email = create_account_form.cleaned_data['email']
-            password = create_account_form.cleaned_data['password1']
+            password1 = create_account_form.cleaned_data['password1']
+            password2 = create_account_form.cleaned_data['password2']
             try:
-                existing_user = User.objects.get(email__iexact=email)
-                context = {
-                    'create_account_form' : create_account_form,
-                    'error_message': " est déja utilisé. Choissisez un autre nom.",
-                    'email': existing_user.email
-                }
-                return render(request, 'authentication/create_account.html', context)
-            except:
                 user = User(
-                    first_name=first_name,
-                    email=email,
-                    password=password
+                first_name=first_name,
+                email=email,
+                password=password1
                 )
                 user.save()
-                UserSession().user_id = user.id
-                context = {
-                    'create_account_form' : create_account_form,
-                    'error_message': " n'est pas utilisé et a été créer",
-                    'email': email,
-                }
                 return HttpResponseRedirect(reverse('supersub:index'))
+            except:
+                create_account_form = CreateAccountForm()
+                context = {
+                    'form' : create_account_form
+                }
+                return render(request, 'authentication/create_account.html', context)
+        else:
+            context = {
+                'form' : create_account_form
+            }
+            return render(request, 'authentication/create_account.html', context)
+
+            
     else:
         create_account_form = CreateAccountForm()
         context = {
-            'first_name' : create_account_form['first_name'],
-            'email' : create_account_form['email'],
-            'password1' : create_account_form['password1'],
-            'password2' : create_account_form['password2'],
+            'form' : create_account_form
         }
         return render(request, 'authentication/create_account.html', context) 
 
