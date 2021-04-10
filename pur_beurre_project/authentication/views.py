@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -33,7 +34,9 @@ def create_account(request):
                 first_name=first_name,
                 email=email,
                 password=password1)
+            user.set_password(user.password)
             user.save()
+            # user = authenticate(email=user.email, password=user.password)
             return HttpResponseRedirect(reverse('supersub:index'))
         else:
             context = {
