@@ -20,9 +20,9 @@ class SignInForm(UserCreationForm):
 class LoginForm(UserCreationForm):
     """
     """
-    pass
-    # email = forms.CharField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    # password1 = forms.CharField(label="Mot de passe", widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    # class Meta(UserCreationForm):
-    #     model = User
-    #     fields = ['email', 'password1']
+    email = forms.CharField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    password1 = forms.CharField(label="Mot de passe", widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password2 = forms.CharField(widget=forms.HiddenInput())
+    class Meta(UserCreationForm):
+        model = User
+        fields = ['email', 'password1', 'password2']

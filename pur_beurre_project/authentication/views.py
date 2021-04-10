@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
@@ -37,7 +37,8 @@ def signin(request):
             user.set_password(user.password)
             user.save()
             # user = authenticate(email=user.email, password=user.password)
-            return HttpResponseRedirect(reverse('supersub:index'))
+            # if user is not None:
+            #     return HttpResponseRedirect(reverse('supersub:index'))
         else:
             context = {
                 'form' : signin_form
@@ -68,28 +69,24 @@ def login(request):
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             email = login_form.cleaned_data['email']
-            password = login_form.cleaned_data['password']
+            password = login_form.cleaned_data['password1']
             try:
                 existing_user = User.objects.get(email__iexact=email, password__iexact=password)
                 return render(request, 'supersub/index.html')
             except:
-                login_form = LoginForm()
                 context = {
-                    'login_form' : login_form,
-                    'error_message': "Email et/ou mot de passe incorrect"
+                    'login' : login_form
                 }
                 return render(request, 'authentication/login.html', context)
         else:
-            login_form = LoginForm()
             context = {
-                'login_form' : login_form,
-                'error_message': "L\'adresse email n'est pas valide"
+                'form' : login_form
             }
             return render(request, 'authentication/login.html', context)
     else:
         login_form = LoginForm()
         context = {
-            'login_form' : login_form
+            'form' : login_form
         }
         return render(request, 'authentication/login.html', context) 
 
