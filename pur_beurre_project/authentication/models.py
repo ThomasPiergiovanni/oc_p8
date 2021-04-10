@@ -9,6 +9,7 @@ from authentication.manager import UserManager
 class User(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
+    first_name = models.TextField(_('first name'), null=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

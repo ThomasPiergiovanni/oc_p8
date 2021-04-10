@@ -14,13 +14,15 @@ class CreateAccountForm(UserCreationForm):
     password2 = forms.CharField(label="Confirmer le mot de passe",widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     class Meta(UserCreationForm):
         model = User
-        fields = ['first_name', 'email', 'password1', 'password2' ]
+        fields = ['first_name', 'email', 'password1', 'password2']
 
 
 class LoginForm(UserCreationForm):
     """
     """
     pass
-    
-    # email = forms.EmailField(label='Email', widget=forms.TextInput(attrs={'class': 'form-control mb-3'}))
-    # password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    # email = forms.CharField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    # password1 = forms.CharField(label="Mot de passe", widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    # class Meta(UserCreationForm):
+    #     model = User
+    #     fields = ['email', 'password1']

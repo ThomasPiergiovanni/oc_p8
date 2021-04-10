@@ -2,7 +2,6 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from authentication.user_session import UserSession
 from authentication.models import User
 from authentication.forms import CreateAccountForm, LoginForm
 
