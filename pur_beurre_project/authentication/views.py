@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from authentication.models import User
-from authentication.forms import CreateAccountForm, LoginForm
+from authentication.forms import SignInForm, LoginForm
 
 # Create your views here.
 
@@ -20,16 +20,16 @@ def account(request):
 #         return login(request)
 
 
-def create_account(request):
+def signin(request):
     """
     """
     if request.method == 'POST':
-        create_account_form = CreateAccountForm(request.POST)
-        if create_account_form.is_valid():
-            first_name = create_account_form.cleaned_data['first_name']
-            email = create_account_form.cleaned_data['email']
-            password1 = create_account_form.cleaned_data['password1']
-            password2 = create_account_form.cleaned_data['password2']
+        signin_form = SignInForm(request.POST)
+        if signin_form.is_valid():
+            first_name = signin_form.cleaned_data['first_name']
+            email = signin_form.cleaned_data['email']
+            password1 = signin_form.cleaned_data['password1']
+            password2 = signin_form.cleaned_data['password2']
             user = User(
                 first_name=first_name,
                 email=email,
@@ -40,15 +40,15 @@ def create_account(request):
             return HttpResponseRedirect(reverse('supersub:index'))
         else:
             context = {
-                'form' : create_account_form
+                'form' : signin_form
             }
-            return render(request, 'authentication/create_account.html', context)   
+            return render(request, 'authentication/signin.html', context)   
     else:
-        create_account_form = CreateAccountForm()
+        signin_form = SignInForm()
         context = {
-            'form' : create_account_form
+            'form' : signin_form
         }
-        return render(request, 'authentication/create_account.html', context) 
+        return render(request, 'authentication/signin.html', context) 
 
 # def login(request):
 #     """

@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from authentication.models import User
 
 
-class CreateAccountForm(UserCreationForm):
+class SignInForm(UserCreationForm):
     """
     """
     first_name = forms.CharField(label="Prénom", widget=forms.TextInput(attrs={'class': 'form-control'}))
