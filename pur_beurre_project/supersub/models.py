@@ -1,6 +1,6 @@
 from django.db import models
 
-from authentication.models import User
+from authentication.models import CustomUser
 
 # Create your models here.
 
@@ -22,14 +22,14 @@ class Product(models.Model):
     url = models.URLField(max_length=200)
     categories = models.TextField()
     category = models.ForeignKey(Category, models.CASCADE)
-    relation_user = models.ManyToManyField(User, through='Favorites')
+    relation_user = models.ManyToManyField(CustomUser, through='Favorites')
 
     def __str__(self):
         return self.name
 
 
 class Favorites(models.Model):
-    user = models.ForeignKey(User, models.CASCADE)
+    custom_user = models.ForeignKey(CustomUser, models.CASCADE)
     product = models.ForeignKey(Product, models.CASCADE)
 
     def __str__(self):

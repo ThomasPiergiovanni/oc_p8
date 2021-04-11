@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from authentication.models import User
+from authentication.models import CustomUser
 from authentication.forms import SignInForm, LoginForm
 
 # Create your views here.
@@ -30,15 +30,13 @@ def signin(request):
             email = signin_form.cleaned_data['email']
             password1 = signin_form.cleaned_data['password1']
             password2 = signin_form.cleaned_data['password2']
-            user = User(
-                first_name=first_name,
+            user = CustomUser.objects.create_user(
                 email=email,
-                password=password1)
-            user.set_password(user.password)
-            user.save()
+                password=password1,
+                first_name=first_name)
             # user = authenticate(email=user.email, password=user.password)
             # if user is not None:
-            #     return HttpResponseRedirect(reverse('supersub:index'))
+            return HttpResponseRedirect(reverse('supersub:index'))
         else:
             context = {
                 'form' : signin_form
@@ -51,33 +49,14 @@ def signin(request):
         }
         return render(request, 'authentication/signin.html', context) 
 
-# def login(request):
-#     """
-#     """
-#     if request.method == 'POST':
-#         if request.method == 'POST':
-#     context ={
-#         'message': "Se connecter",
-#         'button_message': "Se connecter"
-#     }
-#     return render(request, 'authentification/login.html', context)
 
 def login(request):
     """
     """
     if request.method == 'POST':
-        login_form = LoginForm(request.POST)
+        login_form = LoginForm(data=request.POST)
         if login_form.is_valid():
-            email = login_form.cleaned_data['email']
-            password = login_form.cleaned_data['password1']
-            try:
-                existing_user = User.objects.get(email__iexact=email, password__iexact=password)
-                return render(request, 'supersub/index.html')
-            except:
-                context = {
-                    'login' : login_form
-                }
-                return render(request, 'authentication/login.html', context)
+            return HttpResponseRedirect(reverse('supersub:index'))
         else:
             context = {
                 'form' : login_form
