@@ -58,7 +58,7 @@ class DbManager():
                         self.categories_in_db.append(category.name)
                         category.save()
                 except KeyError as error:
-                    print(error)
+                    print("Category key error:", error)
 
     def drop_products(self):
         """
@@ -114,4 +114,4 @@ class DbManager():
                                 self.products_in_db.append(product.name)
                                 product.save()
                     except KeyError as error:
-                        print(error)
+                        print("Product key error: ", error)
