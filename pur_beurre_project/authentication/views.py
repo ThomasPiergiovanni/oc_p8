@@ -52,6 +52,7 @@ def sign_up(request):
 def sign_in(request):
     """
     """
+    logout(request)
     if request.method == 'POST':
         form = SignInForm(data=request.POST)
         if form.is_valid():
