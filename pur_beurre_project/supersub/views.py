@@ -53,3 +53,6 @@ def results(request):
             'error_message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
         }
         return render(request, 'supersub/index.html', context)
+
+def register_product(request, id_product, id_user):
+    pass
