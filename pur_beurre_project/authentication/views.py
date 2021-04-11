@@ -9,15 +9,16 @@ from authentication.forms import SignUpForm, SignInForm
 # Create your views here.
 
 def account(request):
-    pass
-#     user_session = UserSession()
-#     if user_session.active:
-#         context = {
-#             'user_session':user_session
-#         }
-#         return render(request, 'authentification/account.html', context)
-#     else:
-#         return login(request)
+    """
+    """
+    user = request.user
+    if not user.is_authenticated:
+        return render(request, 'authentication/sign_in.html', context)
+    else:
+        context = {
+            'user':user
+        }
+        return render(request, 'authentication/account.html', context)     
 
 
 def sign_up(request):
