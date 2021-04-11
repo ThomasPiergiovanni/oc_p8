@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -13,7 +13,7 @@ def account(request):
     """
     user = request.user
     if not user.is_authenticated:
-        return render(request, 'authentication/sign_in.html', context)
+        return redirect('authentication:sign_in')
     else:
         context = {
             'user':user
@@ -35,9 +35,7 @@ def sign_up(request):
                 email=email,
                 password=password1,
                 first_name=first_name)
-            # user = authenticate(email=user.email, password=user.password)
-            # if user is not None:
-            return HttpResponseRedirect(reverse('supersub:index'))
+            return HttpResponseRedirect(reverse('authentication:sign_in'))
         else:
             context = {
                 'form' : form
@@ -62,8 +60,7 @@ def sign_in(request):
             user = authenticate(email=email, password=password)
             if user is not None:
                 login(request, user)
-                if user.is_authenticated:
-                    return redirect('supersub:index')
+                return redirect('supersub:index')
         else:
             context = {
                 'form' : form
@@ -74,6 +71,8 @@ def sign_in(request):
         context = {
             'form' : form
         }
-        return render(request, 'authentication/sign_in.html', context) 
+        return render(request, 'authentication/sign_in.html', context)
 
-
+def sign_out(request):
+    logout(request)
+    return redirect('supersub:index') 
