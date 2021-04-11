@@ -1,6 +1,6 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as django_login
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from authentication.models import CustomUser
@@ -56,7 +56,20 @@ def login(request):
     if request.method == 'POST':
         login_form = LoginForm(data=request.POST)
         if login_form.is_valid():
-            return HttpResponseRedirect(reverse('supersub:index'))
+            email = login_form.cleaned_data['username']
+            password = login_form.cleaned_data['password']
+            user = authenticate(email=email, password=password)
+            if user is not None:
+                django_login(request, user)
+                print(request.user.email)
+                if user.is_authenticated:
+                    return redirect('supersub:index')
+                # logged_user_email = request.user.email
+
+            #     context = {
+            #         'form' : login_form
+            #     }
+            #     return render(request, 'authentication/login.html', context)   
         else:
             context = {
                 'form' : login_form
