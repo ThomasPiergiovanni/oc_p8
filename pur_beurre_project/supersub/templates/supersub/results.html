@@ -38,7 +38,7 @@
                             <div class="m-4 results-image">
                                 <a href="{% url 'supersub:product_detail' id_product=product.id %}" class="ele_dark_href">
                                     <img style="max-height: 80px;"  src=" {{ product.image }} " alt="" />
-                                    <p class="h4 m-1"> {{ product.name }} </p>
+                                    <p class="h5 m-1"> {{ product.name }} </p>
                                 </a>
                                 <div class="nutriscore-circle">
                                     <i class="fas fa-circle"></i>
@@ -46,14 +46,16 @@
                                 <div class="nutriscore-letter text-uppercase">
                                     <p>{{ product.nutriscore_grade }}</p>
                                 </div>
-                                <a href="" class="ele_dark_href">
-                                    <p class="mb-0">
-                                        <span>
-                                            <i class="fas fa-save"></i>
-                                        </span>
-                                        Sauvegarder
-                                    </p>
-                                </a>
+                                {% if user.is_authenticated %}
+                                    <a href="" class="ele_dark_href">
+                                        <p class="mb-0">
+                                            <span>
+                                                <i class="fas fa-save"></i>
+                                            </span>
+                                            Sauvegarder
+                                        </p>
+                                    </a>
+                                {% endif %}
 
                             </div>
                         </div>
