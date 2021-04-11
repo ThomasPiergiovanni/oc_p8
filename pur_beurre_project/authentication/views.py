@@ -1,10 +1,10 @@
-from django.contrib.auth import authenticate, login as django_login
+from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from authentication.models import CustomUser
-from authentication.forms import SignInForm, LoginForm
+from authentication.forms import SignUpForm, SignInForm
 
 # Create your views here.
 
@@ -20,16 +20,16 @@ def account(request):
 #         return login(request)
 
 
-def signin(request):
+def sign_up(request):
     """
     """
     if request.method == 'POST':
-        signin_form = SignInForm(request.POST)
-        if signin_form.is_valid():
-            first_name = signin_form.cleaned_data['first_name']
-            email = signin_form.cleaned_data['email']
-            password1 = signin_form.cleaned_data['password1']
-            password2 = signin_form.cleaned_data['password2']
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            email = form.cleaned_data['email']
+            password1 = form.cleaned_data['password1']
+            password2 = form.cleaned_data['password2']
             user = CustomUser.objects.create_user(
                 email=email,
                 password=password1,
@@ -39,47 +39,40 @@ def signin(request):
             return HttpResponseRedirect(reverse('supersub:index'))
         else:
             context = {
-                'form' : signin_form
+                'form' : form
             }
-            return render(request, 'authentication/signin.html', context)   
+            return render(request, 'authentication/sign_up.html', context)   
     else:
-        signin_form = SignInForm()
+        form = SignUpForm()
         context = {
-            'form' : signin_form
+            'form' : form
         }
-        return render(request, 'authentication/signin.html', context) 
+        return render(request, 'authentication/sign_up.html', context) 
 
 
-def login(request):
+def sign_in(request):
     """
     """
     if request.method == 'POST':
-        login_form = LoginForm(data=request.POST)
-        if login_form.is_valid():
-            email = login_form.cleaned_data['username']
-            password = login_form.cleaned_data['password']
+        form = SignInForm(data=request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['username']
+            password = form.cleaned_data['password']
             user = authenticate(email=email, password=password)
             if user is not None:
-                django_login(request, user)
-                print(request.user.email)
+                login(request, user)
                 if user.is_authenticated:
                     return redirect('supersub:index')
-                # logged_user_email = request.user.email
-
-            #     context = {
-            #         'form' : login_form
-            #     }
-            #     return render(request, 'authentication/login.html', context)   
         else:
             context = {
-                'form' : login_form
+                'form' : form
             }
-            return render(request, 'authentication/login.html', context)
+            return render(request, 'authentication/sign_in.html', context)
     else:
-        login_form = LoginForm()
+        form = SignInForm()
         context = {
-            'form' : login_form
+            'form' : form
         }
-        return render(request, 'authentication/login.html', context) 
+        return render(request, 'authentication/sign_in.html', context) 
 
 
