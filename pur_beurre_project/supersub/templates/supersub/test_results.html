@@ -1,9 +1,0 @@
-{% if name %}
-    <p>{{ name }}</p>
-    <img src='{{ image }}'>
-    <ul>
-    {% for product in products_in_categories %}
-        <li>{{ product.name }}</li>
-    {% endfor %}
-    </ul>
-{% endif %}

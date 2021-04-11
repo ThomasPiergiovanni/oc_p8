@@ -11,7 +11,7 @@ def index(request):
 # def account(request):
 #     return render(request, 'supersub/account.html')
 
-def aliment(request, id_product):
+def product_detail(request, id_product):
     product = Product.objects.get(pk=id_product)
     context = {
         'name': product.name,
@@ -24,11 +24,11 @@ def aliment(request, id_product):
         'url': product.url
     }
 
-    return render(request, 'supersub/aliment.html', context)
+    return render(request, 'supersub/product_detail.html', context)
 
 
-def registered_aliments(request):
-    return render(request, 'supersub/registered_aliments.html')
+def registered_products(request):
+    return render(request, 'supersub/registered_products.html')
 
 
 def results(request):
