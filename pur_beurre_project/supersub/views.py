@@ -55,4 +55,4 @@ def results(request):
         return render(request, 'supersub/index.html', context)
 
 def register_product(request, id_product, id_user):
-    pass
+    print(id_product, id_user)
