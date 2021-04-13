@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 
-from .models import Product
+from .models import Product, Favorites
 
 
 
@@ -55,4 +55,11 @@ def results(request):
         return render(request, 'supersub/index.html', context)
 
 def register_product(request, id_product, id_user):
-    print(id_product, id_user)
+    try:
+        favorite = Favorites.objects.filter(product_id__iexact=id_product, custom_user_id__iexact=id_user, )
+        if favorite is not None:
+            print("In db: ", id_product, id_user)
+    except Exception as error:
+        favorite = Favorites(custom_user_id=id_user, product_id=id_product)
+        favorite.save()
+        print("Added in db : ", id_product, id_user)
