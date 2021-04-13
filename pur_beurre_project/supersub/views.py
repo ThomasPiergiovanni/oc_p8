@@ -1,4 +1,6 @@
 from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from .models import Product, Favorites
 
@@ -56,10 +58,15 @@ def results(request):
 
 def register_product(request, id_product, id_user):
     try:
-        favorite = Favorites.objects.filter(product_id__iexact=id_product, custom_user_id__iexact=id_user, )
+        favorite = Favorites.objects.get(product_id__exact=id_product, custom_user_id__exact=id_user)
         if favorite is not None:
-            print("In db: ", id_product, id_user)
-    except Exception as error:
-        favorite = Favorites(custom_user_id=id_user, product_id=id_product)
-        favorite.save()
-        print("Added in db : ", id_product, id_user)
+            context = {
+                'message': "Ce produit fait féja partit de vos favoris",
+            }
+            return render(request, 'supersub/results.html', context)
+    except:
+        pass
+    #         favorite = Favorites(custom_user_id=id_user, product_id=id_product)
+    #         favorite.save()
+    #         return HttpResponseRedirect(reverse('supersub:index'))
+

@@ -22,7 +22,7 @@ class Product(models.Model):
     url = models.URLField(max_length=200)
     categories = models.TextField()
     category = models.ForeignKey(Category, models.CASCADE)
-    relation_user = models.ManyToManyField(CustomUser, through='Favorites')
+    relation_custom_user = models.ManyToManyField(CustomUser, through='Favorites')
 
     def __str__(self):
         return self.name
@@ -33,4 +33,4 @@ class Favorites(models.Model):
     product = models.ForeignKey(Product, models.CASCADE)
 
     def __str__(self):
-        return self.user.email
+        return self.custom_user.email
