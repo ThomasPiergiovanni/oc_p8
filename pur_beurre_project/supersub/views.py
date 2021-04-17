@@ -64,30 +64,33 @@ def results(request):
     """
     """
     if request.method == 'GET':
-        try:
-            matching_products = Product.objects.filter(name__contains=request.GET['product'])
-            product = matching_products[0]
-            products_list = (
-                Product.objects.filter(category_id=product.category_id)
-                .filter(nutriscore_grade__lte=product.nutriscore_grade)
-                .exclude(id__exact=product.id).order_by('id')
-            )
-            paginator = Paginator(products_list, 6)
+        if request.GET['product']:
+            try:
+                matching_products = Product.objects.filter(name__contains=request.GET['product'])
+                product = matching_products[0]
+                products_list = (
+                    Product.objects.filter(category_id=product.category_id)
+                    .filter(nutriscore_grade__lte=product.nutriscore_grade)
+                    .exclude(id__exact=product.id).order_by('id')
+                )
+                paginator = Paginator(products_list, 6)
 
-            page_number = request.GET.get ('page')
-            page_obj = paginator.get_page(page_number)
-            context = {
-                'searched_product': product,
-                'products': products_list,
-                'page_obj' : page_obj
+                page_number = request.GET.get ('page')
+                page_obj = paginator.get_page(page_number)
+                context = {
+                    'searched_product': product,
+                    'products': products_list,
+                    'page_obj' : page_obj
 
-            }
-            return render(request, 'supersub/results_test.html', context)
-        except:
-            context = {
-                'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
-            }
-            return render(request, 'supersub/index.html', context)
+                }
+                return render(request, 'supersub/results_test.html', context)
+            except:
+                context = {
+                    'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
+                }
+                return render(request, 'supersub/index.html', context)
+        else:
+            pass
 
 
 def results_test(request):
