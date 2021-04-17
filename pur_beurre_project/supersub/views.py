@@ -70,16 +70,37 @@ def results(request):
             products_list = (
                 Product.objects.filter(category_id=product.category_id)
                 .filter(nutriscore_grade__lte=product.nutriscore_grade)
-                .exclude(id__exact=product.id).order_by('id')[:6]
+                .exclude(id__exact=product.id).order_by('id')
             )
+            paginator = Paginator(products_list, 6)
+
+            page_number = request.GET.get ('page')
+            page_obj = paginator.get_page(page_number)
             context = {
                 'searched_product': product,
-                'products': products_list
+                'products': products_list,
+                'page_obj' : page_obj
 
             }
-            return render(request, 'supersub/results.html', context)
+            return render(request, 'supersub/results_test.html', context)
         except:
             context = {
                 'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
             }
             return render(request, 'supersub/index.html', context)
+
+
+def results_test(request):
+    products_list = (
+        Product.objects.all().order_by('id')
+    )
+    paginator = Paginator(products_list, 6)
+
+    page_number = request.GET.get ('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'page_obj' : page_obj
+
+    }
+    print(request.META.get('REQUEST_METHOD'))
+    return render(request, 'supersub/results_test.html', context)
