@@ -22,7 +22,7 @@
                             </div>
                         </div>
                     {% endif %}
-                    <form action="{% url 'supersub:results'%}" method="post" novalidate>
+                    <form action="{% url 'supersub:results'%}" method="get" novalidate>
                         {% csrf_token %}
                         <div class="form-group align-content-end">
                             <div class="row">

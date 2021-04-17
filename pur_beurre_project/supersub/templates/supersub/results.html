@@ -47,7 +47,7 @@
                                     <p>{{ product.nutriscore_grade }}</p>
                                 </div>
                                 {% if user.is_authenticated %}
-                                    <a href="{% url 'supersub:register_product' id_product=product.id id_user=user.id%}" class="ele_dark_href">
+                                    <a href="{% url 'supersub:register_product' id_product=product.id id_user=user.id %}" class="ele_dark_href">
                                         <p class="mb-0">
                                             <span>
                                                 <i class="fas fa-save"></i>
