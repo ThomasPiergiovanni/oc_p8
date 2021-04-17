@@ -23,7 +23,16 @@ def product_detail(request, id_product):
 
 
 def registered_products(request):
-    return render(request, 'supersub/registered_products.html')
+    user = request.user
+    if user.is_authenticated:
+        try:
+            favorites = Favorites.objects.filter(custom_user_id__exact=user.id).select_related('product')
+            context = {
+                'favorites': favorites
+            }
+            return render(request, 'supersub/registered_products.html', context)
+        except:
+            pass
 
 
 def results(request):
@@ -39,7 +48,6 @@ def results(request):
                 .exclude(id__exact=product.id)[:6]
             )
             context = {
-                'or_prod': product.id,
                 'name': product.name,
                 'image': product.image,
                 'products_in_categories': products_in_catgeories
