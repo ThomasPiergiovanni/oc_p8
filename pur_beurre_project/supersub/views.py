@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -10,9 +11,6 @@ from authentication.models import CustomUser
 # Create your views here.
 def index(request):
     return render(request, 'supersub/index.html')
-
-# def account(request):
-#     return render(request, 'supersub/account.html')
 
 def product_detail(request, id_product):
     product = Product.objects.get(pk=id_product)
@@ -43,33 +41,6 @@ def registered_products(request):
             }
             return render(request, 'supersub/index.html', context)
 
-
-
-def results(request):
-    """
-    """
-    if request.method == 'GET':
-        try:
-            products = Product.objects.filter(name__contains=request.GET['product'])
-            product = products[0]
-            products_in_catgeories = (
-                Product.objects.filter(category_id=product.category_id)
-                .filter(nutriscore_grade__lte=product.nutriscore_grade)
-                .exclude(id__exact=product.id)[:6]
-            )
-            context = {
-                'name': product.name,
-                'image': product.image,
-                'products_in_categories': products_in_catgeories
-            }
-            return render(request, 'supersub/results.html', context)
-        except:
-            context = {
-                'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
-            }
-            return render(request, 'supersub/index.html', context)
-
-
 def register_product(request, id_product, id_user):
     product = Product.objects.get(pk=id_product)
     try:
@@ -77,7 +48,7 @@ def register_product(request, id_product, id_user):
         if favorite is not None:
             context = {
                 'product': product,
-                'favorite_message': "Ce produit fait déja parti de vos favoris"
+                'message': "Ce produit fait déja parti de vos favoris"
             }
             return render(request, 'supersub/product_detail.html', context)
     except:
@@ -89,3 +60,26 @@ def register_product(request, id_product, id_user):
                 }
         return render(request, 'supersub/product_detail.html', context)
 
+def results(request):
+    """
+    """
+    if request.method == 'GET':
+        try:
+            matching_products = Product.objects.filter(name__contains=request.GET['product'])
+            product = matching_products[0]
+            products_list = (
+                Product.objects.filter(category_id=product.category_id)
+                .filter(nutriscore_grade__lte=product.nutriscore_grade)
+                .exclude(id__exact=product.id).order_by('id')[:6]
+            )
+            context = {
+                'searched_product': product,
+                'products': products_list
+
+            }
+            return render(request, 'supersub/results.html', context)
+        except:
+            context = {
+                'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
+            }
+            return render(request, 'supersub/index.html', context)
