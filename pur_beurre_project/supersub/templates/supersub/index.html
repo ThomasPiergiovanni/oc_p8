@@ -15,10 +15,10 @@
                         consommez tous les jours!</h2>
                 </div>
                 <div class="col-10 col-md-8 col-lg-5  align-self-start">
-                    {% if error_message %}
+                    {% if message %}
                         <div class="row">
                             <div class="col">
-                                <p class=text-primary>{{ error_message }}</p>
+                                <p class="text-primary text-uppercase ">{{ message }}</p>
                             </div>
                         </div>
                     {% endif %}

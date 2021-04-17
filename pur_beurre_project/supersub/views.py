@@ -25,14 +25,24 @@ def product_detail(request, id_product):
 def registered_products(request):
     user = request.user
     if user.is_authenticated:
-        try:
+        entry_list = list(Favorites.objects.filter(custom_user_id__exact=user.id)) 
+        if entry_list:
             favorites = Favorites.objects.filter(custom_user_id__exact=user.id).select_related('product')
             context = {
                 'favorites': favorites
             }
             return render(request, 'supersub/registered_products.html', context)
-        except:
-            pass
+        else:
+            context = {
+                'message': " Vous n'avez enregistré aucun favoris jusqu'à présent"
+            }
+            return render(request, 'supersub/index.html', context)
+    else:
+            context = {
+                'message': " Vous devez vous connecter pour consulter vos favoris"
+            }
+            return render(request, 'supersub/index.html', context)
+
 
 
 def results(request):
@@ -55,7 +65,7 @@ def results(request):
             return render(request, 'supersub/results.html', context)
         except:
             context = {
-                'error_message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
+                'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
             }
             return render(request, 'supersub/index.html', context)
 
