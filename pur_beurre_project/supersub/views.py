@@ -12,6 +12,7 @@ from authentication.models import CustomUser
 # Create your views here.
 def index(request):
     try:
+        del request.session['product']
         del request.session['potential_favorites']
         return render(request, 'supersub/index.html')
     except:
@@ -65,49 +66,55 @@ def register_product(request, id_product, id_user):
                 }
         return render(request, 'supersub/product_detail.html', context)
 
+def paginate(request, candidates_favorites):
+    paginator = Paginator(candidates_favorites, 6)
+    page_number = request.GET.get ('page')
+    page_obj = paginator.get_page(page_number)
+    return page_obj
+
+def add_to_session(request, product_id, candidates_favorites_ids):
+    request.session['product_id'] = product_id
+    request.session['candidates_favorites_ids'] = candidates_favorites_ids
+
+
 def results_test(request):
     """
     """
-    try: 
-        if request.session['potential_favorites']:
-            matching_products =[]
-            for deserialized_object in serializers.deserialize("json", request.session['potential_favorites']):
-                product = Product.objects.get(pk=deserialized_object.object.pk)
-                matching_products.append(product)
+    product_id = request.session.get('product_id', None)
+    candidates_favorites_ids = request.session.get('candidates_favorites_ids', None)
+    if candidates_favorites_ids:
+        candidates_favorites = []
+        for candidate_favorite_id in candidates_favorites_ids:
+            product = Product.objects.get(pk=candidate_favorite_id)
+            candidates_favorites.append(product)
+        product = Product.objects.get(pk=product_id)
+        context = {
+            # 'searched_product': product,
+            # 'products': products_list,
+            'page_obj' : paginate(request, candidates_favorites)
 
-            paginator = Paginator(matching_products, 6)
-
-            page_number = request.GET.get ('page')
-            page_obj = paginator.get_page(page_number)
-            context = {
-                # 'searched_product': product,
-                # 'products': products_list,
-                'page_obj' : page_obj
-
-            }
-            return render(request, 'supersub/results_test.html', context)
-    except:
-        research = request.GET.get('product', None)
-        if research:
-            name_matching = Product.objects.filter(name__contains=research)
-            if name_matching:
-                product = name_matching[0]
-                matching_products = (
+        }
+        return render(request, 'supersub/results_test.html', context)
+    else:
+        searched_string = request.GET.get('product', None)
+        if searched_string:
+            matching_products = Product.objects.filter(name__contains=searched_string)
+            if matching_products:
+                product_id = matching_products[0].id
+                candidates_favorites_ids = []
+                candidates_favorites = (
                     Product.objects.filter(category_id=product.category_id)
                     .filter(nutriscore_grade__lte=product.nutriscore_grade)
                     .exclude(id__exact=product.id).order_by('id')
                 )
-                request.session['potential_favorites'] = serializers.serialize('json',matching_products)
-
-                paginator = Paginator(matching_products, 6)
-
-                page_number = request.GET.get ('page')
-                page_obj = paginator.get_page(page_number)
+                for product in candidates_favorites:
+                    candidates_favorites_ids.append(product.id)
+    
+                add_to_session(request, product_id, candidates_favorites_ids)
                 context = {
                     # 'searched_product': product,
                     # 'products': products_list,
-                    'page_obj' : page_obj
-
+                    'page_obj' : paginate(request, candidates_favorites)
                 }
                 return render(request, 'supersub/results_test.html', context)
             else:
@@ -120,18 +127,3 @@ def results_test(request):
                 'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
             }
             return render(request, 'supersub/index.html', context)
-
-# def results_test(request):
-#     products_list = (
-#         Product.objects.all().order_by('id')
-#     )
-#     paginator = Paginator(products_list, 6)
-
-#     page_number = request.GET.get ('page')
-#     page_obj = paginator.get_page(page_number)
-#     context = {
-#         'page_obj' : page_obj
-
-#     }
-#     print(request.META.get('REQUEST_METHOD'))
-#     return render(request, 'supersub/results_test.html', context)
