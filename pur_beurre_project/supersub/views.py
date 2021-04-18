@@ -12,8 +12,8 @@ from authentication.models import CustomUser
 # Create your views here.
 def index(request):
     try:
-        del request.session['product']
-        del request.session['potential_favorites']
+        del request.session['product_id']
+        del request.session['candidates_favorites_ids']
         return render(request, 'supersub/index.html')
     except:
         return render(request, 'supersub/index.html')
@@ -67,15 +67,18 @@ def register_product(request, id_product, id_user):
         return render(request, 'supersub/product_detail.html', context)
 
 def paginate(request, candidates_favorites):
+    """
+    """
     paginator = Paginator(candidates_favorites, 6)
     page_number = request.GET.get ('page')
     page_obj = paginator.get_page(page_number)
     return page_obj
 
 def add_to_session(request, product_id, candidates_favorites_ids):
+    """
+    """
     request.session['product_id'] = product_id
     request.session['candidates_favorites_ids'] = candidates_favorites_ids
-
 
 def results_test(request):
     """
@@ -91,7 +94,7 @@ def results_test(request):
         context = {
             # 'searched_product': product,
             # 'products': products_list,
-            'page_obj' : paginate(request, candidates_favorites)
+            'page_object' : paginate(request, candidates_favorites)
 
         }
         return render(request, 'supersub/results_test.html', context)
@@ -100,7 +103,8 @@ def results_test(request):
         if searched_string:
             matching_products = Product.objects.filter(name__contains=searched_string)
             if matching_products:
-                product_id = matching_products[0].id
+                product = matching_products[0]
+                product_id = product.id
                 candidates_favorites_ids = []
                 candidates_favorites = (
                     Product.objects.filter(category_id=product.category_id)
@@ -114,7 +118,7 @@ def results_test(request):
                 context = {
                     # 'searched_product': product,
                     # 'products': products_list,
-                    'page_obj' : paginate(request, candidates_favorites)
+                    'page_object' : paginate(request, candidates_favorites)
                 }
                 return render(request, 'supersub/results_test.html', context)
             else:
