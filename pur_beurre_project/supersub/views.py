@@ -71,8 +71,8 @@ def paginate(request, candidates_favorites):
     """
     paginator = Paginator(candidates_favorites, 6)
     page_number = request.GET.get ('page')
-    page_obj = paginator.get_page(page_number)
-    return page_obj
+    page_object = paginator.get_page(page_number)
+    return page_object
 
 def add_to_session(request, product_id, candidates_favorites_ids):
     """
@@ -80,7 +80,7 @@ def add_to_session(request, product_id, candidates_favorites_ids):
     request.session['product_id'] = product_id
     request.session['candidates_favorites_ids'] = candidates_favorites_ids
 
-def results_test(request):
+def results(request):
     """
     """
     product_id = request.session.get('product_id', None)
@@ -92,12 +92,11 @@ def results_test(request):
             candidates_favorites.append(product)
         product = Product.objects.get(pk=product_id)
         context = {
-            # 'searched_product': product,
-            # 'products': products_list,
+            'searched_product': product,
             'page_object' : paginate(request, candidates_favorites)
 
         }
-        return render(request, 'supersub/results_test.html', context)
+        return render(request, 'supersub/results.html', context)
     else:
         searched_string = request.GET.get('product', None)
         if searched_string:
@@ -111,16 +110,15 @@ def results_test(request):
                     .filter(nutriscore_grade__lte=product.nutriscore_grade)
                     .exclude(id__exact=product.id).order_by('id')
                 )
-                for product in candidates_favorites:
-                    candidates_favorites_ids.append(product.id)
-    
+                for candidate in candidates_favorites:
+                    candidates_favorites_ids.append(candidate.id)
+   
                 add_to_session(request, product_id, candidates_favorites_ids)
                 context = {
-                    # 'searched_product': product,
-                    # 'products': products_list,
+                    'searched_product': product,
                     'page_object' : paginate(request, candidates_favorites)
                 }
-                return render(request, 'supersub/results_test.html', context)
+                return render(request, 'supersub/results.html', context)
             else:
                 context = {
                     'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
