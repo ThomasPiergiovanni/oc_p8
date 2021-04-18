@@ -1,6 +1,6 @@
-{% for product in page_obj %}
+{% for paginator in page_obj %}
 
-    {{ product.name|upper }}<br>
+    {{ paginator.name|upper }}<br>
 
 {% endfor %}
 
