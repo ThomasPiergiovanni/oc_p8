@@ -31,9 +31,9 @@ def registered_products(request):
     if user.is_authenticated:
         entry_list = list(Favorites.objects.filter(custom_user_id__exact=user.id)) 
         if entry_list:
-            favorites = Favorites.objects.filter(custom_user_id__exact=user.id).select_related('product')
+            favorites = Favorites.objects.filter(custom_user_id__exact=user.id).select_related('product').order_by('id')
             context = {
-                'favorites': favorites
+                'page_object': paginate(request, favorites)
             }
             return render(request, 'supersub/registered_products.html', context)
         else:
@@ -66,19 +66,32 @@ def register_product(request, id_product, id_user):
                 }
         return render(request, 'supersub/product_detail.html', context)
 
-def paginate(request, candidates_favorites):
+def paginate(request, objects_list):
     """
     """
-    paginator = Paginator(candidates_favorites, 6)
+    paginator = Paginator(objects_list, 6)
     page_number = request.GET.get ('page')
     page_object = paginator.get_page(page_number)
     return page_object
 
-def add_to_session(request, product_id, candidates_favorites_ids):
+# def add_to_session(request, product_id, candidates_favorites_ids):
+#     """
+#     """
+#     request.session['product_id'] = product_id
+#     request.session['candidates_favorites_ids'] = candidates_favorites_ids
+
+def add_to_session(**kwargs):
     """
     """
-    request.session['product_id'] = product_id
-    request.session['candidates_favorites_ids'] = candidates_favorites_ids
+    request = kwargs.get('request', None)
+    product_id = kwargs.get('product_id', None)
+    candidates_favorites_ids = kwargs.get('candidates_favorites_ids', None)
+    if request:
+        if product_id:
+            request.session['product_id'] = product_id
+        if candidates_favorites_ids:
+            request.session['candidates_favorites_ids'] = candidates_favorites_ids
+
 
 def results(request):
     """
@@ -94,7 +107,6 @@ def results(request):
         context = {
             'searched_product': product,
             'page_object' : paginate(request, candidates_favorites)
-
         }
         return render(request, 'supersub/results.html', context)
     else:
@@ -112,8 +124,9 @@ def results(request):
                 )
                 for candidate in candidates_favorites:
                     candidates_favorites_ids.append(candidate.id)
-   
-                add_to_session(request, product_id, candidates_favorites_ids)
+                
+
+                add_to_session(request=request, product_id=product_id, candidates_favorites_ids=candidates_favorites_ids)
                 context = {
                     'searched_product': product,
                     'page_object' : paginate(request, candidates_favorites)

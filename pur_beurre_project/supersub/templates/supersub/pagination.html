@@ -1,0 +1,15 @@
+<div class="row align-items-end text-center">
+    <div class="col">
+        {% if page_object.has_previous %}
+        <a href="?page={{ page_object.previous_page_number }}#favorite_section" class="ele_dark_href">&laquo;</a>
+        {% endif %}
+
+        <span class="current text-dark">
+            Page {{ page_object.number }} de {{ page_object.paginator.num_pages }}.
+        </span>
+
+        {% if page_object.has_next %}
+        <a href="?page={{ page_object.next_page_number }}#favorite_section" class="ele_dark_href">&raquo;</a>
+        {% endif %}
+    </div>
+</div>
