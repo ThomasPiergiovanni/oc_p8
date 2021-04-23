@@ -49,7 +49,7 @@ class ProductDetailView(View):
 #     }
 #     return render(request, 'supersub/product_detail.html', context)
 
-class UserFavoritesView(View):
+class FavoritesView(View):
     def get(self, request):
         user = request.user
         if user.is_authenticated:
@@ -59,7 +59,7 @@ class UserFavoritesView(View):
                 context = {
                     'page_object': paginate(request, favorites)
                 }
-                return render(request, 'supersub/registered_products.html', context)
+                return render(request, 'supersub/favorites.html', context)
             else:
                 context = {
                     'message': " Vous n'avez enregistré aucun favoris jusqu'à présent"
