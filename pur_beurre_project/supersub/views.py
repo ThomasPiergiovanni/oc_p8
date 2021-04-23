@@ -49,27 +49,48 @@ class ProductDetailView(View):
 #     }
 #     return render(request, 'supersub/product_detail.html', context)
 
-
-def registered_products(request):
-    user = request.user
-    if user.is_authenticated:
-        entry_list = list(Favorites.objects.filter(custom_user_id__exact=user.id)) 
-        if entry_list:
-            favorites = Favorites.objects.filter(custom_user_id__exact=user.id).select_related('product').order_by('id')
-            context = {
-                'page_object': paginate(request, favorites)
-            }
-            return render(request, 'supersub/registered_products.html', context)
+class UserFavoritesView(View):
+    def get(self, request):
+        user = request.user
+        if user.is_authenticated:
+            entry_list = list(Favorites.objects.filter(custom_user_id__exact=user.id)) 
+            if entry_list:
+                favorites = Favorites.objects.filter(custom_user_id__exact=user.id).select_related('product').order_by('id')
+                context = {
+                    'page_object': paginate(request, favorites)
+                }
+                return render(request, 'supersub/registered_products.html', context)
+            else:
+                context = {
+                    'message': " Vous n'avez enregistré aucun favoris jusqu'à présent"
+                }
+                return render(request, 'supersub/index.html', context)
         else:
-            context = {
-                'message': " Vous n'avez enregistré aucun favoris jusqu'à présent"
-            }
-            return render(request, 'supersub/index.html', context)
-    else:
-            context = {
-                'message': " Vous devez vous connecter pour consulter vos favoris"
-            }
-            return render(request, 'supersub/index.html', context)
+                context = {
+                    'message': " Vous devez vous connecter pour consulter vos favoris"
+                }
+                return render(request, 'supersub/index.html', context)
+
+# def registered_products(request):
+#     user = request.user
+#     if user.is_authenticated:
+#         entry_list = list(Favorites.objects.filter(custom_user_id__exact=user.id)) 
+#         if entry_list:
+#             favorites = Favorites.objects.filter(custom_user_id__exact=user.id).select_related('product').order_by('id')
+#             context = {
+#                 'page_object': paginate(request, favorites)
+#             }
+#             return render(request, 'supersub/registered_products.html', context)
+#         else:
+#             context = {
+#                 'message': " Vous n'avez enregistré aucun favoris jusqu'à présent"
+#             }
+#             return render(request, 'supersub/index.html', context)
+#     else:
+#             context = {
+#                 'message': " Vous devez vous connecter pour consulter vos favoris"
+#             }
+#             return render(request, 'supersub/index.html', context)
 
 def register_product(request, id_product, id_user):
     product = Product.objects.get(pk=id_product)
