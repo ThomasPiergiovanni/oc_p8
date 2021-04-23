@@ -7,23 +7,47 @@ from django.urls import reverse
 from .models import Product, Favorites
 from authentication.models import CustomUser
 
+from django.views import View
+
+from django.views.generic import DetailView
+
+
+class IndexView(View):
+    """
+    """
+    def get(self,request):
+        try:
+            del request.session['product_id']
+            del request.session['candidates_favorites_ids']
+            return render(request, 'supersub/index.html')
+        except:
+            return render(request, 'supersub/index.html')
 
 
 # Create your views here.
-def index(request):
-    try:
-        del request.session['product_id']
-        del request.session['candidates_favorites_ids']
-        return render(request, 'supersub/index.html')
-    except:
-        return render(request, 'supersub/index.html')
+# def index(request):
+#     try:
+#         del request.session['product_id']
+#         del request.session['candidates_favorites_ids']
+#         return render(request, 'supersub/index.html')
+#     except:
+#         return render(request, 'supersub/index.html')
 
-def product_detail(request, id_product):
-    product = Product.objects.get(pk=id_product)
-    context = {
-        'product': product
-    }
-    return render(request, 'supersub/product_detail.html', context)
+class ProductDetailView(View):
+
+    def get(self, request, id_product):
+        product = Product.objects.get(pk=id_product)
+        context = {
+            'product': product
+        }
+        return render(request, 'supersub/product_detail.html', context)
+
+# def product_detail(request, id_product):
+#     product = Product.objects.get(pk=id_product)
+#     context = {
+#         'product': product
+#     }
+#     return render(request, 'supersub/product_detail.html', context)
 
 
 def registered_products(request):
@@ -73,12 +97,6 @@ def paginate(request, objects_list):
     page_number = request.GET.get ('page')
     page_object = paginator.get_page(page_number)
     return page_object
-
-# def add_to_session(request, product_id, candidates_favorites_ids):
-#     """
-#     """
-#     request.session['product_id'] = product_id
-#     request.session['candidates_favorites_ids'] = candidates_favorites_ids
 
 def add_to_session(**kwargs):
     """
