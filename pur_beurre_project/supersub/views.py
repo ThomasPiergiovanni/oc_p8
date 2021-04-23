@@ -92,24 +92,49 @@ class FavoritesView(View):
 #             }
 #             return render(request, 'supersub/index.html', context)
 
-def register_product(request, id_product, id_user):
-    product = Product.objects.get(pk=id_product)
-    try:
-        favorite = Favorites.objects.get(product_id__exact=id_product, custom_user_id__exact=id_user)
-        if favorite is not None:
-            context = {
-                'product': product,
-                'message': "Ce produit fait déja parti de vos favoris"
-            }
-            return render(request, 'supersub/product_detail.html', context)
-    except:
-        favorite = Favorites(product_id=id_product, custom_user_id=id_user)
-        favorite.save()
-        context = {
+class RegisterFavoriteView(View):
+    def __init__(self):
+        self.favorite = None
+    
+    def get(self, request, id_product, id_user):
+        product = Product.objects.get(pk=id_product)
+        try:
+            self.favorite = Favorites.objects.get(product_id__exact=id_product, custom_user_id__exact=id_user)
+            if self.favorite is not None:
+                context = {
                     'product': product,
-                    'favorite_message': "Ce produit a été ajouté vos favoris"
+                    'message': "Ce produit fait déja parti de vos favoris"
                 }
-        return render(request, 'supersub/product_detail.html', context)
+                return render(request, 'supersub/product_detail.html', context)
+    
+        except:
+            self.favorite = Favorites(product_id=id_product, custom_user_id=id_user)
+            self.favorite.save()
+            context = {
+                        'product': product,
+                        'message': "Ce produit a été ajouté vos favoris"
+                    }
+            return render(request, 'supersub/product_detail.html', context)
+
+
+# def register_product(request, id_product, id_user):
+#     product = Product.objects.get(pk=id_product)
+#     try:
+#         favorite = Favorites.objects.get(product_id__exact=id_product, custom_user_id__exact=id_user)
+#         if favorite is not None:
+#             context = {
+#                 'product': product,
+#                 'message': "Ce produit fait déja parti de vos favoris"
+#             }
+#             return render(request, 'supersub/product_detail.html', context)
+#     except:
+#         favorite = Favorites(product_id=id_product, custom_user_id=id_user)
+#         favorite.save()
+#         context = {
+#                     'product': product,
+#                     'favorite_message': "Ce produit a été ajouté vos favoris"
+#                 }
+#         return render(request, 'supersub/product_detail.html', context)
 
 def paginate(request, objects_list):
     """
