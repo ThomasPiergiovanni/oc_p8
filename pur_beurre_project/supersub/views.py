@@ -157,52 +157,104 @@ def add_to_session(**kwargs):
             request.session['candidates_favorites_ids'] = candidates_favorites_ids
 
 
-def results(request):
+class ResutlView(View):
     """
     """
-    product_id = request.session.get('product_id', None)
-    candidates_favorites_ids = request.session.get('candidates_favorites_ids', None)
-    if candidates_favorites_ids:
-        candidates_favorites = []
-        for candidate_favorite_id in candidates_favorites_ids:
-            product = Product.objects.get(pk=candidate_favorite_id)
-            candidates_favorites.append(product)
-        product = Product.objects.get(pk=product_id)
-        context = {
-            'searched_product': product,
-            'page_object' : paginate(request, candidates_favorites)
-        }
-        return render(request, 'supersub/results.html', context)
-    else:
-        searched_string = request.GET.get('product', None)
-        if searched_string:
-            matching_products = Product.objects.filter(name__contains=searched_string)
-            if matching_products:
-                product = matching_products[0]
-                product_id = product.id
-                candidates_favorites_ids = []
-                candidates_favorites = (
-                    Product.objects.filter(category_id=product.category_id)
-                    .filter(nutriscore_grade__lte=product.nutriscore_grade)
-                    .exclude(id__exact=product.id).order_by('id')
-                )
-                for candidate in candidates_favorites:
-                    candidates_favorites_ids.append(candidate.id)
-                
+    def get(self, request):
+        product_id = request.session.get('product_id', None)
+        candidates_favorites_ids = request.session.get('candidates_favorites_ids', None)
+        if candidates_favorites_ids:
+            candidates_favorites = []
+            for candidate_favorite_id in candidates_favorites_ids:
+                product = Product.objects.get(pk=candidate_favorite_id)
+                candidates_favorites.append(product)
+            product = Product.objects.get(pk=product_id)
+            context = {
+                'searched_product': product,
+                'page_object' : paginate(request, candidates_favorites)
+            }
+            return render(request, 'supersub/results.html', context)
+        else:
+            searched_string = request.GET.get('product', None)
+            if searched_string:
+                matching_products = Product.objects.filter(name__contains=searched_string)
+                if matching_products:
+                    product = matching_products[0]
+                    product_id = product.id
+                    candidates_favorites_ids = []
+                    candidates_favorites = (
+                        Product.objects.filter(category_id=product.category_id)
+                        .filter(nutriscore_grade__lte=product.nutriscore_grade)
+                        .exclude(id__exact=product.id).order_by('id')
+                    )
+                    for candidate in candidates_favorites:
+                        candidates_favorites_ids.append(candidate.id)
+                    
 
-                add_to_session(request=request, product_id=product_id, candidates_favorites_ids=candidates_favorites_ids)
-                context = {
-                    'searched_product': product,
-                    'page_object' : paginate(request, candidates_favorites)
-                }
-                return render(request, 'supersub/results.html', context)
+                    add_to_session(request=request, product_id=product_id, candidates_favorites_ids=candidates_favorites_ids)
+                    context = {
+                        'searched_product': product,
+                        'page_object' : paginate(request, candidates_favorites)
+                    }
+                    return render(request, 'supersub/results.html', context)
+                else:
+                    context = {
+                        'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
+                    }
+                    return render(request, 'supersub/index.html', context)
             else:
                 context = {
                     'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
                 }
                 return render(request, 'supersub/index.html', context)
-        else:
-            context = {
-                'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
-            }
-            return render(request, 'supersub/index.html', context)
+
+
+# def results(request):
+#     """
+#     """
+#     product_id = request.session.get('product_id', None)
+#     candidates_favorites_ids = request.session.get('candidates_favorites_ids', None)
+#     if candidates_favorites_ids:
+#         candidates_favorites = []
+#         for candidate_favorite_id in candidates_favorites_ids:
+#             product = Product.objects.get(pk=candidate_favorite_id)
+#             candidates_favorites.append(product)
+#         product = Product.objects.get(pk=product_id)
+#         context = {
+#             'searched_product': product,
+#             'page_object' : paginate(request, candidates_favorites)
+#         }
+#         return render(request, 'supersub/results.html', context)
+#     else:
+#         searched_string = request.GET.get('product', None)
+#         if searched_string:
+#             matching_products = Product.objects.filter(name__contains=searched_string)
+#             if matching_products:
+#                 product = matching_products[0]
+#                 product_id = product.id
+#                 candidates_favorites_ids = []
+#                 candidates_favorites = (
+#                     Product.objects.filter(category_id=product.category_id)
+#                     .filter(nutriscore_grade__lte=product.nutriscore_grade)
+#                     .exclude(id__exact=product.id).order_by('id')
+#                 )
+#                 for candidate in candidates_favorites:
+#                     candidates_favorites_ids.append(candidate.id)
+                
+
+#                 add_to_session(request=request, product_id=product_id, candidates_favorites_ids=candidates_favorites_ids)
+#                 context = {
+#                     'searched_product': product,
+#                     'page_object' : paginate(request, candidates_favorites)
+#                 }
+#                 return render(request, 'supersub/results.html', context)
+#             else:
+#                 context = {
+#                     'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
+#                 }
+#                 return render(request, 'supersub/index.html', context)
+#         else:
+#             context = {
+#                 'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
+#             }
+#             return render(request, 'supersub/index.html', context)
