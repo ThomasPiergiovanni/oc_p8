@@ -16,12 +16,21 @@ from django.views.generic import DetailView
 class IndexView(View):
     """
     """
+    def __init__(self):
+        self.supersub_manager = SupersubManager()
+
     def get(self,request):
+
+        # self.supersub_manager._delete_session_variables(request)
+        # if self.supersub_manager.product_id:
+        #     print("hello")
+        # else:
+        #     pass
         try:
-            del request.session['product_id']
-            del request.session['candidates_favorites_ids']
+            self.supersub_manager._delete_session_variables(request)
             return render(request, 'supersub/index.html')
         except:
+            # pass
             return render(request, 'supersub/index.html')
 
 
@@ -125,7 +134,7 @@ class ResutlView(View):
                     for candidate in candidates_favorites:
                         candidates_favorites_ids.append(candidate.id)
                     
-                    self.supersub_manager.add_variables_to_session(request=request, product_id=product_id, candidates_favorites_ids=candidates_favorites_ids)
+                    self.supersub_manager.add_variables_to_session(request, product_id, candidates_favorites_ids)
                     context = {
                         'searched_product': product,
                         'page_object' : self.supersub_manager.paginate(request, candidates_favorites)

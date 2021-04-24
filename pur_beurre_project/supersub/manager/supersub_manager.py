@@ -9,24 +9,30 @@ class SupersubManager():
         self.product_id = None
         self.candidates_favorites_ids = None
 
-    def add_variables_to_session(self,**kwargs):
+    def add_variables_to_session(self, request, product_id, candidates_favorites_ids ):
         """
         """
-        self._get_session_variables(**kwargs)
-        if self.request:
-            if self.product_id:
-                self.request.session['product_id'] = self.product_id
-            if self.candidates_favorites_ids:
-                self.request.session['candidates_favorites_ids'] = self.candidates_favorites_ids
+        # self._get_session_variables(request)
+        # if self.request is None:
+        #     print(self.product_id)
+        #     if self.product_id is None:
+        #         request.session['product_id'] = product_id
+        #     if self.candidates_favorites_ids is None:
+        #         request.session['candidates_favorites_ids'] = candidates_favorites_ids
+        request.session['product_id'] = product_id
+        request.session['candidates_favorites_ids'] = candidates_favorites_ids
     
-    def _del_session_variables(self, **kwargs):
-        pass
+    def _delete_session_variables(self, request):
+        self._get_session_variables(request)
+        if self.product_id and self.candidates_favorites_ids:
+            del request.session['product_id']
+            del request.session['candidates_favorites_ids']
 
     
-    def _get_session_variables(self, **kwargs):
-        self.request = kwargs.get('request', None)
-        self.product_id = kwargs.get('product_id', None)
-        self.candidates_favorites_ids = kwargs.get('candidates_favorites_ids', None)
+    def _get_session_variables(self, request):
+        self.request = request.session.get('request', None)
+        self.product_id = request.session.get('product_id', None)
+        self.candidates_favorites_ids = request.session.get('candidates_favorites_ids', None)
 
     def paginate(self, request, objects_list):
         """
