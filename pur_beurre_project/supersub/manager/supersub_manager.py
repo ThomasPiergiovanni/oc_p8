@@ -4,17 +4,29 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 class SupersubManager():
     """
     """
+    def __init__(self):
+        self.request = None
+        self.product_id = None
+        self.candidates_favorites_ids = None
+
     def add_variables_to_session(self,**kwargs):
         """
         """
-        request = kwargs.get('request', None)
-        product_id = kwargs.get('product_id', None)
-        candidates_favorites_ids = kwargs.get('candidates_favorites_ids', None)
-        if request:
-            if product_id:
-                request.session['product_id'] = product_id
-            if candidates_favorites_ids:
-                request.session['candidates_favorites_ids'] = candidates_favorites_ids
+        self._get_session_variables(**kwargs)
+        if self.request:
+            if self.product_id:
+                self.request.session['product_id'] = self.product_id
+            if self.candidates_favorites_ids:
+                self.request.session['candidates_favorites_ids'] = self.candidates_favorites_ids
+    
+    def _del_session_variables(self, **kwargs):
+        pass
+
+    
+    def _get_session_variables(self, **kwargs):
+        self.request = kwargs.get('request', None)
+        self.product_id = kwargs.get('product_id', None)
+        self.candidates_favorites_ids = kwargs.get('candidates_favorites_ids', None)
 
     def paginate(self, request, objects_list):
         """
