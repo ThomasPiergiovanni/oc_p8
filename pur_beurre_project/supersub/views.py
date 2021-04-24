@@ -82,8 +82,8 @@ class RegisterFavoriteView(View):
         if self.supersub_manager._get_favorite(id_product, id_user):
             messages.add_message(request, messages.WARNING,"Produit déja enregistré")
         else:
-            self.favorite = Favorites(product_id=id_product, custom_user_id=id_user)
-            self.favorite.save()
+            Favorites(product_id=id_product, custom_user_id=id_user).save()
+            # self.favorite.save()
             messages.add_message(request, messages.SUCCESS,"Produit enregistré!")
         return HttpResponseRedirect(reverse('supersub:product_detail', args=[id_product]))
 
