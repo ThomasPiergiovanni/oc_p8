@@ -5,20 +5,12 @@ class SupersubManager():
     """
     """
     def __init__(self):
-        self.request = None
         self.product_id = None
         self.candidates_favorites_ids = None
 
-    def add_variables_to_session(self, request, product_id, candidates_favorites_ids ):
+    def _add_variables_to_session(self, request, product_id, candidates_favorites_ids ):
         """
         """
-        # self._get_session_variables(request)
-        # if self.request is None:
-        #     print(self.product_id)
-        #     if self.product_id is None:
-        #         request.session['product_id'] = product_id
-        #     if self.candidates_favorites_ids is None:
-        #         request.session['candidates_favorites_ids'] = candidates_favorites_ids
         request.session['product_id'] = product_id
         request.session['candidates_favorites_ids'] = candidates_favorites_ids
     
@@ -28,9 +20,9 @@ class SupersubManager():
             del request.session['product_id']
             del request.session['candidates_favorites_ids']
 
-    
     def _get_session_variables(self, request):
-        self.request = request.session.get('request', None)
+        """
+        """
         self.product_id = request.session.get('product_id', None)
         self.candidates_favorites_ids = request.session.get('candidates_favorites_ids', None)
 
