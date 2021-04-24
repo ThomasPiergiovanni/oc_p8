@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.core import serializers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render, redirect
@@ -27,7 +28,8 @@ class IndexView(View):
 
 
 class ProductDetailView(View):
-
+    """
+    """
     def get(self, request, id_product):
         product = Product.objects.get(pk=id_product)
         context = {
@@ -37,26 +39,34 @@ class ProductDetailView(View):
 
 
 class FavoritesView(View):
+    """
+    """
+    def __init__(self):
+        """
+        """
+        self.supersub_manager = SupersubManager()
+
     def get(self, request):
-        user = request.user
-        if user.is_authenticated:
-            entry_list = list(Favorites.objects.filter(custom_user_id__exact=user.id)) 
-            if entry_list:
-                favorites = Favorites.objects.filter(custom_user_id__exact=user.id).select_related('product').order_by('id')
+        if request.user.is_authenticated:
+            if list(
+                    Favorites.objects
+                    .filter(custom_user_id__exact=request.user.id)):
+                favorites = (
+                    Favorites.objects
+                    .filter(custom_user_id__exact=request.user.id)
+                    .select_related('product')
+                    .order_by('id'))
                 context = {
-                    'page_object': paginate(request, favorites)
+                    'page_object': self.supersub_manager.paginate(
+                        request, favorites)
                 }
                 return render(request, 'supersub/favorites.html', context)
             else:
-                context = {
-                    'message': " Vous n'avez enregistré aucun favoris jusqu'à présent"
-                }
-                return render(request, 'supersub/index.html', context)
+                self.message = "Vous n'avez enregistré aucun favoris jusqu'à présent"
         else:
-                context = {
-                    'message': " Vous devez vous connecter pour consulter vos favoris"
-                }
-                return render(request, 'supersub/index.html', context)
+            self.message = "Vous devez vous connecter pour consulter vos favoris"
+        return self.supersub_manager.render_index(request, self.message)
+
 
 
 class RegisterFavoriteView(View):
@@ -81,11 +91,8 @@ class RegisterFavoriteView(View):
         except:
             self.favorite = Favorites(product_id=id_product, custom_user_id=id_user)
             self.favorite.save()
-            context = {
-                        'product': product,
-                        'message': "Ce produit a été ajouté vos favoris"
-                    }
-            return render(request, 'supersub/product_detail.html', context)
+            messages.add_message(request, messages.SUCCESS,'Enregistré')
+            return HttpResponseRedirect(reverse('supersub:product_detail', args=[id_product]))
 
 
 class ResutlView(View):

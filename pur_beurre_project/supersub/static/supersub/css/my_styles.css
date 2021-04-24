@@ -227,12 +227,6 @@ h1, h2, h3, h4, h5, h6,
 }
 
 
-
-/*End test section */
-
-
-
-
 #portfolio .container-fluid .portfolio-box .portfolio-box-caption .project-category, #portfolio .container-sm .portfolio-box .portfolio-box-caption .project-category, #portfolio .container-md .portfolio-box .portfolio-box-caption .project-category, #portfolio .container-lg .portfolio-box .portfolio-box-caption .project-category, #portfolio .container-xl .portfolio-box .portfolio-box-caption .project-category {
   font-family: "Open Sans", Arial;
   font-size: 0.85rem;
@@ -303,7 +297,6 @@ header.searchhead h1 {
   color: rgba(52, 90, 97 , 0.7);
   text-decoration: none;
 }
-
 
 .results-image{
   position: relative;
@@ -397,23 +390,6 @@ hr.divider {
   border-color: #de9440;
 }
 
-/* .navbar-light .navbar-brand {
-  color: rgba(52, 90, 97 , 1);
-}
-.navbar-light .navbar-brand:hover, .navbar-light .navbar-brand:focus {
-  color: rgba(52, 90, 97 , 0.9); 
-}
-.navbar-light .navbar-nav .nav-link {
-  color: rgba(52, 90, 97 , 0.5);
-}
-.navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
-  color: rgba(52, 90, 97 , 0.7);
-}
-.navbar-light .navbar-nav .nav-link.disabled {
-  color: rgba(52, 90, 97 , 0.3);
-} */
-
-
 #mainNav .navbar-nav .nav-item .nav-link {
   color: #6c757d;
   font-family: "Open Sans", sans-serif, Arial;
@@ -421,13 +397,7 @@ hr.divider {
   font-size: 0.9rem;
   padding: 0.75rem 0;
 }
-/* #mainNav .navbar-nav .nav-item .nav-link:hover, #mainNav .navbar-nav .nav-item .nav-link:active {
-  color: #c45525;
 
-}
-#mainNav .navbar-nav .nav-item .nav-link.active {
-  color: blue !important;
-} */
 @media (min-width: 992px) {
   #mainNav {
     box-shadow: none;
@@ -507,15 +477,6 @@ hr.divider {
   color: rgba(52, 90, 97 , 0.7);
   }
 }  
-    /* --New element  */
-
-  /* #mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link {
-    color: Blue;
-  }
-  #mainNav.navbar-scrolled .navbar-nav .nav-item .nav-link:hover {
-    color: #c45525;
-  }
-} */
 
 .text-white {
   color: #e8a75d !important;
@@ -532,21 +493,6 @@ hr.divider {
 .text-dark {
   color: #345a61 !important;
 }
-
-/* a.aliment-dark {
-  color: #345a61;
-  text-decoration: none;
-}
-
-a.aliment-dark:hover {
-  color: #86ebe6;
-  text-decoration: none;
-} */
-
-/* .aliment-dark:hover {
-  color: #86ebe6;
-} */
-
 
 /* new element */
 .text-dark-50 {
@@ -590,4 +536,12 @@ a:not([href]):not([class]):hover {
   min-height: 75vh !important;
 }
 
+.success{
+  color: #12c512;
+  text-transform: uppercase;
+}
 
+.error{
+  color: #c45525;
+  text-transform: uppercase;
+}

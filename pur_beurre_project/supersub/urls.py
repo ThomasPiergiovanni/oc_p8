@@ -9,7 +9,7 @@ urlpatterns = [
     
     path('', IndexView.as_view(), name='index'),
     # path('', views.index, name='index'),
-   
+    
     path('product_detail/<int:id_product>', ProductDetailView.as_view(), name='product_detail'),
     # path('product_detail/<int:id_product>', views.product_detail, name='product_detail'),
 

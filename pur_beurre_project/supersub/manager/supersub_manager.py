@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import get_object_or_404, render, redirect
 
 
 class SupersubManager():
@@ -8,7 +9,8 @@ class SupersubManager():
         self.product_id = None
         self.candidates_favorites_ids = None
 
-    def _add_variables_to_session(self, request, product_id, candidates_favorites_ids ):
+    def _add_variables_to_session(
+            self, request, product_id, candidates_favorites_ids):
         """
         """
         request.session['product_id'] = product_id
@@ -33,3 +35,9 @@ class SupersubManager():
         page_number = request.GET.get ('page')
         page_object = paginator.get_page(page_number)
         return page_object
+    
+    def render_index(self, request, message):
+        context = {
+            'message': message
+        }
+        return render(request, 'supersub/index.html', context)
