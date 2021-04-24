@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render, redirect
+from supersub.models import Favorites
 
 
 class SupersubManager():
@@ -41,3 +42,11 @@ class SupersubManager():
             'message': message
         }
         return render(request, 'supersub/index.html', context)
+    
+    def _get_favorite(self, id_product, id_user):
+        """
+        """
+        try: 
+            return Favorites.objects.get(product_id__exact=id_product, custom_user_id__exact=id_user)
+        except:
+            return None

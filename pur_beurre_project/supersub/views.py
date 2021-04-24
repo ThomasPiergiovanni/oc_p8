@@ -73,25 +73,20 @@ class RegisterFavoriteView(View):
     """
     """
     def __init__(self):
+        self.supersub_manager = SupersubManager()
         self.favorite = None
     
     def get(self, request, id_product, id_user):
         """
         """
         product = Product.objects.get(pk=id_product)
-        try:
-            self.favorite = Favorites.objects.get(product_id__exact=id_product, custom_user_id__exact=id_user)
-            if self.favorite is not None:
-                context = {
-                    'product': product,
-                    'message': "Ce produit fait déja parti de vos favoris"
-                }
-                return render(request, 'supersub/product_detail.html', context)
-    
-        except:
+        if self.supersub_manager._get_favorite(id_product, id_user):
+            messages.add_message(request, messages.WARNING,"Produit déja enregistré")
+            return HttpResponseRedirect(reverse('supersub:product_detail', args=[id_product]))   
+        else:
             self.favorite = Favorites(product_id=id_product, custom_user_id=id_user)
             self.favorite.save()
-            messages.add_message(request, messages.SUCCESS,'Enregistré')
+            messages.add_message(request, messages.SUCCESS,"Produit enregistré!")
             return HttpResponseRedirect(reverse('supersub:product_detail', args=[id_product]))
 
 

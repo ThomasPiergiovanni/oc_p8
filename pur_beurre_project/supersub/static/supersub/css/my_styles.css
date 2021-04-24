@@ -537,11 +537,18 @@ a:not([href]):not([class]):hover {
 }
 
 .success{
-  color: #12c512;
-  text-transform: uppercase;
+  color: #28a745;
+  font-family: "Open Sans", sans-serif, Arial;
+}
+
+.warning{
+  color: #ffc107;
+  font-family: "Open Sans", sans-serif, Arial;
 }
 
 .error{
-  color: #c45525;
-  text-transform: uppercase;
+  color: #dc3545;
+  font-family: "Open Sans", sans-serif, Arial;
 }
+
+
