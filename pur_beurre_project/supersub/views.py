@@ -79,15 +79,13 @@ class RegisterFavoriteView(View):
     def get(self, request, id_product, id_user):
         """
         """
-        product = Product.objects.get(pk=id_product)
         if self.supersub_manager._get_favorite(id_product, id_user):
             messages.add_message(request, messages.WARNING,"Produit déja enregistré")
-            return HttpResponseRedirect(reverse('supersub:product_detail', args=[id_product]))   
         else:
             self.favorite = Favorites(product_id=id_product, custom_user_id=id_user)
             self.favorite.save()
             messages.add_message(request, messages.SUCCESS,"Produit enregistré!")
-            return HttpResponseRedirect(reverse('supersub:product_detail', args=[id_product]))
+        return HttpResponseRedirect(reverse('supersub:product_detail', args=[id_product]))
 
 
 class ResutlView(View):
