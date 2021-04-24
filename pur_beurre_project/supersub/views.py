@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from .models import Product, Favorites
 from authentication.models import CustomUser
+from .manager.supersub_manager import SupersubManager
 
 from django.views import View
 
@@ -136,13 +137,13 @@ class RegisterFavoriteView(View):
 #                 }
 #         return render(request, 'supersub/product_detail.html', context)
 
-def paginate(request, objects_list):
-    """
-    """
-    paginator = Paginator(objects_list, 6)
-    page_number = request.GET.get ('page')
-    page_object = paginator.get_page(page_number)
-    return page_object
+# def paginate(request, objects_list):
+#     """
+#     """
+#     paginator = Paginator(objects_list, 6)
+#     page_number = request.GET.get ('page')
+#     page_object = paginator.get_page(page_number)
+#     return page_object
 
 def add_to_session(**kwargs):
     """
@@ -160,6 +161,11 @@ def add_to_session(**kwargs):
 class ResutlView(View):
     """
     """
+    def __init__(self):
+        """
+        """
+        self.supersub_manager = SupersubManager()
+
     def get(self, request):
         product_id = request.session.get('product_id', None)
         candidates_favorites_ids = request.session.get('candidates_favorites_ids', None)
@@ -171,7 +177,7 @@ class ResutlView(View):
             product = Product.objects.get(pk=product_id)
             context = {
                 'searched_product': product,
-                'page_object' : paginate(request, candidates_favorites)
+                'page_object' : self.supersub_manager.paginate(request, candidates_favorites)
             }
             return render(request, 'supersub/results.html', context)
         else:
@@ -194,7 +200,7 @@ class ResutlView(View):
                     add_to_session(request=request, product_id=product_id, candidates_favorites_ids=candidates_favorites_ids)
                     context = {
                         'searched_product': product,
-                        'page_object' : paginate(request, candidates_favorites)
+                        'page_object' : self.supersub_manager.paginate(request, candidates_favorites)
                     }
                     return render(request, 'supersub/results.html', context)
                 else:
