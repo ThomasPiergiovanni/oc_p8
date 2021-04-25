@@ -15,13 +15,6 @@
                         consommez tous les jours!</h2>
                 </div>
                 <div class="col-10 col-md-8 col-lg-5  align-self-start">
-                    {% if message %}
-                        <div class="row">
-                            <div class="col">
-                                <p class="text-primary text-uppercase ">{{ message }}</p>
-                            </div>
-                        </div>
-                    {% endif %}
                     {% if messages %}
                         {% for message in messages %}
                         <div class="row">
@@ -36,7 +29,7 @@
                     <form action="{% url 'supersub:results'%}" method="get" novalidate>
                         {% csrf_token %}
                         <div class="form-group align-content-end">
-                            <div class="row">
+                            <div class="row  mt-4">
                                 <div class="col-8">
                                     <input type="text" name ="product" id="product" class="form-control text-dark" required>
                                 </div>

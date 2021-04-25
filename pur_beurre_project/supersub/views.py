@@ -27,13 +27,47 @@ class IndexView(View):
         return render(request, 'supersub/index.html')
 
 
+class ResutlView(View):
+    """
+    """
+    def __init__(self):
+        """
+        """
+        self.supersub_manager = SupersubManager()
+
+    def get(self, request):
+        """
+        """
+        session_prod_id = request.session.get('session_prod_id', None)
+        session_favs_cands_ids = request.session.get('session_favs_cands_ids', None)
+        if session_favs_cands_ids:
+            context = self.supersub_manager._display_results_from_session_variables(request, session_prod_id, session_favs_cands_ids)
+            return render(request, 'supersub/results.html', context)
+        else:
+            searched_string = request.GET.get('product', None)
+            if searched_string:
+                matching_products = Product.objects.filter(name__contains=searched_string)[:1]
+                if matching_products:
+                    context = self.supersub_manager._display_results_from_form(request, matching_products) 
+                    return render(request, 'supersub/results.html', context)
+                else:
+                    messages.add_message(request, messages.WARNING, "Ce produit n'a pas été reconnu ou n'existe pas.")
+            else:
+                messages.add_message(request, messages.ERROR, "Saisissez un produit")
+            return HttpResponseRedirect(reverse('supersub:index'))
+
+
 class ProductDetailView(View):
     """
     """
+    def __init__(self):
+        self.supersub_manager = SupersubManager()
+
     def get(self, request, id_product):
-        product = Product.objects.get(pk=id_product)
+        """
+        """
         context = {
-            'product': product
+            'product': self.supersub_manager._get_product(id_product)
         }
         return render(request, 'supersub/product_detail.html', context)
 
@@ -48,14 +82,12 @@ class FavoritesView(View):
 
     def get(self, request):
         if request.user.is_authenticated:
-            if list(
-                    Favorites.objects
-                    .filter(custom_user_id__exact=request.user.id)):
-                favorites = (
-                    Favorites.objects
-                    .filter(custom_user_id__exact=request.user.id)
-                    .select_related('product')
-                    .order_by('id'))
+            favorites = list(
+                Favorites.objects
+                .filter(custom_user_id__exact=request.user.id)
+                .select_related('product')
+                .order_by('id'))
+            if favorites:
                 context = {
                     'page_object': self.supersub_manager._paginate(
                         request, favorites)
@@ -86,46 +118,3 @@ class RegisterFavoriteView(View):
             Favorites(product_id=id_product, custom_user_id=id_user).save()
             messages.add_message(request, messages.SUCCESS,"Produit enregistré!")
         return HttpResponseRedirect(reverse('supersub:product_detail', args=[id_product]))
-
-
-class ResutlView(View):
-    """
-    """
-    def __init__(self):
-        """
-        """
-        self.supersub_manager = SupersubManager()
-
-    def get(self, request):
-        session_prod_id = request.session.get('session_prod_id', None)
-        session_favs_cands_ids = request.session.get('session_favs_cands_ids', None)
-        if session_favs_cands_ids:
-            context = self.supersub_manager._display_results_from_session_variables(request, session_prod_id, session_favs_cands_ids)
-            return render(request, 'supersub/results.html', context)
-        else:
-            searched_string = request.GET.get('product', None)
-            if searched_string:
-                matching_products = Product.objects.filter(name__contains=searched_string)[:1]
-                if matching_products:
-                    product = matching_products[0]
-                    favorites_candidates = (
-                        Product.objects.filter(category_id=product.category_id)
-                        .filter(nutriscore_grade__lte=product.nutriscore_grade)
-                        .exclude(id__exact=product.id).order_by('id')
-                    )
-                    session_favs_cands_ids = (
-                        self.supersub_manager
-                        ._get_session_favs_cands_ids(favorites_candidates))
-        
-                    self.supersub_manager._add_variables_to_session(
-                        request, product.id, session_favs_cands_ids
-                    )
-                    context = {
-                        'searched_product': product,
-                        'page_object' : self.supersub_manager._paginate(
-                            request, favorites_candidates
-                        )
-                    }
-                    return render(request, 'supersub/results.html', context)
-            messages.add_message(request, messages.ERROR, "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée.")
-            return HttpResponseRedirect(reverse('supersub:index'))
