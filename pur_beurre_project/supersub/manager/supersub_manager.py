@@ -29,20 +29,14 @@ class SupersubManager():
         self.product_id = request.session.get('product_id', None)
         self.candidates_favorites_ids = request.session.get('candidates_favorites_ids', None)
 
-    def paginate(self, request, objects_list):
+    def _paginate(self, request, objects_list):
         """
         """
         paginator = Paginator(objects_list, 6)
         page_number = request.GET.get ('page')
         page_object = paginator.get_page(page_number)
         return page_object
-    
-    def render_index(self, request, message):
-        context = {
-            'message': message
-        }
-        return render(request, 'supersub/index.html', context)
-    
+     
     def _get_favorite(self, id_product, id_user):
         """
         """

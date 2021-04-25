@@ -22,6 +22,17 @@
                             </div>
                         </div>
                     {% endif %}
+                    {% if messages %}
+                        {% for message in messages %}
+                        <div class="row">
+                            <div class="col">
+                                <h6 {% if message.tags %} class="{{ message.tags }} mb-3" {% endif %}>
+                                    {{ message }}
+                                </h6>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
                     <form action="{% url 'supersub:results'%}" method="get" novalidate>
                         {% csrf_token %}
                         <div class="form-group align-content-end">

@@ -23,11 +23,11 @@
                             {% for message in messages %}
                                 <div class="row">
                                     <div class="col">
-                                        <h5 {% if message.tags %} 
-                                                class="{{ message.tags }}"
+                                        <h6 {% if message.tags %} 
+                                                class="{{ message.tags }}  mb-3""
                                             {% endif %}>
                                             {{ message }}
-                                        </h5>
+                                        </h6>
                                     </div>
                                 </div>
                             {% endfor %}

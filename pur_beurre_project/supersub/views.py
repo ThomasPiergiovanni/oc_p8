@@ -57,15 +57,15 @@ class FavoritesView(View):
                     .select_related('product')
                     .order_by('id'))
                 context = {
-                    'page_object': self.supersub_manager.paginate(
+                    'page_object': self.supersub_manager._paginate(
                         request, favorites)
                 }
                 return render(request, 'supersub/favorites.html', context)
             else:
-                self.message = "Vous n'avez enregistré aucun favoris jusqu'à présent"
+                messages.add_message(request, messages.WARNING,"Vous n'avez enregistré aucun favoris jusqu'à présent")
         else:
-            self.message = "Vous devez vous connecter pour consulter vos favoris"
-        return self.supersub_manager.render_index(request, self.message)
+            messages.add_message(request, messages.ERROR,"Connectez-vous pour consulter vos favoris!")
+        return render(request, 'supersub/index.html')
 
 
 
@@ -73,9 +73,10 @@ class RegisterFavoriteView(View):
     """
     """
     def __init__(self):
+        """
+        """
         self.supersub_manager = SupersubManager()
-        self.favorite = None
-    
+ 
     def get(self, request, id_product, id_user):
         """
         """
@@ -83,7 +84,6 @@ class RegisterFavoriteView(View):
             messages.add_message(request, messages.WARNING,"Produit déja enregistré")
         else:
             Favorites(product_id=id_product, custom_user_id=id_user).save()
-            # self.favorite.save()
             messages.add_message(request, messages.SUCCESS,"Produit enregistré!")
         return HttpResponseRedirect(reverse('supersub:product_detail', args=[id_product]))
 
@@ -107,7 +107,7 @@ class ResutlView(View):
             product = Product.objects.get(pk=product_id)
             context = {
                 'searched_product': product,
-                'page_object' : self.supersub_manager.paginate(request, candidates_favorites)
+                'page_object' : self.supersub_manager._paginate(request, candidates_favorites)
             }
             return render(request, 'supersub/results.html', context)
         else:
@@ -131,7 +131,7 @@ class ResutlView(View):
                     )
                     context = {
                         'searched_product': product,
-                        'page_object' : self.supersub_manager.paginate(
+                        'page_object' : self.supersub_manager._paginate(
                             request, candidates_favorites
                         )
                     }
