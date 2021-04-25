@@ -16,9 +16,8 @@ class SupersubManager():
         """
         favorites_candidates = (
             self._create_favorites_candidates(session_favs_cands_ids))
-        product = Product.objects.get(pk=session_prods_id)
         context = {
-            'searched_product': product,
+            'searched_product': self._create_product(session_prods_id),
             'page_object' : self._paginate(request, favorites_candidates)
         }
         return context
@@ -27,10 +26,14 @@ class SupersubManager():
         """
         """
         favorites_candidates = []
-        for favorite_candidate_id in session_favs_cands_ids:
-            product = Product.objects.get(pk=favorite_candidate_id)
-            favorites_candidates.append(product)
+        for session_fav_cand_id in session_favs_cands_ids:
+            favorites_candidates.append(self._create_product(session_fav_cand_id))
         return favorites_candidates
+    
+    def _create_product(self, id_product):
+        """
+        """
+        return Product.objects.get(pk=id_product)
     
     def _get_session_favs_cands_ids(self, favorites_candidates):
         """
