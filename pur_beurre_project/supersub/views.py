@@ -17,38 +17,30 @@ from django.views.generic import DetailView
 class IndexView(View):
     """
     """
-    def __init__(self):
-        self.supersub_manager = SupersubManager()
-
     def get(self,request):
         """
         """
-        self.supersub_manager._delete_session_variables(request)
+        SupersubManager()._delete_session_variables(request)
         return render(request, 'supersub/index.html')
 
 
 class ResutlView(View):
     """
     """
-    def __init__(self):
-        """
-        """
-        self.supersub_manager = SupersubManager()
-
     def get(self, request):
         """
         """
         session_prod_id = request.session.get('session_prod_id', None)
         session_favs_cands_ids = request.session.get('session_favs_cands_ids', None)
         if session_favs_cands_ids:
-            context = self.supersub_manager._display_results_from_session_variables(request, session_prod_id, session_favs_cands_ids)
+            context = SupersubManager()._display_results_from_session_variables(request, session_prod_id, session_favs_cands_ids)
             return render(request, 'supersub/results.html', context)
         else:
             searched_string = request.GET.get('product', None)
             if searched_string:
                 matching_products = Product.objects.filter(name__contains=searched_string)[:1]
                 if matching_products:
-                    context = self.supersub_manager._display_results_from_form(request, matching_products) 
+                    context = SupersubManager()._display_results_from_form(request, matching_products) 
                     return render(request, 'supersub/results.html', context)
                 else:
                     messages.add_message(request, messages.WARNING, "Ce produit n'a pas été reconnu ou n'existe pas.")
@@ -60,14 +52,11 @@ class ResutlView(View):
 class ProductDetailView(View):
     """
     """
-    def __init__(self):
-        self.supersub_manager = SupersubManager()
-
     def get(self, request, id_product):
         """
         """
         context = {
-            'product': self.supersub_manager._get_product(id_product)
+            'product': SupersubManager()._get_product(id_product)
         }
         return render(request, 'supersub/product_detail.html', context)
 
@@ -75,11 +64,6 @@ class ProductDetailView(View):
 class FavoritesView(View):
     """
     """
-    def __init__(self):
-        """
-        """
-        self.supersub_manager = SupersubManager()
-
     def get(self, request):
         if request.user.is_authenticated:
             favorites = list(
@@ -89,7 +73,7 @@ class FavoritesView(View):
                 .order_by('id'))
             if favorites:
                 context = {
-                    'page_object': self.supersub_manager._paginate(
+                    'page_object': SupersubManager()._paginate(
                         request, favorites)
                 }
                 return render(request, 'supersub/favorites.html', context)
@@ -100,19 +84,13 @@ class FavoritesView(View):
         return HttpResponseRedirect(reverse('supersub:index'))
 
 
-
 class RegisterFavoriteView(View):
     """
     """
-    def __init__(self):
-        """
-        """
-        self.supersub_manager = SupersubManager()
- 
     def get(self, request, id_product, id_user):
         """
         """
-        if self.supersub_manager._get_favorite(id_product, id_user):
+        if SupersubManager()._get_favorite(id_product, id_user):
             messages.add_message(request, messages.WARNING,"Produit déja enregistré")
         else:
             Favorites(product_id=id_product, custom_user_id=id_user).save()
