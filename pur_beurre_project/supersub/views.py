@@ -136,13 +136,5 @@ class ResutlView(View):
                         )
                     }
                     return render(request, 'supersub/results.html', context)
-                else:
-                    context = {
-                        'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
-                    }
-                    return render(request, 'supersub/index.html', context)
-            else:
-                context = {
-                    'message': "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée. Faites une nouvelle recherche"
-                }
-                return render(request, 'supersub/index.html', context)
+            messages.add_message(request, messages.ERROR, "Ce produit n'a pas été reconnu ou n'existe pas dans la base de donnée.")
+            return HttpResponseRedirect(reverse('supersub:index'))
