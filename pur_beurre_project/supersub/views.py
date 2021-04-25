@@ -65,7 +65,7 @@ class FavoritesView(View):
                 messages.add_message(request, messages.WARNING,"Vous n'avez enregistré aucun favoris jusqu'à présent")
         else:
             messages.add_message(request, messages.ERROR,"Connectez-vous pour consulter vos favoris!")
-        return render(request, 'supersub/index.html')
+        return HttpResponseRedirect(reverse('supersub:index'))
 
 
 
@@ -97,42 +97,39 @@ class ResutlView(View):
         self.supersub_manager = SupersubManager()
 
     def get(self, request):
-        product_id = request.session.get('product_id', None)
-        candidates_favorites_ids = request.session.get('candidates_favorites_ids', None)
-        if candidates_favorites_ids:
-            candidates_favorites = []
-            for candidate_favorite_id in candidates_favorites_ids:
-                product = Product.objects.get(pk=candidate_favorite_id)
-                candidates_favorites.append(product)
-            product = Product.objects.get(pk=product_id)
+        favorites_candidates_ids = request.session.get('favorites_candidates_ids', None)
+        if favorites_candidates_ids:
+            favorites_candidates = (
+                self.supersub_manager
+                ._create_favorites_candidates(favorites_candidates_ids))
+            product = Product.objects.get(pk=request.session.get('product_id', None))
             context = {
                 'searched_product': product,
-                'page_object' : self.supersub_manager._paginate(request, candidates_favorites)
+                'page_object' : self.supersub_manager._paginate(request, favorites_candidates)
             }
             return render(request, 'supersub/results.html', context)
         else:
             searched_string = request.GET.get('product', None)
             if searched_string:
-                matching_products = Product.objects.filter(name__contains=searched_string)
+                matching_products = Product.objects.filter(name__contains=searched_string)[:1]
                 if matching_products:
                     product = matching_products[0]
-                    product_id = product.id
-                    candidates_favorites_ids = []
-                    candidates_favorites = (
+                    favorites_candidates = (
                         Product.objects.filter(category_id=product.category_id)
                         .filter(nutriscore_grade__lte=product.nutriscore_grade)
                         .exclude(id__exact=product.id).order_by('id')
                     )
-                    for candidate in candidates_favorites:
-                        candidates_favorites_ids.append(candidate.id)
-                    
+                    favorites_candidates_ids = (
+                        self.supersub_manager
+                        ._get_favorites_candidates_ids(favorites_candidates))
+        
                     self.supersub_manager._add_variables_to_session(
-                        request, product_id, candidates_favorites_ids
+                        request, product.id, favorites_candidates_ids
                     )
                     context = {
                         'searched_product': product,
                         'page_object' : self.supersub_manager._paginate(
-                            request, candidates_favorites
+                            request, favorites_candidates
                         )
                     }
                     return render(request, 'supersub/results.html', context)

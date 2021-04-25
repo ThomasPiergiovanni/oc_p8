@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import get_object_or_404, render, redirect
-from supersub.models import Favorites
+
+from supersub.models import Favorites, Product
 
 
 class SupersubManager():
@@ -8,26 +8,43 @@ class SupersubManager():
     """
     def __init__(self):
         self.product_id = None
-        self.candidates_favorites_ids = None
+        self.favorites_candidates_ids = None
+    
+    def _create_favorites_candidates(self, favorites_candidates_ids):
+        """
+        """
+        favorites_candidates = []
+        for favorite_candidate_id in favorites_candidates_ids:
+            product = Product.objects.get(pk=favorite_candidate_id)
+            favorites_candidates.append(product)
+        return favorites_candidates
+    
+    def _get_favorites_candidates_ids(self, favorites_candidates):
+        """
+        """
+        favorites_candidates_ids =[]
+        for candidate in favorites_candidates:
+            favorites_candidates_ids.append(candidate.id)
+        return favorites_candidates_ids
 
     def _add_variables_to_session(
-            self, request, product_id, candidates_favorites_ids):
+            self, request, product_id, favorites_candidates_ids):
         """
         """
         request.session['product_id'] = product_id
-        request.session['candidates_favorites_ids'] = candidates_favorites_ids
+        request.session['favorites_candidates_ids'] = favorites_candidates_ids
     
     def _delete_session_variables(self, request):
         self._get_session_variables(request)
-        if self.product_id and self.candidates_favorites_ids:
+        if self.product_id and self.favorites_candidates_ids:
             del request.session['product_id']
-            del request.session['candidates_favorites_ids']
+            del request.session['favorites_candidates_ids']
 
     def _get_session_variables(self, request):
         """
         """
         self.product_id = request.session.get('product_id', None)
-        self.candidates_favorites_ids = request.session.get('candidates_favorites_ids', None)
+        self.favorites_candidates_ids = request.session.get('favorites_candidates_ids', None)
 
     def _paginate(self, request, objects_list):
         """
