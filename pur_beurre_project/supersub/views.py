@@ -11,7 +11,6 @@ from .manager.supersub_manager import SupersubManager
 
 from django.views import View
 
-from django.views.generic import DetailView
 
 
 class IndexView(View):
@@ -30,10 +29,9 @@ class ResutlView(View):
     def get(self, request):
         """
         """
-        session_prod_id = request.session.get('session_prod_id', None)
-        session_favs_cands_ids = request.session.get('session_favs_cands_ids', None)
-        if session_favs_cands_ids:
-            context = SupersubManager()._display_results_from_session_variables(request, session_prod_id, session_favs_cands_ids)
+        session_prod_id, session_prods_ids = SupersubManager()._get_session_variables(request)
+        if session_prods_ids:
+            context = SupersubManager()._display_results_from_session_variables(request, session_prod_id, session_prods_ids)
             return render(request, 'supersub/results.html', context)
         else:
             searched_string = request.GET.get('product', None)

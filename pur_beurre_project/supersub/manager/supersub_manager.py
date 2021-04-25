@@ -7,50 +7,52 @@ from supersub.models import Favorites, Product
 class SupersubManager():
     """
     """
-    def __init__(self):
-        self._session_prod_id = None
-        self._session_favs_cands_ids = None
-    
-    def _display_results_from_session_variables(self, request, session_prods_id, session_favs_cands_ids):
+    def _display_results_from_session_variables(
+            self, request, session_prod_id, session_prods_ids):
         """
         """
-        favorites_candidates = (
-            self._create_favorites_candidates(session_favs_cands_ids))
+        products_candidates = (
+            self._get_results_products(session_prods_ids))
         context = {
-            'searched_product': self._get_product(session_prods_id),
-            'page_object' : self._paginate(request, favorites_candidates)
+            'searched_product': self._get_product(session_prod_id),
+            'page_object' : self._paginate(request, products_candidates)
         }
         return context
     
-    def _create_favorites_candidates(self, session_favs_cands_ids):
+    def _get_results_products(self, session_prods_ids):
         """
         """
-        favorites_candidates = []
-        for session_fav_cand_id in session_favs_cands_ids:
-            favorites_candidates.append(self._get_product(session_fav_cand_id))
-        return favorites_candidates
+        products_candidates = []
+        for session_fav_cand_id in session_prods_ids:
+            products_candidates.append(self._get_product(session_fav_cand_id))
+        return products_candidates
     
     def _get_product(self, id_product):
         """
         """
         return Product.objects.get(pk=id_product)
+    
+    def _get_searched_string(self,request):
+        """
+        """
+        return request.GET.get('product', None)
   
     def _display_results_from_form(self, request, matching_products):
         """
         """
         product = matching_products[0]
-        favorites_candidates = self._get_favorites_candidates(product)
-        session_favs_cands_ids = (
-            self._get_session_favs_cands_ids(favorites_candidates))
+        products_candidates = self._get_products_candidates(product)
+        session_prods_ids = (
+            self._get_session_prods_ids(products_candidates))
         self._add_variables_to_session(
-            request, product.id, session_favs_cands_ids)
+            request, product.id, session_prods_ids)
         context = {
             'searched_product': product,
-            'page_object' : self._paginate(request, favorites_candidates)
+            'page_object' : self._paginate(request, products_candidates)
         }
         return context
     
-    def _get_favorites_candidates(self, product):
+    def _get_products_candidates(self, product):
         """
         """
         return (
@@ -58,40 +60,43 @@ class SupersubManager():
             .filter(nutriscore_grade__lte=product.nutriscore_grade)
             .exclude(id__exact=product.id).order_by('id'))
     
-    def _get_session_favs_cands_ids(self, favorites_candidates):
+    def _get_session_prods_ids(self, products_candidates):
         """
         """
-        session_favs_cands_ids =[]
-        for candidate in favorites_candidates:
-            session_favs_cands_ids.append(candidate.id)
-        return session_favs_cands_ids
+        session_prods_ids =[]
+        for candidate in products_candidates:
+            session_prods_ids.append(candidate.id)
+        return session_prods_ids
 
     def _add_variables_to_session(
-            self, request, session_prod_id, session_favs_cands_ids):
+            self, request, session_prod_id, session_prods_ids):
         """
         """
         request.session['session_prod_id'] = session_prod_id
-        request.session['session_favs_cands_ids'] = session_favs_cands_ids
+        request.session['session_prods_ids'] = session_prods_ids
 
     def _paginate(self, request, objects_list):
         """
         """
         paginator = Paginator(objects_list, 6)
         page_number = request.GET.get ('page')
-        page_object = paginator.get_page(page_number)
-        return page_object
+        return paginator.get_page(page_number)
+
     
     def _delete_session_variables(self, request):
-        self._get_session_variables(request)
-        if self._session_prod_id and self._session_favs_cands_ids:
+        """
+        """
+        _session_prod_id, session_prods_ids = self._get_session_variables(request)
+        if _session_prod_id and session_prods_ids:
             del request.session['session_prod_id']
-            del request.session['session_favs_cands_ids']
+            del request.session['session_prods_ids']
 
     def _get_session_variables(self, request):
         """
         """
-        self._session_prod_id = request.session.get('session_prod_id', None)
-        self._session_favs_cands_ids = request.session.get('session_favs_cands_ids', None)
+        session_prod_id = request.session.get('session_prod_id', None)
+        session_prods_ids = request.session.get('session_prods_ids', None)
+        return session_prod_id, session_prods_ids
    
     def _get_favorite(self, id_product, id_user):
         """
