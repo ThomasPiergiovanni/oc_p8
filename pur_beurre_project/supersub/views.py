@@ -97,16 +97,10 @@ class ResutlView(View):
         self.supersub_manager = SupersubManager()
 
     def get(self, request):
-        favorites_candidates_ids = request.session.get('favorites_candidates_ids', None)
-        if favorites_candidates_ids:
-            favorites_candidates = (
-                self.supersub_manager
-                ._create_favorites_candidates(favorites_candidates_ids))
-            product = Product.objects.get(pk=request.session.get('product_id', None))
-            context = {
-                'searched_product': product,
-                'page_object' : self.supersub_manager._paginate(request, favorites_candidates)
-            }
+        session_prod_id = request.session.get('session_prod_id', None)
+        session_favs_cands_ids = request.session.get('session_favs_cands_ids', None)
+        if session_favs_cands_ids:
+            context = self.supersub_manager._display_results_from_session_variables(request, session_prod_id, session_favs_cands_ids)
             return render(request, 'supersub/results.html', context)
         else:
             searched_string = request.GET.get('product', None)
@@ -119,12 +113,12 @@ class ResutlView(View):
                         .filter(nutriscore_grade__lte=product.nutriscore_grade)
                         .exclude(id__exact=product.id).order_by('id')
                     )
-                    favorites_candidates_ids = (
+                    session_favs_cands_ids = (
                         self.supersub_manager
-                        ._get_favorites_candidates_ids(favorites_candidates))
+                        ._get_session_favs_cands_ids(favorites_candidates))
         
                     self.supersub_manager._add_variables_to_session(
-                        request, product.id, favorites_candidates_ids
+                        request, product.id, session_favs_cands_ids
                     )
                     context = {
                         'searched_product': product,
