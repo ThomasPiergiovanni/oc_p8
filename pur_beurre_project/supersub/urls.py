@@ -1,7 +1,7 @@
 from django.urls import path
 
 from . import views
-from .views import IndexView, ProductDetailView, FavoritesView, RegisterFavoriteView,ResutlView
+from .views import IndexView, ProductDetailView, FavoritesView, RegisterFavoriteView, ResutlView, LegalMentionsView
 
 app_name = 'supersub'
 
@@ -20,6 +20,8 @@ urlpatterns = [
     # path('results/', views.results, name='results'),
 
 
-    path('register_favorite/<int:id_product>/<int:id_user>', RegisterFavoriteView.as_view(), name='register_favorite' )
+    path('register_favorite/<int:id_product>/<int:id_user>', RegisterFavoriteView.as_view(), name='register_favorite' ),
     # path('register_product/<int:id_product>/<int:id_user>', views.register_product, name='register_product'),
+
+    path('legal_mentions/', LegalMentionsView.as_view(), name='legal_mentions')
 ]

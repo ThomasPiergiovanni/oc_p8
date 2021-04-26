@@ -1,7 +1,5 @@
 from django.contrib import messages
-from django.core import serializers
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
@@ -10,7 +8,6 @@ from authentication.models import CustomUser
 from .manager.supersub_manager import SupersubManager
 
 from django.views import View
-
 
 
 class IndexView(View):
@@ -31,14 +28,14 @@ class ResutlView(View):
         """
         session_prod_id, session_prods_ids = SupersubManager()._get_session_variables(request)
         if session_prods_ids:
-            context = SupersubManager()._display_results_from_session_variables(request, session_prod_id, session_prods_ids)
+            context = SupersubManager()._get_context_from_session_variables(request, session_prod_id, session_prods_ids)
             return render(request, 'supersub/results.html', context)
         else:
             searched_string = request.GET.get('product', None)
             if searched_string:
                 matching_products = Product.objects.filter(name__contains=searched_string)[:1]
                 if matching_products:
-                    context = SupersubManager()._display_results_from_form(request, matching_products) 
+                    context = SupersubManager()._get_context_from_form(request, matching_products) 
                     return render(request, 'supersub/results.html', context)
                 else:
                     messages.add_message(request, messages.WARNING, "Ce produit n'a pas été reconnu ou n'existe pas.")
@@ -67,8 +64,7 @@ class FavoritesView(View):
             favorites = list(
                 Favorites.objects
                 .filter(custom_user_id__exact=request.user.id)
-                .select_related('product')
-                .order_by('id'))
+                .select_related('product').order_by('id'))
             if favorites:
                 context = {
                     'page_object': SupersubManager()._paginate(
@@ -94,3 +90,12 @@ class RegisterFavoriteView(View):
             Favorites(product_id=id_product, custom_user_id=id_user).save()
             messages.add_message(request, messages.SUCCESS,"Produit enregistré!")
         return HttpResponseRedirect(reverse('supersub:product_detail', args=[id_product]))
+
+
+class LegalMentionsView(View):
+    """
+    """
+    def get(self,request):
+        """
+        """
+        return render(request, 'supersub/legal_mentions.html')

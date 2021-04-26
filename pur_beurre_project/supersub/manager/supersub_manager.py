@@ -7,7 +7,7 @@ from supersub.models import Favorites, Product
 class SupersubManager():
     """
     """
-    def _display_results_from_session_variables(
+    def _get_context_from_session_variables(
             self, request, session_prod_id, session_prods_ids):
         """
         """
@@ -37,7 +37,7 @@ class SupersubManager():
         """
         return request.GET.get('product', None)
   
-    def _display_results_from_form(self, request, matching_products):
+    def _get_context_from_form(self, request, matching_products):
         """
         """
         product = matching_products[0]
