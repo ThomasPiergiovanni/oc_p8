@@ -27,14 +27,10 @@ def sign_up(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            first_name = form.cleaned_data['first_name']
-            email = form.cleaned_data['email']
-            password1 = form.cleaned_data['password1']
-            password2 = form.cleaned_data['password2']
             user = CustomUser.objects.create_user(
-                email=email,
-                password=password1,
-                first_name=first_name)
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password1'],
+                first_name=form.cleaned_data['first_name'])
             return HttpResponseRedirect(reverse('authentication:sign_in'))
         else:
             context = {
