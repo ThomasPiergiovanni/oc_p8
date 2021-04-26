@@ -536,6 +536,10 @@ a:not([href]):not([class]):hover {
   min-height: 75vh !important;
 }
 
+.min-vh-90 {
+  min-height: 90vh !important;
+}
+
 .success{
   color: #86ebe6;
   font-family: "Open Sans", sans-serif, Arial;

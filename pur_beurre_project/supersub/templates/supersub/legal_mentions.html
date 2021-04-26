@@ -3,7 +3,7 @@
 {% block content %}
     {% load static %}
     <!-- Masthead-->
-    <!-- <header class="searchhead" id="searched">
+    <header class="searchhead" id="searched">
         <div class="container h-100">
             <div class="row h-100 align-items-center justify-content-center text-center">
                 <div class="col-lg-8 align-self-center mb-2">
@@ -11,18 +11,28 @@
                 </div>
             </div>
         </div>
-    </header> -->
+    </header>
     <!-- Mention légales-->
-    <section class="page-section bg-white" id="contact">
+    <section class="page-section bg-white min-vh-90" id="contact">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <h2 class="text-dark mt-0">Mentions légales</h2>
-                    <hr class="divider light my-4" />
-                    <p class="text-dark-75 mb-4">Mention légales ici</p>
+                <div class="col-lg-8 text-dark text-left">
+                    <h4 >Editeur</h4>
+                    <p class="mb-4">Le site www.herokuapp.monsite.com est édité par:</p>
+                    <ul>
+                        <li>La société: </li>
+                        <li>Siège social:</li>
+                        <li>Téléphone: </li>
+                    </ul>
+                    <h4 class="mt-4">Prestataire d'hébergement:</h4>
+                    <p class="mb-4">Le site www.herokuapp.monsite.com est hebergé par:</p>
+                    <ul>
+                        <li>La société: </li>
+                        <li>Siège social:</li>
+                        <li>Téléphone: </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
-
 {% endblock %}
