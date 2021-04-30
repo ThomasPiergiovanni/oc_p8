@@ -31,9 +31,18 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto my-2 my-lg-0 align-items-center">
-                        <form class="d-flex pl-4 pr-4" action="index.html" method="post" novalidate>
-                            <input type="text" id="question" class="form-control mybox" value="Chercher"
-                                aria-label="Search" required>
+                        <form action="{% url 'supersub:results'%}" method="get" class="d-flex pl-4 pr-4" novalidate>
+                            <!-- <input type="text" id="question" class="form-control mybox" value="Chercher" aria-label="Search" required> -->
+                            {% csrf_token %}
+
+                            {% for field in form %}
+                            <p>
+                                {{ field }}
+                                {% for error in field.errors %}
+                                    <p class="text-primary"> {{ error }}</p>
+                                {% endfor %}
+                            </p>
+                            {% endfor %}
                         </form>
                         <li class="nav-item nav-link js-scroll-trigger navbar-brand">
                             <a href="{% url 'authentication:account'%}">

@@ -24,19 +24,7 @@ class AccountView(View):
             context = {
                 'user':request.user
             }
-            return render(request, 'authentication/account.html', context)
-
-# def account(request):
-#     """
-#     """
-#     user = request.user
-#     if not user.is_authenticated:
-#         return redirect('authentication:sign_in')
-#     else:
-#         context = {
-#             'user':user
-#         }
-#         return render(request, 'authentication/account.html', context)     
+            return render(request, 'authentication/account.html', context)    
 
 
 def sign_up(request):
