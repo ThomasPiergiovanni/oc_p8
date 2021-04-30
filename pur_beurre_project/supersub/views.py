@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from .models import Product, Favorites
 from authentication.models import CustomUser
-from .forms import SearchForm
+from .forms import MainSearchForm, NavbarSearchForm
 from .manager.supersub_manager import SupersubManager
 
 from django.views import View
@@ -18,9 +18,9 @@ class IndexView(View):
         """
         """
         SupersubManager()._delete_session_variables(request)
-        form = SearchForm()
         context = {
-            'form' : form
+            'main_form' : MainSearchForm(),
+            'navbar_form' : NavbarSearchForm()
         }
         return render(request, 'supersub/index.html', context)
 
@@ -37,7 +37,13 @@ class ResutlView(View):
             return render(request, 'supersub/results.html', context)
         else:
             if request.method == 'GET':
-                form = SearchForm(request.GET)
+                # form = SearchForm(request.GET)
+                main_form = MainSearchForm(request.GET)
+                nav_form = NavbarSearchForm(request.GET)
+                if main_form:
+                    form = main_form
+                elif nav_form:
+                    form = nav_form
                 if form.is_valid():
                     matching_products = Product.objects.filter(name__contains=form.cleaned_data['searched_string'])[:1]
                     if matching_products:
