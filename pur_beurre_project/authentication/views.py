@@ -2,23 +2,41 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views import View
 
 from authentication.models import CustomUser
 from authentication.forms import SignUpForm, SignInForm
 
+
+
 # Create your views here.
 
-def account(request):
+
+class AccountView(View):
     """
     """
-    user = request.user
-    if not user.is_authenticated:
-        return redirect('authentication:sign_in')
-    else:
-        context = {
-            'user':user
-        }
-        return render(request, 'authentication/account.html', context)     
+    def get(self, request):
+        """
+        """
+        if not request.user.is_authenticated:
+            return redirect('authentication:sign_in')
+        else:
+            context = {
+                'user':request.user
+            }
+            return render(request, 'authentication/account.html', context)
+
+# def account(request):
+#     """
+#     """
+#     user = request.user
+#     if not user.is_authenticated:
+#         return redirect('authentication:sign_in')
+#     else:
+#         context = {
+#             'user':user
+#         }
+#         return render(request, 'authentication/account.html', context)     
 
 
 def sign_up(request):
