@@ -34,26 +34,21 @@ class ResutlView(View):
         session_prod_id, session_prods_ids = SupersubManager()._get_session_variables(request)
         if session_prods_ids:
             context = SupersubManager()._get_context_from_session_variables(request, session_prod_id, session_prods_ids)
+            context ["navbar_form"] = NavbarSearchForm()
             return render(request, 'supersub/results.html', context)
+        
         else:
-            if request.method == 'GET':
-                # form = SearchForm(request.GET)
-                main_form = MainSearchForm(request.GET)
-                nav_form = NavbarSearchForm(request.GET)
-                if main_form:
-                    form = main_form
-                elif nav_form:
-                    form = nav_form
-                if form.is_valid():
-                    matching_products = Product.objects.filter(name__contains=form.cleaned_data['searched_string'])[:1]
-                    if matching_products:
-                        context = SupersubManager()._get_context_from_form(request, matching_products) 
-                        return render(request, 'supersub/results.html', context)
-                    else:
-                        messages.add_message(request, messages.WARNING, "Ce produit n'a pas été reconnu ou n'existe pas.")
+            form = SupersubManager()._get_forms(request)
+            if form.is_valid():
+                matching_products = Product.objects.filter(name__contains=form.cleaned_data['searched_string'])[:1]
+                if matching_products:
+                    context = SupersubManager()._get_context_from_form(request, matching_products) 
+                    return render(request, 'supersub/results.html', context)
                 else:
-                    messages.add_message(request, messages.ERROR, "Saisissez un produit")
-                return HttpResponseRedirect(reverse('supersub:index'))
+                    messages.add_message(request, messages.WARNING, "Ce produit n'a pas été reconnu ou n'existe pas.")
+            else:
+                messages.add_message(request, messages.ERROR, "Saisissez un produit")
+            return HttpResponseRedirect(reverse('supersub:index'))
 
 
 class ProductDetailView(View):

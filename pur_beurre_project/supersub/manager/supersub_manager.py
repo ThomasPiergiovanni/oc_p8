@@ -2,6 +2,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 
 from supersub.models import Favorites, Product
+from supersub.forms import MainSearchForm, NavbarSearchForm
 
 
 class SupersubManager():
@@ -31,6 +32,17 @@ class SupersubManager():
         """
         """
         return Product.objects.get(pk=id_product)
+    
+    def _get_forms(self, request):
+        """
+        """
+        main_form = MainSearchForm(request.GET)
+        nav_form = NavbarSearchForm(request.GET)
+        if main_form:
+            return main_form
+        elif nav_form:
+            return nav_form
+
     
     def _get_searched_string(self,request):
         """
