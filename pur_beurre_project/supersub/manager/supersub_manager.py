@@ -8,6 +8,16 @@ from supersub.forms import MainSearchForm, NavbarSearchForm
 class SupersubManager():
     """
     """
+    def _get_data(self):
+        """
+        """
+        data = {
+            "context": {},
+            "render":"",
+            "redirect":""
+        }
+        return data
+    
     def _get_page_from_session_variables(
             self, request, session_prods_ids):
         """
@@ -29,29 +39,7 @@ class SupersubManager():
         """
         """
         return Product.objects.get(pk=id_product)
-
-    def _get_data(self):
-        """
-        """
-        context = self._get_context()
-        data = {
-            "context": context,
-            "render":"",
-            "redirect":""
-        }
-        return data
-    
-    def _get_context(self):
-        """
-        """
-        context = {
-            "searched_product":"",
-            "page_object":"",
-            "main_form":"",
-            "navbar_form":""
-        }
-        return context
-    
+   
     def _get_form_value(self, request):
         """
         """
@@ -61,22 +49,15 @@ class SupersubManager():
             return main_form
         elif nav_form:
             return nav_form
-        else:
-            return None
-
   
     def _get_page_from_form(self, request, product):
         """
         """
-        products_candidates = self._get_products_candidates(product)
+        products_candidates = self._get_session_prods(product)
         page_object = self._paginate(request, products_candidates)
-        self._add_variables_to_session(
-            request,
-            product.id,
-            self._get_session_prods_ids(products_candidates))
         return page_object
     
-    def _get_products_candidates(self, product):
+    def _get_session_prods(self, product):
         """
         """
         return (
@@ -93,10 +74,13 @@ class SupersubManager():
         return session_prods_ids
 
     def _add_variables_to_session(
-            self, request, session_prod_id, session_prods_ids):
+            self, request, matching_product):
         """
         """
-        request.session['session_prod_id'] = session_prod_id
+        session_prod = matching_product
+        session_prods = self._get_session_prods(session_prod)
+        session_prods_ids = self._get_session_prods_ids(session_prods)
+        request.session['session_prod_id'] = session_prod.id
         request.session['session_prods_ids'] = session_prods_ids
 
     def _paginate(self, request, objects_list):
