@@ -45,7 +45,7 @@
                                     <p>{{ paginator.nutriscore_grade }}</p>
                                 </div>
                                 {% if user.is_authenticated %}
-                                    <a href="{% url 'supersub:register_favorite' id_product=paginator.id id_user=user.id %}" class="ele_dark_href">
+                                    <a href="{% url 'supersub:register_favorite' id_product=paginator.id%}" class="ele_dark_href">
                                         <p class="mb-0">
                                             <span>
                                                 <i class="fas fa-save"></i>
