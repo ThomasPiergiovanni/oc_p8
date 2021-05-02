@@ -45,7 +45,7 @@
                             {% endfor %}
                         </form> -->
 
-                                                    <form action="{% url 'supersub:results'%}" method="get" class="d-flex pl-4 pr-4" novalidate>
+                                                    <form action="{% url 'supersub:results'%}" method="post" class="d-flex pl-4 pr-4" novalidate>
                                                         <!-- <input type="text" id="question" class="form-control mybox" value="Chercher" aria-label="Search" required> -->
                                                         {% csrf_token %}
                                                     

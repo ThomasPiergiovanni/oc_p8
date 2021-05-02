@@ -8,17 +8,14 @@ from supersub.forms import MainSearchForm, NavbarSearchForm
 class SupersubManager():
     """
     """
-    def _get_context_from_session_variables(
-            self, request, session_prod_id, session_prods_ids):
+    def _get_page_from_session_variables(
+            self, request, session_prods_ids):
         """
         """
         products_candidates = (
             self._get_results_products(session_prods_ids))
-        context = {
-            'searched_product': self._get_product(session_prod_id),
-            'page_object' : self._paginate(request, products_candidates)
-        }
-        return context
+        page_object  = self._paginate(request, products_candidates)
+        return page_object
     
     def _get_results_products(self, session_prods_ids):
         """
@@ -32,37 +29,52 @@ class SupersubManager():
         """
         """
         return Product.objects.get(pk=id_product)
+
+    def _get_data(self):
+        """
+        """
+        context = self._get_context()
+        data = {
+            "context": context,
+            "render":"",
+            "redirect":""
+        }
+        return data
     
-    def _get_forms(self, request):
+    def _get_context(self):
         """
         """
-        main_form = MainSearchForm(request.GET)
-        nav_form = NavbarSearchForm(request.GET)
+        context = {
+            "searched_product":"",
+            "page_object":"",
+            "main_form":"",
+            "navbar_form":""
+        }
+        return context
+    
+    def _get_form_value(self, request):
+        """
+        """
+        main_form = MainSearchForm(request.POST)
+        nav_form = NavbarSearchForm(request.POST)
         if main_form:
             return main_form
         elif nav_form:
             return nav_form
+        else:
+            return None
 
-    
-    def _get_searched_string(self,request):
-        """
-        """
-        return request.GET.get('product', None)
   
-    def _get_context_from_form(self, request, matching_products):
+    def _get_page_from_form(self, request, product):
         """
         """
-        product = matching_products[0]
         products_candidates = self._get_products_candidates(product)
-        session_prods_ids = (
-            self._get_session_prods_ids(products_candidates))
+        page_object = self._paginate(request, products_candidates)
         self._add_variables_to_session(
-            request, product.id, session_prods_ids)
-        context = {
-            'searched_product': product,
-            'page_object' : self._paginate(request, products_candidates)
-        }
-        return context
+            request,
+            product.id,
+            self._get_session_prods_ids(products_candidates))
+        return page_object
     
     def _get_products_candidates(self, product):
         """
