@@ -1,8 +1,9 @@
 """ DB manager module
 """
 
-from supersub.off_api_manager import OffApiManager
-from supersub.models import Category, Product
+from off_api_manager import OffApiManager
+from supersub.models import Category, Product, Favorites
+from authentication.models import CustomUser
 
 
 class DbManager():
@@ -12,13 +13,21 @@ class DbManager():
         self.selected_categories = ["en:snacks", "en:desserts", "en:breads",
                 "en:breakfast-cereals", "en:meals"]
         self.categories_in_db = []
+        self.products_in_db = []
+        self.set_database()
+    
+    def set_database(self):
+        """
+        """
         self.drop_categories()
         self.get_categories()
         self.insert_categories()
-        self.products_in_db = []
         self.drop_products()
         self.get_products()
         self.insert_products()
+        self.drop_favorites()
+        self.drop_users()
+
     
     def drop_categories(self):
         """
@@ -115,3 +124,15 @@ class DbManager():
                                 product.save()
                     except KeyError as error:
                         print("Product key error: ", error)
+        
+    def drop_favorites(self):
+        """
+        """
+        all_favorites = Favorites.objects.all()
+        all_favorites.delete()
+    
+    def drop_users(self):
+        """
+        """
+        all_users = CustomUser.objects.all()
+        all_users.delete()
