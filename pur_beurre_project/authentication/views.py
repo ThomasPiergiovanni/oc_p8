@@ -26,11 +26,34 @@ class AccountView(View):
             }
             return render(request, 'authentication/account.html', context)    
 
+class SignUpView(View):
+    """
+    """
 
-def sign_up(request):
-    """
-    """
-    if request.method == 'POST':
+    def get(self, request):
+        """
+        """
+        # if request.method == 'POST':
+        #     form = SignUpForm(request.POST)
+        #     if form.is_valid():
+        #         user = CustomUser.objects.create_user(
+        #             email=form.cleaned_data['email'],
+        #             password=form.cleaned_data['password1'],
+        #             first_name=form.cleaned_data['first_name'])
+        #         return HttpResponseRedirect(reverse('authentication:sign_in'))
+        #     else:
+        #         context = {
+        #             'form' : form
+        #         }
+        #         return render(request, 'authentication/sign_up.html', context)   
+        # else:
+        form = SignUpForm()
+        context = {
+            'form' : form
+        }
+        return render(request, 'authentication/sign_up.html', context)
+
+    def post(self, request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = CustomUser.objects.create_user(
@@ -43,12 +66,6 @@ def sign_up(request):
                 'form' : form
             }
             return render(request, 'authentication/sign_up.html', context)   
-    else:
-        form = SignUpForm()
-        context = {
-            'form' : form
-        }
-        return render(request, 'authentication/sign_up.html', context) 
 
 
 def sign_in(request):
