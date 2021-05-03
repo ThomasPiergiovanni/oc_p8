@@ -1,7 +1,9 @@
 from django.urls import path
 
-from . import views
-from .views import AccountView, SignUpView, SignInView, SignOutView
+from .views.account_view import AccountView
+from .views.sign_up_view import SignUpView
+from .views.sign_in_view import SignInView
+from .views.sign_out_view import SignOutView
 
 app_name = 'authentication'
 
