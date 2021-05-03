@@ -1,7 +1,7 @@
 """ DB manager module
 """
 
-from off_api_manager import OffApiManager
+from supersub.manager.off_api_manager import OffApiManager
 from supersub.models import Category, Product, Favorites
 from authentication.models import CustomUser
 
