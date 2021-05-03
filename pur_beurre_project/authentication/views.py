@@ -33,20 +33,6 @@ class SignUpView(View):
     def get(self, request):
         """
         """
-        # if request.method == 'POST':
-        #     form = SignUpForm(request.POST)
-        #     if form.is_valid():
-        #         user = CustomUser.objects.create_user(
-        #             email=form.cleaned_data['email'],
-        #             password=form.cleaned_data['password1'],
-        #             first_name=form.cleaned_data['first_name'])
-        #         return HttpResponseRedirect(reverse('authentication:sign_in'))
-        #     else:
-        #         context = {
-        #             'form' : form
-        #         }
-        #         return render(request, 'authentication/sign_up.html', context)   
-        # else:
         form = SignUpForm()
         context = {
             'form' : form
@@ -68,11 +54,22 @@ class SignUpView(View):
             return render(request, 'authentication/sign_up.html', context)   
 
 
-def sign_in(request):
+class SignInView(View):
     """
     """
-    logout(request)
-    if request.method == 'POST':
+    def get(self, request):
+        """
+        """
+        form = SignInForm()
+        context = {
+            'form' : form
+        }
+        return render(request, 'authentication/sign_in.html', context)
+    
+    def post(self, request):
+        """
+        """
+        logout(request)
         form = SignInForm(data=request.POST)
         if form.is_valid():
             email = form.cleaned_data['username']
@@ -86,12 +83,31 @@ def sign_in(request):
                 'form' : form
             }
             return render(request, 'authentication/sign_in.html', context)
-    else:
-        form = SignInForm()
-        context = {
-            'form' : form
-        }
-        return render(request, 'authentication/sign_in.html', context)
+
+# def sign_in(request):
+#     """
+#     """
+#     logout(request)
+#     if request.method == 'POST':
+#         form = SignInForm(data=request.POST)
+#         if form.is_valid():
+#             email = form.cleaned_data['username']
+#             password = form.cleaned_data['password']
+#             user = authenticate(email=email, password=password)
+#             if user is not None:
+#                 login(request, user)
+#                 return redirect('supersub:index')
+#         else:
+#             context = {
+#                 'form' : form
+#             }
+#             return render(request, 'authentication/sign_in.html', context)
+#     else:
+#         form = SignInForm()
+#         context = {
+#             'form' : form
+#         }
+#         return render(request, 'authentication/sign_in.html', context)
 
 def sign_out(request):
     logout(request)
