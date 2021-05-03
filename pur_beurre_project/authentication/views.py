@@ -7,6 +7,9 @@ from django.views import View
 from authentication.models import CustomUser
 from authentication.forms import SignUpForm, SignInForm
 
+from supersub.manager.supersub_manager import SupersubManager
+from supersub.forms import NavbarSearchForm
+
 
 
 # Create your views here.
@@ -15,29 +18,42 @@ from authentication.forms import SignUpForm, SignInForm
 class AccountView(View):
     """
     """
+    def __init__(self):
+        """
+        """
+        self.data = SupersubManager()._get_data()
+        self.data['context']['navbar_form'] = NavbarSearchForm()
+        self.data['context']['user'] = ""
+        self.data['redirect'] = 'authentication:sign_in'
+        self.data['render'] = 'authentication/account.html'
+
     def get(self, request):
         """
         """
         if not request.user.is_authenticated:
-            return redirect('authentication:sign_in')
+            return redirect(self.data['redirect'])
         else:
-            context = {
-                'user':request.user
-            }
-            return render(request, 'authentication/account.html', context)    
+            self.data['context']['user'] = request.user
+            return render(request, self.data['render'], self.data['context'])    
 
 class SignUpView(View):
     """
     """
+    def __init__(self):
+        """
+        """
+        self.data = SupersubManager()._get_data()
+        self.data['context']['navbar_form'] = NavbarSearchForm()
+        self.data['context']['form'] = ""
+        self.data['redirect'] = 'authentication:sign_in'
+        self.data['render'] = 'authentication/sign_up.html'
 
     def get(self, request):
         """
         """
         form = SignUpForm()
-        context = {
-            'form' : form
-        }
-        return render(request, 'authentication/sign_up.html', context)
+        self.data['context']['form'] = form
+        return render(request, self.data['render'], self.data['context'])
 
     def post(self, request):
         form = SignUpForm(request.POST)
@@ -46,12 +62,10 @@ class SignUpView(View):
                 email=form.cleaned_data['email'],
                 password=form.cleaned_data['password1'],
                 first_name=form.cleaned_data['first_name'])
-            return HttpResponseRedirect(reverse('authentication:sign_in'))
+            return HttpResponseRedirect(reverse(self.data['redirect']))
         else:
-            context = {
-                'form' : form
-            }
-            return render(request, 'authentication/sign_up.html', context)   
+            self.data['context']['form'] = form
+            return render(request, self.data['render'], self.data['context'])   
 
 
 class SignInView(View):
