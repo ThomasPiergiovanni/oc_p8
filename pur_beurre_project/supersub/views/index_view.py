@@ -1,18 +1,17 @@
 from django.shortcuts import render
+
 from supersub.forms import MainSearchForm, NavbarSearchForm
 from supersub.manager.supersub_manager import SupersubManager
-from django.views import View
+from supersub.views.custom_view import CustomView
 
 
-class IndexView(View):
+class IndexView(CustomView):
     """
     """
     def __init__(self):
         """
         """
-        self.data = SupersubManager()._get_data()
-        self.data['context']['main_form'] = MainSearchForm()
-        self.data['context']['navbar_form'] = NavbarSearchForm()
+        super().__init__()
         self.data['render'] = 'supersub/index.html'
 
     def get(self,request):

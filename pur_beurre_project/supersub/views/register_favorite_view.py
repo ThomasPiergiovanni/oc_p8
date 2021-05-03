@@ -1,15 +1,21 @@
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views import View
 
 from supersub.models import Favorites
 from supersub.manager.supersub_manager import SupersubManager
+from supersub.views.custom_view import CustomView
 
 
-class RegisterFavoriteView(View):
+class RegisterFavoriteView(CustomView):
     """
     """
+    def __init__(self):
+        """
+        """
+        super().__init__()
+        self.data['redirect'] = 'supersub:product_detail'
+
     def get(self, request, id_product):
         """
         """
@@ -24,4 +30,4 @@ class RegisterFavoriteView(View):
                 request,
                 messages.SUCCESS,"Produit enregistré!")
         return HttpResponseRedirect(
-            reverse('supersub:product_detail', args=[id_product]))
+            reverse(self.data['redirect'], args=[id_product]))

@@ -2,20 +2,18 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.views import View
 
 from supersub.models import Favorites
-from supersub.forms import NavbarSearchForm
 from supersub.manager.supersub_manager import SupersubManager
+from supersub.views.custom_view import CustomView
 
-class FavoritesView(View):
+class FavoritesView(CustomView):
     """
     """
     def __init__(self):
         """
         """
-        self.data = SupersubManager()._get_data()
-        self.data['context']['navbar_form'] = NavbarSearchForm()
+        super().__init__()
         self.data['render'] = 'supersub/favorites.html'
         self.data['redirect'] = 'supersub:index'
 

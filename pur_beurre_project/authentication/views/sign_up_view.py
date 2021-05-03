@@ -5,7 +5,6 @@ from django.views import View
 
 from authentication.models import CustomUser
 from authentication.forms import SignUpForm
-
 from supersub.manager.supersub_manager import SupersubManager
 from supersub.forms import NavbarSearchForm
 

@@ -1,18 +1,17 @@
-from django.views import View
 from django.shortcuts import render
 
 from supersub.forms import NavbarSearchForm
 from supersub.manager.supersub_manager import SupersubManager
+from supersub.views.custom_view import CustomView
 
 
-class LegalMentionsView(View):
+class LegalMentionsView(CustomView):
     """
     """
     def __init__(self):
         """
         """
-        self.data = SupersubManager()._get_data()
-        self.data['context']['navbar_form'] = NavbarSearchForm()
+        super().__init__()
         self.data['render'] = 'supersub/legal_mentions.html'
 
     def get(self,request):

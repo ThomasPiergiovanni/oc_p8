@@ -3,7 +3,6 @@ from django.shortcuts import render, redirect
 from django.views import View
 
 from authentication.forms import SignInForm
-
 from supersub.manager.supersub_manager import SupersubManager
 from supersub.forms import NavbarSearchForm
 
