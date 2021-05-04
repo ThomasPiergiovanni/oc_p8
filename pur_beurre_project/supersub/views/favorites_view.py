@@ -4,7 +4,6 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from supersub.models import Favorites
-from supersub.manager.supersub_manager import SupersubManager
 from supersub.views.custom_view import CustomView
 
 class FavoritesView(CustomView):
@@ -24,10 +23,10 @@ class FavoritesView(CustomView):
                 .filter(custom_user_id__exact=request.user.id)
                 .select_related('product').order_by('id'))
             if favorites:
-                self.data['context']['page_object'] = (
-                    SupersubManager()._paginate(request, favorites))
+                self.data['ctxt']['page_obj'] = (
+                    self.manager._paginate(request, favorites))
                 return render(
-                    request, self.data['render'], self.data['context'])
+                    request, self.data['render'], self.data['ctxt'])
             else:
                 messages.add_message(
                     request,

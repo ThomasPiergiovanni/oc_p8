@@ -9,11 +9,14 @@ class CustomView(View):
     def __init__(self):
         """
         """
+        self.manager = SupersubManager()
         self.data = SupersubManager()._get_data()
-        self.data['context']['main_form'] = MainSearchForm()
-        self.data['context']['navbar_form'] = NavbarSearchForm()
-        self.data['context']['searched_product'] = ''
-        self.data['context']['product'] = ''
-        self.data['context']['page_object'] = ''
+        self.data['ctxt']['main_form'] = MainSearchForm()
+        self.data['ctxt']['navbar_form'] = NavbarSearchForm()
+        self.data['ctxt']['searched_prod'] = ''
+        self.data['ctxt']['prod'] = ''
+        self.data['ctxt']['page_obj'] = ''
+        self.data['ctxt']['user'] = ""
+        self.data['ctxt']['form'] = ''
         self.data['render'] = ''
         self.data['redirect'] = ''

@@ -1,13 +1,20 @@
 from django.contrib.auth import logout
 from django.shortcuts import redirect
-from django.views import View
+
+from supersub.views.custom_view import CustomView
 
 
-class SignOutView(View):
+class SignOutView(CustomView):
     """
     """
+    def __init__(self):
+        """
+        """
+        super().__init__()
+        self.data['redirect'] = 'supersub:index'
+
     def get(self, request):
         """
         """
         logout(request)
-        return redirect('supersub:index') 
+        return redirect(self.data['redirect']) 

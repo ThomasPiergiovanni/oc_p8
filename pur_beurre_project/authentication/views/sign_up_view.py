@@ -1,26 +1,20 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from django.views import View
 
-from authentication.models import CustomUser
 from authentication.forms import SignUpForm
-from supersub.manager.supersub_manager import SupersubManager
+from authentication.models import CustomUser
 from supersub.forms import NavbarSearchForm
+from supersub.views.custom_view import CustomView
 
 
-# Create your views here.
-
-
-class SignUpView(View):
+class SignUpView(CustomView):
     """
     """
     def __init__(self):
         """
         """
-        self.data = SupersubManager()._get_data()
-        self.data['context']['navbar_form'] = NavbarSearchForm()
-        self.data['context']['form'] = ""
+        super().__init__()
         self.data['redirect'] = 'authentication:sign_in'
         self.data['render'] = 'authentication/sign_up.html'
 
@@ -28,8 +22,8 @@ class SignUpView(View):
         """
         """
         form = SignUpForm()
-        self.data['context']['form'] = form
-        return render(request, self.data['render'], self.data['context'])
+        self.data['ctxt']['form'] = form
+        return render(request, self.data['render'], self.data['ctxt'])
 
     def post(self, request):
         form = SignUpForm(request.POST)
@@ -40,5 +34,5 @@ class SignUpView(View):
                 first_name=form.cleaned_data['first_name'])
             return HttpResponseRedirect(reverse(self.data['redirect']))
         else:
-            self.data['context']['form'] = form
-            return render(request, self.data['render'], self.data['context'])   
+            self.data['ctxt']['form'] = form
+            return render(request, self.data['render'], self.data['ctxt'])   

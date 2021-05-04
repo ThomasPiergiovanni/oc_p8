@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
 from supersub.forms import MainSearchForm, NavbarSearchForm
-from supersub.manager.supersub_manager import SupersubManager
 from supersub.views.custom_view import CustomView
 
 
@@ -17,5 +16,5 @@ class IndexView(CustomView):
     def get(self,request):
         """
         """
-        SupersubManager()._delete_session_variables(request)
-        return render(request, self.data['render'], self.data['context'])
+        self.manager._delete_session_vars(request)
+        return render(request, self.data['render'], self.data['ctxt'])

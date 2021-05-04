@@ -18,10 +18,10 @@
         <section class="page-section bg-white" id="services">
             <div class="container">
                 <div class="row">
-                    {% for paginator in page_object %}
+                    {% for paginator in page_obj %}
                         <div class="col-lg-4 col-sm-6 text-center">
                             <div class="m-4 results-image">
-                                <a href="{% url 'supersub:product_detail' id_product=paginator.product.id %}" class="ele_dark_href">
+                                <a href="{% url 'supersub:product_detail' id_prod=paginator.product.id %}" class="ele_dark_href">
                                     <img style="max-height: 80px;" src=" {{ paginator.product.image }} " alt="" />
                                     <p class="h5 m-1"> {{ paginator.product.name }} </p>
                                 </a>

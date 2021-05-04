@@ -5,7 +5,6 @@ from django.urls import reverse
 
 from supersub.models import Product
 from supersub.forms import NavbarSearchForm
-from supersub.manager.supersub_manager import SupersubManager
 from supersub.views.custom_view import CustomView
 
 
@@ -22,34 +21,29 @@ class ResultView(CustomView):
     def get(self, request):
         """
         """
-        session_prod_id, session_prods_ids = (
-            SupersubManager()._get_session_variables(request))
-        self.data['context']['searched_product'] = (
-            SupersubManager()._get_product(session_prod_id))
-        self.data['context']["page_object"] = (
-            SupersubManager()
-            ._get_page_from_session_variables(request, session_prods_ids))
-        return render(request, self.data['render'], self.data['context'])
+        prod_id, prods_ids = self.manager._get_session_vars(request)
+        self.data['ctxt']['searched_prod'] = self.manager._get_product(prod_id)
+        self.data['ctxt']["page_obj"] = (
+            self.manager._get_page_from_session_vars(request, prods_ids))
+        return render(request, self.data['render'], self.data['ctxt'])
 
 
     def post(self, request):
         """
         """
-        form = SupersubManager()._get_form_value(request)
+        form = self.manager._get_form_value(request)
         if form.is_valid():
-            matching_products = (
+            match_prods = (
                 Product.objects.filter(
-                name__contains=form.cleaned_data['searched_string'])[:1])
-            if matching_products:
-                self.data['context']['searched_product'] = (
-                    matching_products[0])
-                self.data['context']["page_object"] = (
-                    SupersubManager()
-                    ._get_page_from_form(request, matching_products[0]))
-                SupersubManager()._add_variables_to_session(
-                    request, matching_products[0])
+                name__contains=form.cleaned_data['product'])[:1])
+            if match_prods:
+                self.data['ctxt']['searched_prod'] = match_prods[0]
+                self.data['ctxt']["page_obj"] = (
+                    self.manager._get_page_from_form(request, match_prods[0]))
+                self.manager._add_vars_to_session(request, match_prods[0])
+                self.data['ctxt']['user'] = request.user
                 return render(
-                    request, self.data['render'], self.data['context'])
+                    request, self.data['render'], self.data['ctxt'])
             else:
                 messages.add_message(
                     request,

@@ -4,7 +4,7 @@ from django import forms
 class MainSearchForm(forms.Form):
     """
     """
-    searched_string = forms.CharField(
+    product = forms.CharField(
         label=None,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
@@ -13,7 +13,7 @@ class MainSearchForm(forms.Form):
 class NavbarSearchForm(forms.Form):
     """
     """
-    searched_string = forms.CharField(
+    product = forms.CharField(
         label=None,
         widget=forms.TextInput(attrs={
             'class': 'form-control mybox'}))
