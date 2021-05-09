@@ -6,7 +6,7 @@ class NewVisitorTest(TestCase):
     """
     """
     def setUp(self):
-        # self.browser = webdriver.Edge('C:\Program Files\EdgeDriver\msedgedriver.exe')
+        self.browser = webdriver.Edge('C:\Program Files\EdgeDriver\msedgedriver.exe')
         self.browser = webdriver.Edge()
     
     def tearDown(self):

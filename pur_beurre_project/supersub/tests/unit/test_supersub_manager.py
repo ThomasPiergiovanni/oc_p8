@@ -45,7 +45,10 @@ class SupersubManagerTest(TestCase):
         data = SupersubManager()._get_data()
         self.assertEqual(data, self.data)
 
-
+    def test__get_from_session_vars(self):
+        """
+        """
+        pass
     
     def test__get_results_prods(self):
         """
@@ -76,3 +79,6 @@ class SupersubManagerTest(TestCase):
         """
         product = SupersubManager()._get_product(self.prod_one.id)
         self.assertEqual(product, self.prod_one)
+    
+    def test__paginate(self):
+        pass
