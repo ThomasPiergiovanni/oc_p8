@@ -90,10 +90,13 @@ class SupersubManagerTest(TestCase):
         data = SupersubManager()._get_data()
         self.assertEqual(data, self.data)
 
-    def test__get_from_session_vars(self):
+    def test__get_page_from_session_vars(self):
         """
         """
-        pass
+        page = SupersubManager()._get_page_from_session_vars(
+            self.request, self.prods_ids)
+        prod_name = self.get_page_product_name_for_product_id_equal_1(page)
+        self.assertEqual(prod_name, 'Product_for_test')
     
     def test__get_results_prods(self):
         """
@@ -105,11 +108,11 @@ class SupersubManagerTest(TestCase):
         page_test = self.paginator.get_page(1)
         page = SupersubManager()._get_page(self.request, self.prods_list)
         self.assertEqual(
-            self._get_page_product_name_for_product_id_equal_1(page),
-            self._get_page_product_name_for_product_id_equal_1(page_test))
-        self.assertEqual(page.number, page_test.number)
+            self.get_page_product_name_for_product_id_equal_1(page),
+            'Product_for_test')
+
     
-    def _get_page_product_name_for_product_id_equal_1(self, page):
+    def get_page_product_name_for_product_id_equal_1(self, page):
         for product in page:
             if product.id == 1:
                 return product.name   
