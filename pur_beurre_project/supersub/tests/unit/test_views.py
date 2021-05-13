@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.urls import reverse
 
 from supersub.forms import MainSearchForm, NavbarSearchForm
+from supersub.models import Category, Product
 
 
 
@@ -31,8 +32,29 @@ class IndexViewTest(TestCase):
 class ResultViewTest(TestCase):
     """
     """
-    def test_index_form_POST_request(self):
+    @classmethod
+    def setUpTestData(cls):
+        Category.objects.create(
+            id=1,
+            name="CategorieOne",
+            url="www.categorie_test.com")
+        Product.objects.create(
+            id_origin = 'fevfvf',
+            name = 'Product_for_test',
+            nutriscore_grade = 'A',
+            fat = 4.56,
+            saturated_fat = 5.56,
+            sugar=6.56,
+            salt=7.56,
+            image='www.imageurlbidon.com',
+            url='www.urlbidon.com',
+            categories='cat1, cat2, cat3',
+            category_id=1
+        )
+
+    def test_index_page_POST_request(self):
         pass
-        # response = self.client.post('/supersub/results',{'product': 'Bur'})
-        # self.assertEqual(response.status_code, 200)
+        response = self.client.post('/supersub/results/',data={'product':'Product_for_test'})
+        self.assertEqual(response.status_code,200)
+
 
