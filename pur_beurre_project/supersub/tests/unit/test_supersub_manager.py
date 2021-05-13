@@ -10,8 +10,23 @@ class SupersubManagerTest(TestCase):
     """
     @classmethod
     def setUpTestData(cls):
+        cls.emulate_data()
         cls.emulate_category()
         cls.emulate_product()
+        cls.prod1 = Product.objects.get(pk=1)
+        cls.prod2 = Product.objects.get(pk=2)
+        cls.prods_list = cls.emulate_prods_list(cls.prod1, cls.prod2)
+        cls.prods_ids = cls.emulate_prods_ids_list(cls.prod1, cls.prod2)
+        cls.request = RequestFactory().get('', data={'page':1})
+        cls.paginator = Paginator(cls.prods_list, 6)
+    
+    @classmethod
+    def emulate_data(cls):
+        cls.data = {
+            'ctxt': {},
+            'render':"",
+            'redirect':""
+        }
 
     @classmethod
     def emulate_category(cls):
@@ -50,55 +65,18 @@ class SupersubManagerTest(TestCase):
             categories='cat1, cat2, cat3',
             category_id=1
         )
-
-    def setUp(self):
-        self.data = self.emulate_data()
-        # self.category = self.emulate_category("CatOne")
-        # self.prod_one = self.emulate_product("ProdOne", self.category)
-        # self.prod_two = self.emulate_product("ProdTwo", self.category)
-        product = Product.objects.get(pk=1)
-        product2 = Product.objects.get(pk=2)
-        self.prods_list = self.emulate_prods_list(
-            product, product2)
-        # self.prods_ids = self.emulate_prods_ids_list(
-        #     self.prod_one, self.prod_two)
-        self.prods_ids = self.emulate_prods_ids_list(product,product2)
-        self.factory = RequestFactory()
     
-    def emulate_data(self):
-        data = {
-            'ctxt': {},
-            'render':"",
-            'redirect':""
-        }
-        return data
-
-    # def emulate_category(self, name):
-    #     category = Category.objects.create(
-    #         name=name,
-    #         url="www.categorie_test.com")
-    #     return category
-
-    # def emulate_product(self, name, category):
-    #     product = Product.objects.create(
-    #         name=name,
-    #         fat=110.56,
-    #         saturated_fat=25.12,
-    #         sugar=5.456,
-    #         salt=2,
-    #         category=category
-    #     )
-    #     return product
-
-    def emulate_prods_list(self, prod_one, prod_two):
+    @classmethod
+    def emulate_prods_list(cls, prod_one, prod_two):
         """
         """
         prods = []
         prods.append(prod_one)
         prods.append(prod_two)
         return prods
-
-    def emulate_prods_ids_list(self, prod_one, prod_two):
+    
+    @classmethod
+    def emulate_prods_ids_list(cls, prod_one, prod_two):
         """
         """
         prods_ids =[]
@@ -124,13 +102,12 @@ class SupersubManagerTest(TestCase):
         self.assertEqual(products, self.prods_list)
         
     def test__get_page_with_page_num_one(self):
-        request_test = self.factory.get('', data={'page':1})
-        paginator_test = Paginator(self.prods_list, 6)
-        page_test = paginator_test.get_page(1)
-        page = SupersubManager()._get_page(request_test, self.prods_list)
+        page_test = self.paginator.get_page(1)
+        page = SupersubManager()._get_page(self.request, self.prods_list)
         self.assertEqual(
-            self._get_page_product_name(page),
-            self._get_page_product_name(page_test))
+            self._get_page_product_name_for_product_id_equal_1(page),
+            self._get_page_product_name_for_product_id_equal_1(page_test))
+        self.assertEqual(page.number, page_test.number)
     
     def _get_page_product_name_for_product_id_equal_1(self, page):
         for product in page:
@@ -138,16 +115,14 @@ class SupersubManagerTest(TestCase):
                 return product.name   
     
     def test__get_paginator_number_of_pages(self):
-        paginator_test = Paginator(self.prods_list, 6)
-        paginator =SupersubManager()._get_paginator(self.prods_list)
-        self.assertEqual(paginator.num_pages, paginator_test.num_pages)
+        paginator = SupersubManager()._get_paginator(self.prods_list)
+        self.assertEqual(paginator.num_pages, self.paginator.num_pages)
 
     def test__get_paginator_product_name_for_page_1_with_product_id_equal_1(self):
-        paginator_test = Paginator(self.prods_list, 6)
         paginator = SupersubManager()._get_paginator(self.prods_list)
         self.assertEqual(
-            self._get_product_name(paginator_test),
-            self._get_product_name(paginator))
+            self._get_product_name(paginator),
+            self._get_product_name(self.paginator))
 
     def _get_product_name(self, objects_list):
         for page in objects_list:
@@ -156,8 +131,7 @@ class SupersubManagerTest(TestCase):
                 return product.name
     
     def test__request_page_number_with_page_equal_one(self):
-        request_test = self.factory.get('', data={'page':1})
-        page_number = SupersubManager()._get_request_page_number(request_test)
+        page_number = SupersubManager()._get_request_page_number(self.request)
         self.assertEqual(page_number, '1')
 
     def test__get_product(self):
