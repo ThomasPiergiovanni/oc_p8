@@ -21,3 +21,7 @@ class FormsTest(TestCase):
         self.assertTrue(
             self.main_form.fields['product']
             .widget.attrs['autofocus'] is True)
+    
+    def test_form_validation_for_blank_product(self):
+        form = MainSearchForm(data={'product':''})
+        self.assertFalse(form.is_valid())
