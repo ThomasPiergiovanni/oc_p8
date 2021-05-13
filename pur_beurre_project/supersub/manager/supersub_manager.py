@@ -23,7 +23,7 @@ class SupersubManager():
         """
         """
         prods_candidates = self._get_results_prods(prods_ids)
-        page_obj = self._paginate(request, prods_candidates)
+        page_obj = self._get_page(request, prods_candidates)
         return page_obj
     
     def _get_results_prods(self, prods_ids):
@@ -53,7 +53,7 @@ class SupersubManager():
         """
         """
         prods_candidates = self._get_session_prods(product)
-        page_obj = self._paginate(request, prods_candidates)
+        page_obj = self._get_page(request, prods_candidates)
         return page_obj
     
     def _get_session_prods(self, product):
@@ -81,12 +81,18 @@ class SupersubManager():
         request.session['prod_id'] = match_prod.id
         request.session['prods_ids'] = prods_ids
 
-    def _paginate(self, request, objects_list):
+    def _get_page(self, request, objects_list):
         """
         """
-        paginator = Paginator(objects_list, 6)
-        page_number = request.GET.get ('page')
+        paginator = self._get_paginator(objects_list)
+        page_number = self._get_request_page_number(request)
         return paginator.get_page(page_number)
+    
+    def _get_paginator(self, objects_list):
+        return Paginator(objects_list, 6)
+    
+    def _get_request_page_number(self, request):
+        return request.GET.get ('page')
 
     
     def _delete_session_vars(self, request):
