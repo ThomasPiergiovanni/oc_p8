@@ -16,10 +16,11 @@ class SupersubManagerTest(TestCase):
         cls.emulate_product()
         cls.prod1 = Product.objects.get(pk=1)
         cls.prod2 = Product.objects.get(pk=2)
+        cls.prod3 = Product.objects.get(pk=3)
         cls.prods_list = cls.emulate_prods_list(cls.prod1, cls.prod2)
         cls.prods_ids = cls.emulate_prods_ids_list(cls.prod1, cls.prod2)
         cls.request_GET = RequestFactory().get('', data={'page':1})
-        cls.request_POST = RequestFactory().post('', data={'product':cls.prod1})
+        cls.request_POST = RequestFactory().post('', data={'page':1, 'product':cls.prod1.name})
         cls.paginator = Paginator(cls.prods_list, 6)
     
     @classmethod
@@ -57,12 +58,26 @@ class SupersubManagerTest(TestCase):
             id=2,
             id_origin = 'kmihnl',
             name = 'Product_for_test2',
-            nutriscore_grade = 'B',
+            nutriscore_grade = 'A',
             fat = 94.56,
             saturated_fat = 95.56,
             sugar=96.56,
             salt=97.56,
             image='www.imageurlbidon2.com',
+            url='www.urlbidon.com',
+            categories='cat1, cat2, cat3',
+            category_id=1
+        )
+        Product.objects.create(
+            id=3,
+            id_origin = 'zeregrt',
+            name = 'Product_for_test3',
+            nutriscore_grade = 'A',
+            fat = 94.56,
+            saturated_fat = 95.56,
+            sugar=96.56,
+            salt=97.56,
+            image='www.imageurlbidon3.com',
             url='www.urlbidon.com',
             categories='cat1, cat2, cat3',
             category_id=1
@@ -91,13 +106,7 @@ class SupersubManagerTest(TestCase):
     def test__get_page_from_session_vars_with_prod_name(self):
         page = SupersubManager()._get_page_from_session_vars(
             self.request_GET, self.prods_ids)
-        prod_name = self.get_page_product_name(page)
-        self.assertEqual(prod_name, 'Product_for_test')
-    
-    def get_page_product_name(self, page):
-        for product in page:
-            if product.id == 1:
-                return product.name
+        self.assertEqual(page[0].name, 'Product_for_test')
 
     def test__get_results_prods_with_prods_list(self):
         """
@@ -111,7 +120,7 @@ class SupersubManagerTest(TestCase):
     
     def test__get_page_with_prod_name(self):
         page = SupersubManager()._get_page(self.request_GET, self.prods_list)
-        self.assertEqual(self.get_page_product_name(page),'Product_for_test')
+        self.assertEqual(page[0].name,'Product_for_test')
     
     def test__get_paginator_with_num_pages(self):
         paginator = SupersubManager()._get_paginator(self.prods_list)
@@ -138,3 +147,14 @@ class SupersubManagerTest(TestCase):
         self.assertTrue(
             type(form),
             type(MainSearchForm()) or type(NavbarSearchForm()))
+    
+    def test__get_page_from_form_with_prod_name(self):
+        page = SupersubManager()._get_page_from_form(
+            self.request_POST, self.prod1)
+        self.assertEqual(page[0].name,'Product_for_test2')
+        self.assertEqual(page[1].name,'Product_for_test3')
+    
+    def test__get_session_prods_with_prod_id(self):
+        prods = SupersubManager()._get_session_prods(self.prod1)
+        self.assertEqual(prods[0].id, 2)
+        self.assertEqual(prods[1].id, 3)
