@@ -158,3 +158,7 @@ class SupersubManagerTest(TestCase):
         prods = SupersubManager()._get_session_prods(self.prod1)
         self.assertEqual(prods[0].id, 2)
         self.assertEqual(prods[1].id, 3)
+    
+    def test__get_session_prods_ids_with_prods_list(self):
+        prods_ids = SupersubManager()._get_session_prods_ids(self.prods_list)
+        self.assertEqual(prods_ids, self.prods_ids)
