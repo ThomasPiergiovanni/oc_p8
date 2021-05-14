@@ -61,11 +61,11 @@ class ResultViewTest(TestCase):
             category_id=1
         ) 
 
-    def test_index_page_POST_request_gives_response_200(self):
+    def test_index_page_POST_request_with_response_200(self):
         response = self.client.post('/supersub/results/',data={'product':'Product_for_test'})
         self.assertEqual(response.status_code,200)
     
-    def test_index_page_POST_request_gives_context_correct(self):
+    def test_index_page_POST_request_with_context_correct(self):
         response = self.client.post('/supersub/results/',data={'product':'Product_for_test'})
         product = Product.objects.get(pk=1)
         self.assertEqual(response.context['searched_prod'], product)

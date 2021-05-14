@@ -17,7 +17,8 @@ class SupersubManagerTest(TestCase):
         cls.prod2 = Product.objects.get(pk=2)
         cls.prods_list = cls.emulate_prods_list(cls.prod1, cls.prod2)
         cls.prods_ids = cls.emulate_prods_ids_list(cls.prod1, cls.prod2)
-        cls.request = RequestFactory().get('', data={'page':1})
+        cls.request_GET = RequestFactory().get('', data={'page':1})
+        cls.request_POST = RequestFactory().post('', data={'product':cls.prod1})
         cls.paginator = Paginator(cls.prods_list, 6)
     
     @classmethod
@@ -88,7 +89,7 @@ class SupersubManagerTest(TestCase):
 
     def test__get_page_from_session_vars_with_prod_name(self):
         page = SupersubManager()._get_page_from_session_vars(
-            self.request, self.prods_ids)
+            self.request_GET, self.prods_ids)
         prod_name = self.get_page_product_name(page)
         self.assertEqual(prod_name, 'Product_for_test')
     
@@ -108,34 +109,29 @@ class SupersubManagerTest(TestCase):
         self.assertEqual(product, self.prod1)
     
     def test__get_page_with_prod_name(self):
-        page = SupersubManager()._get_page(self.request, self.prods_list)
+        page = SupersubManager()._get_page(self.request_GET, self.prods_list)
         self.assertEqual(self.get_page_product_name(page),'Product_for_test')
     
-
-        
-
-    
-  
-    
-    def test__get_paginator_number_of_pages(self):
+    def test__get_paginator_with_num_pages(self):
         paginator = SupersubManager()._get_paginator(self.prods_list)
         self.assertEqual(paginator.num_pages, self.paginator.num_pages)
 
-    def test__get_paginator_product_name_for_page_1_with_product_id_equal_1(self):
+    def test__get_paginator_with_prod_name(self):
         paginator = SupersubManager()._get_paginator(self.prods_list)
         self.assertEqual(
-            self._get_product_name(paginator),
-            self._get_product_name(self.paginator))
+            self.get_paginator_product_name(paginator),
+            self.get_paginator_product_name(self.paginator))
 
-    def _get_product_name(self, objects_list):
-        for page in objects_list:
+    def get_paginator_product_name(self, paginator):
+        for page in paginator:
             if page.number == 1:
                 product = page.object_list[0]
                 return product.name
     
-    def test__request_page_number_with_page_equal_one(self):
-        page_number = SupersubManager()._get_request_page_number(self.request)
+    def test__request_page_number_with_page_number(self):
+        page_number = SupersubManager()._get_request_page_number(self.request_GET)
         self.assertEqual(page_number, '1')
-
-
     
+    def test__get_form_with_form(self):
+        form =  SupersubManager()._get_form_value(self.request_POST)
+        self.assertTrue(form)

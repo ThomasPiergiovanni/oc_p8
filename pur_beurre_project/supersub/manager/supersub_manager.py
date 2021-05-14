@@ -34,29 +34,24 @@ class SupersubManager():
             prods_candidates.append(self._get_product(prod_id))
         return prods_candidates
     
+    def _get_product(self, id_prod):
+        """
+        """
+        return Product.objects.get(pk=id_prod)
+    
     def _get_page(self, request, objects_list):
         """
         """
         paginator = self._get_paginator(objects_list)
         page_number = self._get_request_page_number(request)
         return paginator.get_page(page_number)
-
-    
-    def _get_product(self, id_prod):
-        """
-        """
-        return Product.objects.get(pk=id_prod)
    
     def _get_form_value(self, request):
         """
         """
-        main_form = MainSearchForm(request.POST)
-        nav_form = NavbarSearchForm(request.POST)
-        if main_form:
-            return main_form
-        elif nav_form:
-            return nav_form
-  
+        form = NavbarSearchForm(request.POST)
+        form = MainSearchForm(request.POST)
+        return form
     def _get_page_from_form(self, request, product):
         """
         """
