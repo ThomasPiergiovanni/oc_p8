@@ -169,3 +169,10 @@ class SupersubManagerTest(TestCase):
         self.assertEqual(self.request_POST.session['prod_id'], 1)
         self.assertEqual(self.request_POST.session['prods_ids'], [2, 3])
     
+    def test__delete_session_vars(self):
+        setattr(self.request_GET, 'session', {'prod_id':'1', 'prods_ids':'[2, 3]'})
+        SupersubManager()._delete_session_vars(self.request_GET)
+        self.assertEqual(self.request_GET.session.get('prod_id',None), None)
+        self.assertEqual(self.request_GET.session.get('prods_ids', None), None)
+
+    
