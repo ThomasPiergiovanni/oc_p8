@@ -2,6 +2,7 @@ from django.core.paginator import Paginator
 from django.test import TestCase, RequestFactory
 from supersub.manager.supersub_manager import SupersubManager
 from supersub.models import Category, Product
+from supersub.forms import MainSearchForm, NavbarSearchForm
 
 # Create your tests here.
 
@@ -133,5 +134,7 @@ class SupersubManagerTest(TestCase):
         self.assertEqual(page_number, '1')
     
     def test__get_form_with_form(self):
-        form =  SupersubManager()._get_form_value(self.request_POST)
-        self.assertTrue(form)
+        form =  SupersubManager()._get_form(self.request_POST)
+        self.assertTrue(
+            type(form),
+            type(MainSearchForm()) or type(NavbarSearchForm()))

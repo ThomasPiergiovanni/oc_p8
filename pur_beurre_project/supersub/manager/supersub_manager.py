@@ -46,12 +46,13 @@ class SupersubManager():
         page_number = self._get_request_page_number(request)
         return paginator.get_page(page_number)
    
-    def _get_form_value(self, request):
+    def _get_form(self, request):
         """
         """
         form = NavbarSearchForm(request.POST)
         form = MainSearchForm(request.POST)
         return form
+
     def _get_page_from_form(self, request, product):
         """
         """

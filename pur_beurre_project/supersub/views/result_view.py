@@ -31,7 +31,7 @@ class ResultView(CustomView):
     def post(self, request):
         """
         """
-        form = self.manager._get_form_value(request)
+        form = self.manager._get_form(request)
         if form.is_valid():
             match_prods = (
                 Product.objects.filter(
