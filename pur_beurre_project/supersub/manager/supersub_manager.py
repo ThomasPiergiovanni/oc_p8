@@ -34,6 +34,14 @@ class SupersubManager():
             prods_candidates.append(self._get_product(prod_id))
         return prods_candidates
     
+    def _get_page(self, request, objects_list):
+        """
+        """
+        paginator = self._get_paginator(objects_list)
+        page_number = self._get_request_page_number(request)
+        return paginator.get_page(page_number)
+
+    
     def _get_product(self, id_prod):
         """
         """
@@ -81,12 +89,7 @@ class SupersubManager():
         request.session['prod_id'] = match_prod.id
         request.session['prods_ids'] = prods_ids
 
-    def _get_page(self, request, objects_list):
-        """
-        """
-        paginator = self._get_paginator(objects_list)
-        page_number = self._get_request_page_number(request)
-        return paginator.get_page(page_number)
+
     
     def _get_paginator(self, objects_list):
         return Paginator(objects_list, 6)
