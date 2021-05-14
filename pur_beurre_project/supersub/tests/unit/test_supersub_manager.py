@@ -162,3 +162,10 @@ class SupersubManagerTest(TestCase):
     def test__get_session_prods_ids_with_prods_list(self):
         prods_ids = SupersubManager()._get_session_prods_ids(self.prods_list)
         self.assertEqual(prods_ids, self.prods_ids)
+    
+    def test__add_vars_to_session_with_prod_id_and_prods_ids(self):
+        setattr(self.request_POST, 'session', {'prod_id':'', 'prods_ids':''})
+        SupersubManager()._add_vars_to_session(self.request_POST, self.prod1)
+        self.assertEqual(self.request_POST.session['prod_id'], 1)
+        self.assertEqual(self.request_POST.session['prods_ids'], [2, 3])
+    
