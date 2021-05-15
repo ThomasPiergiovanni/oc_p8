@@ -201,7 +201,11 @@ class SupersubManagerTest(TestCase):
         self.assertEqual(prod_id, 1)
         self.assertEqual(prods_ids, [2, 3])
     
-    def test__get_favorite(self):
+    def test__get_favorite_with_class_type_is_true(self):
         favorites = SupersubManager()._get_favorite(1, 1)
-        self.assertTrue(type(favorites), type(Favorites()))
+        self.assertTrue(favorites, type(Favorites()))
+    
+    def test__get_favorite_with_class_type_is_none(self):
+        favorites = SupersubManager()._get_favorite(1, 2)
+        self.assertFalse(favorites, type(Favorites()))
     
