@@ -1,7 +1,9 @@
 from django.core.paginator import Paginator
 from django.test import TestCase, RequestFactory
+
+from authentication.models import CustomUser
 from supersub.manager.supersub_manager import SupersubManager
-from supersub.models import Category, Product
+from supersub.models import Category, Product, Favorites
 from supersub.forms import MainSearchForm, NavbarSearchForm
 
 # Create your tests here.
@@ -22,6 +24,9 @@ class SupersubManagerTest(TestCase):
         cls.request_GET = RequestFactory().get('', data={'page':1})
         cls.request_POST = RequestFactory().post('', data={'page':1, 'product':cls.prod1.name})
         cls.paginator = Paginator(cls.prods_list, 6)
+        cls.emulate_favorites()
+        cls.emulate_custom_user()
+        cls.custom_user = CustomUser.objects.get(pk=1)
     
     @classmethod
     def emulate_data(cls):
@@ -98,6 +103,18 @@ class SupersubManagerTest(TestCase):
         prods_ids.append(prod_one.id)
         prods_ids.append(prod_two.id)
         return prods_ids
+       
+    @classmethod
+    def emulate_custom_user(cls):
+        custom_user = CustomUser.objects.create_user(
+                id=1,
+                email='testuser@email.com',
+                password='_Xxxxxxx',
+                first_name='tester')
+    
+    @classmethod
+    def emulate_favorites(cls):
+        Favorites.objects.create(product_id=1, custom_user_id=1)
 
     def test__get_data(self):
         data = SupersubManager()._get_data()
@@ -109,8 +126,6 @@ class SupersubManagerTest(TestCase):
         self.assertEqual(page[0].name, 'Product_for_test')
 
     def test__get_results_prods_with_prods_list(self):
-        """
-        """
         products = SupersubManager()._get_results_prods(self.prods_ids)
         self.assertEqual(products, self.prods_list)
     
@@ -178,11 +193,15 @@ class SupersubManagerTest(TestCase):
         self.assertEqual(
             self.request_GET.session.get('prods_ids', None), None)
     
-    def test__get_session_vars(self):
-        setattr(self.request_GET, 'session', {
-            'prod_id':1, 'prods_ids':[2, 3]})
+    def test__get_session_vars_with_prod_id_and_prods_ids(self):
+        setattr(
+            self.request_GET, 'session', {'prod_id': 1,'prods_ids': [2, 3]})
         prod_id, prods_ids = (
             SupersubManager()._get_session_vars(self.request_GET))
         self.assertEqual(prod_id, 1)
         self.assertEqual(prods_ids, [2, 3])
+    
+    def test__get_favorite(self):
+        favorites = SupersubManager()._get_favorite(1, 1)
+        self.assertTrue(type(favorites), type(Favorites()))
     
