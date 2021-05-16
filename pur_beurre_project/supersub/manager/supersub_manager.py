@@ -45,6 +45,12 @@ class SupersubManager():
         paginator = self._get_paginator(objects_list)
         page_number = self._get_request_page_number(request)
         return paginator.get_page(page_number)
+    
+    def _get_paginator(self, objects_list):
+        return Paginator(objects_list, 6)
+    
+    def _get_request_page_number(self, request):
+        return request.GET.get ('page')
    
     def _get_form(self, request):
         """
@@ -85,15 +91,6 @@ class SupersubManager():
         request.session['prod_id'] = match_prod.id
         request.session['prods_ids'] = prods_ids
 
-
-    
-    def _get_paginator(self, objects_list):
-        return Paginator(objects_list, 6)
-    
-    def _get_request_page_number(self, request):
-        return request.GET.get ('page')
-
-    
     def _delete_session_vars(self, request):
         """
         """
