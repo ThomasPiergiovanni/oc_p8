@@ -67,13 +67,19 @@ class TestFavoritesView(TestCase):
             self.favorites_view.data['redirect'],
             'supersub:index')
     
-    def test_get_with_response_200(self):
+    def test_get_with_response_200_with_favs_and_logged_in(self):
         self.emulate_favorites()
         self.client.login(email='testuser@email.com', password='_Xxxxxxx')
         response = self.client.get('/supersub/favorites/')
         self.assertEqual(response.status_code, 200)
     
-    def test_get_with_response_200_no_favs_saved(self):
+    def test_get_with_favorite(self):
+        self.emulate_favorites()
+        self.client.login(email='testuser@email.com', password='_Xxxxxxx')
+        response = self.client.get('/supersub/favorites/')
+        self.assertEqual(response.context['page_obj'][0].custom_user_id, 1)
+    
+    def test_get_with_message_warning(self):
         self.client.login(
             email='testuser@email.com',
             password='_Xxxxxxx')
@@ -85,7 +91,7 @@ class TestFavoritesView(TestCase):
             " favoris jusqu'à présent")
 
     
-    def test_get_with_response_302_no_loggedin(self):
+    def test_get_with_message_error(self):
         response = self.client.get('/supersub/favorites/', follow=True)
         messages = response.context['messages']
         for message in messages:
