@@ -16,7 +16,7 @@ class CustomView(View):
         self.data['ctxt']['searched_prod'] = ''
         self.data['ctxt']['prod'] = ''
         self.data['ctxt']['page_obj'] = ''
-        self.data['ctxt']['user'] = ""
+        self.data['ctxt']['user'] = ''
         self.data['ctxt']['form'] = ''
         self.data['render'] = ''
         self.data['redirect'] = ''
