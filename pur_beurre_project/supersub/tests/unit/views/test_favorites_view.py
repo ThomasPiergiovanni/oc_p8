@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.test import TestCase, RequestFactory
 from django.contrib.auth import authenticate, login, logout
 
@@ -15,7 +16,6 @@ class TestFavoritesView(TestCase):
         cls.emulate_category()
         cls.emulate_product()
         cls.emulate_custom_user()
-        cls.emulate_favorites()
         cls.custom_user = CustomUser.objects.get(pk=1)
     
     @classmethod
@@ -50,8 +50,8 @@ class TestFavoritesView(TestCase):
                 password='_Xxxxxxx',
                 first_name='tester')
     
-    @classmethod
-    def emulate_favorites(cls):
+    
+    def emulate_favorites(self):
         Favorites.objects.create(product_id=1, custom_user_id=1)
 
     def test___init__with_favorites(self):
@@ -68,7 +68,27 @@ class TestFavoritesView(TestCase):
             'supersub:index')
     
     def test_get_with_response_200(self):
-
+        self.emulate_favorites()
         self.client.login(email='testuser@email.com', password='_Xxxxxxx')
         response = self.client.get('/supersub/favorites/')
-        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.status_code, 200)
+    
+    def test_get_with_response_200_no_favs_saved(self):
+        self.client.login(
+            email='testuser@email.com',
+            password='_Xxxxxxx')
+        response = self.client.get('/supersub/favorites/', follow=True)
+        messages = response.context['messages']
+        for message in messages:
+            self.assertEqual(message.level_tag, 'warning')
+            self.assertEqual(message.message, "Vous n'avez enregistré aucun"\
+            " favoris jusqu'à présent")
+
+    
+    def test_get_with_response_302_no_loggedin(self):
+        response = self.client.get('/supersub/favorites/', follow=True)
+        messages = response.context['messages']
+        for message in messages:
+            self.assertEqual(message.level_tag, 'error')
+            self.assertEqual(message.message, "Connectez-vous pour"\
+            " consulter vos favoris!")
