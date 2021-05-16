@@ -24,7 +24,7 @@ class FavoritesView(CustomView):
                 .select_related('product').order_by('id'))
             if favorites:
                 self.data['ctxt']['page_obj'] = (
-                    self.manager._paginate(request, favorites))
+                    self.manager._get_page(request, favorites))
                 return render(
                     request, self.data['render'], self.data['ctxt'])
             else:
