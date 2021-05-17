@@ -1,10 +1,9 @@
 from django.test import TestCase
 
-# from supersub.models import Category, Product, Favorites
-
 from supersub.models.category import Category
-from supersub.models.product import Product
 from supersub.models.favorites import Favorites
+from supersub.models.product import Product
+
 
 
 class ModelsTest(TestCase):

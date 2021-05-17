@@ -2,14 +2,15 @@ from django.core.paginator import Paginator
 from django.test import TestCase, RequestFactory
 
 from authentication.models import CustomUser
-from supersub.manager.supersub_manager import SupersubManager
-# from supersub.models import Category, Product, Favorites
-
-from supersub.models.category import Category
-from supersub.models.product import Product
-from supersub.models.favorites import Favorites
-
 from supersub.forms import MainSearchForm, NavbarSearchForm
+from supersub.manager.supersub_manager import SupersubManager
+# from supersub.models.category import Category
+from supersub.models.favorites import Favorites
+from supersub.models.product import Product
+
+from supersub.tests.unit.models.test_category import CategoryTest
+
+
 
 # Create your tests here.
 
@@ -19,7 +20,7 @@ class SupersubManagerTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.emulate_data()
-        cls.emulate_category()
+        CategoryTest.emulate_category()
         cls.emulate_product()
         cls.prod1 = Product.objects.get(pk=1)
         cls.prod2 = Product.objects.get(pk=2)
@@ -41,12 +42,12 @@ class SupersubManagerTest(TestCase):
             'redirect':""
         }
 
-    @classmethod
-    def emulate_category(cls):
-        Category.objects.create(
-            id=1,
-            name="CategorieOne",
-            url="www.categorie_test.com")
+    # @classmethod
+    # def emulate_category(cls):
+    #     Category.objects.create(
+    #         id=1,
+    #         name="CategorieOne",
+    #         url="www.categorie_test.com")
     
     @classmethod
     def emulate_product(cls):

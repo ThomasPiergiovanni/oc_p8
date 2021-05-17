@@ -3,14 +3,11 @@ from django.test import TestCase, RequestFactory
 from django.contrib.auth import authenticate, login, logout
 
 from authentication.models import CustomUser
-# from supersub.models import Category, Product, Favorites
-from supersub.models.category import Category
-from supersub.models.product import Product
+# from supersub.models.category import Category
 from supersub.models.favorites import Favorites
-
+from supersub.models.product import Product
 from supersub.views.favorites_view import FavoritesView
-
-from supersub.tests.unit.managers.test_supersub_manager import SupersubManagerTest
+from supersub.tests.unit.models.test_category import CategoryTest
 
 
 class TestFavoritesView(TestCase):
@@ -19,7 +16,7 @@ class TestFavoritesView(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.favorites_view = FavoritesView()
-        SupersubManagerTest.emulate_category()
+        CategoryTest.emulate_category()
         cls.emulate_product()
         cls.emulate_custom_user()
         cls.custom_user = CustomUser.objects.get(pk=1)

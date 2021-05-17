@@ -1,12 +1,9 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 
-# from supersub.models import Favorites, Product
-
-from supersub.models.product import Product
-from supersub.models.favorites import Favorites
-
 from supersub.forms import MainSearchForm, NavbarSearchForm
+from supersub.models.favorites import Favorites
+from supersub.models.product import Product
 
 
 class SupersubManager():
