@@ -2,7 +2,8 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from supersub.models import Favorites
+# from supersub.models import Favorites
+from supersub.models.favorites import Favorites
 from supersub.views.custom_view import CustomView
 
 

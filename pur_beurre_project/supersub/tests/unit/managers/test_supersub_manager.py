@@ -3,7 +3,12 @@ from django.test import TestCase, RequestFactory
 
 from authentication.models import CustomUser
 from supersub.manager.supersub_manager import SupersubManager
-from supersub.models import Category, Product, Favorites
+# from supersub.models import Category, Product, Favorites
+
+from supersub.models.category import Category
+from supersub.models.product import Product
+from supersub.models.favorites import Favorites
+
 from supersub.forms import MainSearchForm, NavbarSearchForm
 
 # Create your tests here.

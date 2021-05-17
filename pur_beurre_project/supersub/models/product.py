@@ -1,13 +1,7 @@
 from django.db import models
 
 from authentication.models import CustomUser
-
-# Create your models here.
-
-class Category(models.Model):
-    id_origin = models.CharField(max_length=200)
-    name = models.CharField(max_length=200, unique=True)
-    url = models.URLField(max_length=200, null=True)
+from supersub.models.category import Category
 
 
 class Product(models.Model):
@@ -23,14 +17,3 @@ class Product(models.Model):
     categories = models.TextField()
     category = models.ForeignKey(Category, models.CASCADE)
     relation_custom_user = models.ManyToManyField(CustomUser, through='Favorites')
-
-    def __str__(self):
-        return self.name
-
-
-class Favorites(models.Model):
-    custom_user = models.ForeignKey(CustomUser, models.CASCADE)
-    product = models.ForeignKey(Product, models.CASCADE)
-
-    def __str__(self):
-        return self.custom_user.email

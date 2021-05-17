@@ -3,7 +3,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from supersub.models import Product
+# from supersub.models import Product
+from supersub.models.product import Product
+
 from supersub.forms import NavbarSearchForm
 from supersub.views.custom_view import CustomView
 

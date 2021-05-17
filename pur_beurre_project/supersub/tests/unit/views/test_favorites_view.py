@@ -3,8 +3,14 @@ from django.test import TestCase, RequestFactory
 from django.contrib.auth import authenticate, login, logout
 
 from authentication.models import CustomUser
-from supersub.models import Category, Product, Favorites
+# from supersub.models import Category, Product, Favorites
+from supersub.models.category import Category
+from supersub.models.product import Product
+from supersub.models.favorites import Favorites
+
 from supersub.views.favorites_view import FavoritesView
+
+from supersub.tests.unit.managers.test_supersub_manager import SupersubManagerTest
 
 
 class TestFavoritesView(TestCase):
@@ -13,7 +19,7 @@ class TestFavoritesView(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.favorites_view = FavoritesView()
-        cls.emulate_category()
+        SupersubManagerTest.emulate_category()
         cls.emulate_product()
         cls.emulate_custom_user()
         cls.custom_user = CustomUser.objects.get(pk=1)
@@ -35,12 +41,12 @@ class TestFavoritesView(TestCase):
             category_id=1
         )
 
-    @classmethod
-    def emulate_category(cls):
-        Category.objects.create(
-            id=1,
-            name="CategorieOne",
-            url="www.categorie_test.com")
+    # @classmethod
+    # def emulate_category(cls):
+    #     Category.objects.create(
+    #         id=1,
+    #         name="CategorieOne",
+    #         url="www.categorie_test.com")
 
     @classmethod
     def emulate_custom_user(cls):
@@ -90,7 +96,6 @@ class TestFavoritesView(TestCase):
             self.assertEqual(message.message, "Vous n'avez enregistré aucun"\
             " favoris jusqu'à présent")
 
-    
     def test_get_with_message_error(self):
         response = self.client.get('/supersub/favorites/', follow=True)
         messages = response.context['messages']
