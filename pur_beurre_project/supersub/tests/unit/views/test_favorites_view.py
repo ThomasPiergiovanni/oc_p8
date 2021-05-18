@@ -3,11 +3,10 @@ from django.test import TestCase, RequestFactory
 from django.contrib.auth import authenticate, login, logout
 
 from authentication.models import CustomUser
-# from supersub.models.category import Category
 from supersub.models.favorites import Favorites
-from supersub.models.product import Product
 from supersub.views.favorites_view import FavoritesView
 from supersub.tests.unit.models.test_category import CategoryTest
+from supersub.tests.unit.models.test_product import ProductTest
 
 
 class TestFavoritesView(TestCase):
@@ -17,34 +16,10 @@ class TestFavoritesView(TestCase):
     def setUpTestData(cls):
         cls.favorites_view = FavoritesView()
         CategoryTest.emulate_category()
-        cls.emulate_product()
+        ProductTest.emulate_product()
         cls.emulate_custom_user()
         cls.custom_user = CustomUser.objects.get(pk=1)
     
-    @classmethod
-    def emulate_product(cls):
-        Product.objects.create(
-            id=1,
-            id_origin = 'fevfvf',
-            name = 'Product_for_test',
-            nutriscore_grade = 'A',
-            fat = 4.56,
-            saturated_fat = 5.56,
-            sugar=6.56,
-            salt=7.56,
-            image='www.imageurlbidon.com',
-            url='www.urlbidon.com',
-            categories='cat1, cat2, cat3',
-            category_id=1
-        )
-
-    # @classmethod
-    # def emulate_category(cls):
-    #     Category.objects.create(
-    #         id=1,
-    #         name="CategorieOne",
-    #         url="www.categorie_test.com")
-
     @classmethod
     def emulate_custom_user(cls):
         CustomUser.objects.create_user(
@@ -52,7 +27,6 @@ class TestFavoritesView(TestCase):
                 email='testuser@email.com',
                 password='_Xxxxxxx',
                 first_name='tester')
-    
     
     def emulate_favorites(self):
         Favorites.objects.create(product_id=1, custom_user_id=1)

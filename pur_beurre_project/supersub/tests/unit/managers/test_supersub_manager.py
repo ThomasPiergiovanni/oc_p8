@@ -4,11 +4,11 @@ from django.test import TestCase, RequestFactory
 from authentication.models import CustomUser
 from supersub.forms import MainSearchForm, NavbarSearchForm
 from supersub.manager.supersub_manager import SupersubManager
-# from supersub.models.category import Category
+
 from supersub.models.favorites import Favorites
 from supersub.models.product import Product
-
 from supersub.tests.unit.models.test_category import CategoryTest
+from supersub.tests.unit.models.test_product import ProductTest
 
 
 
@@ -21,7 +21,7 @@ class SupersubManagerTest(TestCase):
     def setUpTestData(cls):
         cls.emulate_data()
         CategoryTest.emulate_category()
-        cls.emulate_product()
+        ProductTest.emulate_product()
         cls.prod1 = Product.objects.get(pk=1)
         cls.prod2 = Product.objects.get(pk=2)
         cls.prod3 = Product.objects.get(pk=3)
@@ -40,60 +40,7 @@ class SupersubManagerTest(TestCase):
             'ctxt': {},
             'render':"",
             'redirect':""
-        }
-
-    # @classmethod
-    # def emulate_category(cls):
-    #     Category.objects.create(
-    #         id=1,
-    #         name="CategorieOne",
-    #         url="www.categorie_test.com")
-    
-    @classmethod
-    def emulate_product(cls):
-        Product.objects.create(
-            id=1,
-            id_origin = 'fevfvf',
-            name = 'Product_for_test',
-            nutriscore_grade = 'A',
-            fat = 4.56,
-            saturated_fat = 5.56,
-            sugar=6.56,
-            salt=7.56,
-            image='www.imageurlbidon.com',
-            url='www.urlbidon.com',
-            categories='cat1, cat2, cat3',
-            category_id=1
-        )
-        Product.objects.create(
-            id=2,
-            id_origin = 'kmihnl',
-            name = 'Product_for_test2',
-            nutriscore_grade = 'A',
-            fat = 94.56,
-            saturated_fat = 95.56,
-            sugar=96.56,
-            salt=97.56,
-            image='www.imageurlbidon2.com',
-            url='www.urlbidon.com',
-            categories='cat1, cat2, cat3',
-            category_id=1
-        )
-        Product.objects.create(
-            id=3,
-            id_origin = 'zeregrt',
-            name = 'Product_for_test3',
-            nutriscore_grade = 'A',
-            fat = 94.56,
-            saturated_fat = 95.56,
-            sugar=96.56,
-            salt=97.56,
-            image='www.imageurlbidon3.com',
-            url='www.urlbidon.com',
-            categories='cat1, cat2, cat3',
-            category_id=1
-        )
-    
+        }  
     @classmethod
     def emulate_prods_list(cls, prod_one, prod_two):
         """
