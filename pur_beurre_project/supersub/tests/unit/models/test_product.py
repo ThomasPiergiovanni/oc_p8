@@ -130,55 +130,20 @@ class ProductTest(TestCase):
             type(product_field),
             type(models.ForeignKey(Category, models.CASCADE)))
 
-    def test_product_with_product_instance(self):
-        product = Product.objects.get(pk=1)
-        self.assertIsInstance(product, Product)  
 
-    def test_product_with_instance_id(self):
+
+    def test_product_with_instance(self):
         product = Product.objects.get(pk=1)
+        self.assertIsInstance(product, Product)
         self.assertEquals(product.id, 1)
-
-    def test_product_with_instance_id_origin(self):
-        product = Product.objects.get(pk=1)
         self.assertEquals(product.id_origin, "fevfvf")
-
-    def test_product_with_instance_name(self):
-        product = Product.objects.get(pk=1)
         self.assertEquals(product.name, "Product_for_test")
-    
-    def test_product_with_instance_nutriscore_grade(self):
-        product = Product.objects.get(pk=1)
         self.assertEquals(product.nutriscore_grade, "A")
-
-    def test_product_with_instance_fat(self):
-        product = Product.objects.get(pk=1)
         self.assertEquals(float(product.fat), 4.561)
-
-    def test_product_with_instance_saturated_fat(self):
-        product = Product.objects.get(pk=1)
         self.assertEquals(float(product.saturated_fat), 5.561)
-
-    def test_product_with_instance_sugar(self):
-        product = Product.objects.get(pk=1)
         self.assertEquals(float(product.sugar), 6.561)
-
-    def test_product_with_instance_salt(self):
-        product = Product.objects.get(pk=1)
         self.assertEquals(float(product.salt), 7.561)
-
-    def test_product_with_instance_image(self):
-        product = Product.objects.get(pk=1)
         self.assertEquals(product.image, "www.imageurlbidon.com")
-    
-    def test_product_with_instance_url(self):
-        product = Product.objects.get(pk=1)
         self.assertEquals(product.url, "www.urlbidon.com")
-    
-    def test_product_with_instance_categories(self):
-        product = Product.objects.get(pk=1)
         self.assertEquals(product.categories, "cat1, cat2, cat3")
-    
-    def test_product_with_instance_category(self):
-        product = Product.objects.get(pk=1)
         self.assertEquals(product.category.id, 1)
-    
