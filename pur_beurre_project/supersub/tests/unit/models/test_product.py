@@ -21,10 +21,10 @@ class ProductTest(TestCase):
             id_origin = 'fevfvf',
             name = 'Product_for_test',
             nutriscore_grade = 'A',
-            fat = 4.56,
-            saturated_fat = 5.56,
-            sugar=6.56,
-            salt=7.56,
+            fat = 4.561,
+            saturated_fat = 5.561,
+            sugar= 6.561,
+            salt= 7.561,
             image='www.imageurlbidon.com',
             url='www.urlbidon.com',
             categories='cat1, cat2, cat3',
@@ -35,10 +35,10 @@ class ProductTest(TestCase):
             id_origin = 'kmihnl',
             name = 'Product_for_test2',
             nutriscore_grade = 'A',
-            fat = 94.56,
-            saturated_fat = 95.56,
-            sugar=96.56,
-            salt=97.56,
+            fat = 94.561,
+            saturated_fat = 95.561,
+            sugar= 96.561,
+            salt= 97.561,
             image='www.imageurlbidon2.com',
             url='www.urlbidon.com',
             categories='cat1, cat2, cat3',
@@ -49,33 +49,16 @@ class ProductTest(TestCase):
             id_origin = 'zeregrt',
             name = 'Product_for_test3',
             nutriscore_grade = 'A',
-            fat = 94.56,
-            saturated_fat = 95.56,
-            sugar=96.56,
-            salt=97.56,
+            fat = 94.561,
+            saturated_fat = 95.561,
+            sugar= 96.561,
+            salt= 97.561,
             image='www.imageurlbidon3.com',
             url='www.urlbidon.com',
             categories='cat1, cat2, cat3',
             category_id=1
         )
 
-    def test_product_with_product(self):
-        product = Product.objects.get(pk=1)
-        self.assertIsInstance(product, Product)
-    
-    def test_product_with_attrs_exist(self):
-        self.assertTrue(Product._meta.get_field('name'))
-        self.assertTrue(Product._meta.get_field('nutriscore_grade'))
-        self.assertTrue(Product._meta.get_field('fat'))
-        self.assertTrue(Product._meta.get_field('saturated_fat'))
-        self.assertTrue(Product._meta.get_field('sugar'))
-        self.assertTrue(Product._meta.get_field('salt'))
-        self.assertTrue(Product._meta.get_field('image'))
-        self.assertTrue(Product._meta.get_field('url'))
-        self.assertTrue(Product._meta.get_field('categories'))
-        self.assertTrue(Product._meta.get_field('category'))
-    
-    
     def test_product_with_attr_id_origin(self):
         product_field = Product._meta.get_field('id_origin')
         self.assertTrue(product_field)
@@ -147,15 +130,55 @@ class ProductTest(TestCase):
             type(product_field),
             type(models.ForeignKey(Category, models.CASCADE)))
 
-    
+    def test_product_with_product_instance(self):
+        product = Product.objects.get(pk=1)
+        self.assertIsInstance(product, Product)  
 
-    
-
-    def test_product_with_attr_id(self):
+    def test_product_with_instance_id(self):
         product = Product.objects.get(pk=1)
         self.assertEquals(product.id, 1)
-    
-    def test_product_with_attr_name(self):
+
+    def test_product_with_instance_id_origin(self):
+        product = Product.objects.get(pk=1)
+        self.assertEquals(product.id_origin, "fevfvf")
+
+    def test_product_with_instance_name(self):
         product = Product.objects.get(pk=1)
         self.assertEquals(product.name, "Product_for_test")
+    
+    def test_product_with_instance_nutriscore_grade(self):
+        product = Product.objects.get(pk=1)
+        self.assertEquals(product.nutriscore_grade, "A")
+
+    def test_product_with_instance_fat(self):
+        product = Product.objects.get(pk=1)
+        self.assertEquals(float(product.fat), 4.561)
+
+    def test_product_with_instance_saturated_fat(self):
+        product = Product.objects.get(pk=1)
+        self.assertEquals(float(product.saturated_fat), 5.561)
+
+    def test_product_with_instance_sugar(self):
+        product = Product.objects.get(pk=1)
+        self.assertEquals(float(product.sugar), 6.561)
+
+    def test_product_with_instance_salt(self):
+        product = Product.objects.get(pk=1)
+        self.assertEquals(float(product.salt), 7.561)
+
+    def test_product_with_instance_image(self):
+        product = Product.objects.get(pk=1)
+        self.assertEquals(product.image, "www.imageurlbidon.com")
+    
+    def test_product_with_instance_url(self):
+        product = Product.objects.get(pk=1)
+        self.assertEquals(product.url, "www.urlbidon.com")
+    
+    def test_product_with_instance_categories(self):
+        product = Product.objects.get(pk=1)
+        self.assertEquals(product.categories, "cat1, cat2, cat3")
+    
+    def test_product_with_instance_category(self):
+        product = Product.objects.get(pk=1)
+        self.assertEquals(product.category.id, 1)
     
