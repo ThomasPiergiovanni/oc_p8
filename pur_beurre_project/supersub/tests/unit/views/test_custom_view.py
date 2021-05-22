@@ -14,10 +14,10 @@ class TestCustomView(TestCase):
         cls.manager = SupersubManager()
         cls.data = cls.manager._get_data()
 
-    def test___init__with_customview(self):
+    def test_customview_with_customview(self):
         self.assertTrue(self.custom_view)
 
-    def test___init__with_attr_manager_are_true(self):
+    def test_customview_with_attr_manager_are_true(self):
         self.assertTrue(self.custom_view.manager)
         self.assertTrue(self.custom_view.data)
         self.assertTrue(self.custom_view.data['ctxt']['main_form'])
@@ -30,15 +30,15 @@ class TestCustomView(TestCase):
         self.assertEqual(self.custom_view.data['render'], '')
         self.assertEqual(self.custom_view.data['redirect'], '')
     
-    def test___init__with_attr_manager_type(self):
+    def test_customview_with_attr_manager_type(self):
         self.assertEqual(type(self.custom_view.manager), type(self.manager))
     
-    def test___init__with_attr_data_ctxt_mainform_type(self):
+    def test_customview_with_attr_data_ctxt_mainform_type(self):
         self.assertEqual(
             type(self.custom_view.data['ctxt']['main_form']),
             type(MainSearchForm()))
 
-    def test___init__with_attr_data_ctxt_mainform_type(self):
+    def test_customview_with_attr_data_ctxt_mainform_type(self):
         self.assertEqual(
             type(self.custom_view.data['ctxt']['navbar_form']),
             type(NavbarSearchForm()))
