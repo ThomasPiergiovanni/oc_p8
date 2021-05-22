@@ -3,6 +3,7 @@ from django.views import View
 from supersub.forms import MainSearchForm, NavbarSearchForm
 from supersub.manager.supersub_manager import SupersubManager
 
+
 class CustomView(View):
     """
     """
