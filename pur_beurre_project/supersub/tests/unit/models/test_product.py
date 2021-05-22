@@ -62,27 +62,40 @@ class ProductTest(TestCase):
         product = Product.objects.get(pk=1)
         self.assertIsInstance(product, Product)
     
-    def test_product_with_attr_id_origin_exist(self):
-        self.assertTrue(Product._meta.get_field('id_origin'))
+    def test_product_with_attrs_exist(self):
+        self.assertTrue(Product._meta.get_field('name'))
+        self.assertTrue(Product._meta.get_field('nutriscore_grade'))
+        self.assertTrue(Product._meta.get_field('fat'))
+        self.assertTrue(Product._meta.get_field('saturated_fat'))
+        self.assertTrue(Product._meta.get_field('sugar'))
+        self.assertTrue(Product._meta.get_field('salt'))
+        self.assertTrue(Product._meta.get_field('image'))
+        self.assertTrue(Product._meta.get_field('url'))
+        self.assertTrue(Product._meta.get_field('categories'))
+        self.assertTrue(Product._meta.get_field('category'))
     
-    def test_product_with_attr_id_origin_type(self):
-        field = Product._meta.get_field('id_origin')
-        self.assertEquals(type(field), type(models.CharField()))
     
-    def test_product_with_attr_id_origin_max_lenght(self):
-        product = Product.objects.get(pk=1)
-        field_max_length = product._meta.get_field('id_origin').max_length
-        self.assertEquals(field_max_length, 200)
+    def test_product_with_attr_id_origin(self):
+        product_field = Product._meta.get_field('id_origin')
+        self.assertTrue(product_field)
+        self.assertEquals(type(product_field), type(models.CharField()))
+        self.assertEquals(product_field.max_length, 200)
+ 
+    def test_product_with_attr_name(self):
+        product_field = Product._meta.get_field('name')
+        self.assertTrue(product_field)
+        self.assertEquals(type(product_field), type(models.CharField()))
+        self.assertEquals(product_field.max_length, 200)
+        self.assertEquals(product_field.unique, True)
+
+    def test_product_with_attr_nutriscore_grade(self):
+        product_field = Product._meta.get_field('nutriscore_grade')
+        self.assertTrue(product_field)
+        self.assertEquals(type(product_field), type(models.CharField()))
+        self.assertEquals(product_field.max_length, 8)
     
-    def test_product_with_attr_name_is_unique(self):
-        product = Product.objects.get(pk=1)
-        field_unique = product._meta.get_field('name').unique
-        self.assertEquals(field_unique, True)
+
     
-    def test_product_with_attr_name_max_lenght(self):
-        product = Product.objects.get(pk=1)
-        field_max_length = product._meta.get_field('name').max_length
-        self.assertEquals(field_max_length, 200)
 
     def test_product_with_attr_nutriscore_grade_max_lenght(self):
         product = Product.objects.get(pk=1)
