@@ -1,6 +1,7 @@
 from django.db import models
 from django.test import TestCase
 
+from supersub.models.category import Category
 from supersub.models.product import Product
 from supersub.tests.unit.models.test_category import CategoryTest
 
@@ -101,6 +102,50 @@ class ProductTest(TestCase):
         self.assertEquals(product_field.max_digits, 8)
         self.assertEquals(product_field.decimal_places, 3)
     
+    def test_product_with_attr_saturated_fat(self):
+        product_field = Product._meta.get_field('saturated_fat')
+        self.assertTrue(product_field)
+        self.assertEquals(type(product_field), type(models.DecimalField()))
+        self.assertEquals(product_field.max_digits, 8)
+        self.assertEquals(product_field.decimal_places, 3)
+    
+    def test_product_with_attr_sugar(self):
+        product_field = Product._meta.get_field('sugar')
+        self.assertTrue(product_field)
+        self.assertEquals(type(product_field), type(models.DecimalField()))
+        self.assertEquals(product_field.max_digits, 8)
+        self.assertEquals(product_field.decimal_places, 3)
+    
+    def test_product_with_attr_salt(self):
+        product_field = Product._meta.get_field('sugar')
+        self.assertTrue(product_field)
+        self.assertEquals(type(product_field), type(models.DecimalField()))
+        self.assertEquals(product_field.max_digits, 8)
+        self.assertEquals(product_field.decimal_places, 3)
+    
+    def test_product_with_attr_image(self):
+        product_field = Product._meta.get_field('image')
+        self.assertTrue(product_field)
+        self.assertEquals(type(product_field), type(models.URLField()))
+        self.assertEquals(product_field.max_length, 200)
+
+    def test_product_with_attr_url(self):
+        product_field = Product._meta.get_field('url')
+        self.assertTrue(product_field)
+        self.assertEquals(type(product_field), type(models.URLField()))
+        self.assertEquals(product_field.max_length, 200)
+
+    def test_product_with_attr_categories(self):
+        product_field = Product._meta.get_field('categories')
+        self.assertTrue(product_field)
+        self.assertEquals(type(product_field), type(models.TextField()))
+
+    def test_product_with_attr_category(self):
+        product_field = Product._meta.get_field('category')
+        self.assertTrue(product_field)
+        self.assertEquals(
+            type(product_field),
+            type(models.ForeignKey(Category, models.CASCADE)))
 
     
 
