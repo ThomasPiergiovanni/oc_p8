@@ -21,7 +21,7 @@ class CategoryTest(TestCase):
         category = Category.objects.get(pk=1)
         self.assertIsInstance(category, Category)
     
-    def test_category_with_attr_id_is_unique(self):
+    def test_category_with_attr_name_is_unique(self):
         category = Category.objects.get(pk=1)
         unique_field = category._meta.get_field('name').unique
         self.assertEquals(unique_field, True)

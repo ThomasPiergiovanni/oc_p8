@@ -1,6 +1,8 @@
+from django.db import models
 from django.test import TestCase
 
 from supersub.models.product import Product
+from supersub.tests.unit.models.test_category import CategoryTest
 
 
 class ProductTest(TestCase):
@@ -8,6 +10,7 @@ class ProductTest(TestCase):
     """
     @classmethod
     def setUpTestData(cls):
+        CategoryTest().emulate_category()
         cls.emulate_product()
     
     @classmethod
@@ -56,32 +59,52 @@ class ProductTest(TestCase):
         )
 
     def test_product_with_product(self):
-        category = Category.objects.get(pk=1)
-        self.assertIsInstance(category, Category)
+        product = Product.objects.get(pk=1)
+        self.assertIsInstance(product, Product)
     
-    def test_category_with_attr_id(self):
-        category = Category.objects.get(pk=1)
-        self.assertEqual(category.id, 1)
+    def test_product_with_attr_id_origin_exist(self):
+        self.assertTrue(Product._meta.get_field('id_origin'))
     
-    def test_category_with_attr_name(self):
-        category = Category.objects.get(pk=1)
-        self.assertEqual(category.name, "CategorieOne")
+    def test_product_with_attr_id_origin_type(self):
+        field = Product._meta.get_field('id_origin')
+        self.assertEquals(type(field), type(models.CharField()))
     
-    def test_category_with_attr_url(self):
-        category = Category.objects.get(pk=1)
-        self.assertEqual(category.url, "www.categorie_test.com")
+    def test_product_with_attr_id_origin_max_lenght(self):
+        product = Product.objects.get(pk=1)
+        field_max_length = product._meta.get_field('id_origin').max_length
+        self.assertEquals(field_max_length, 200)
+    
+    def test_product_with_attr_name_is_unique(self):
+        product = Product.objects.get(pk=1)
+        field_unique = product._meta.get_field('name').unique
+        self.assertEquals(field_unique, True)
+    
+    def test_product_with_attr_name_max_lenght(self):
+        product = Product.objects.get(pk=1)
+        field_max_length = product._meta.get_field('name').max_length
+        self.assertEquals(field_max_length, 200)
 
-    def test_category_with_attr_id_is_unique(self):
-        category = Category.objects.get(pk=1)
-        unique_field = category._meta.get_field('name').unique
-        self.assertEquals(unique_field, True)
+    def test_product_with_attr_nutriscore_grade_max_lenght(self):
+        product = Product.objects.get(pk=1)
+        field_max_length = product._meta.get_field('nutriscore_grade').max_length
+        self.assertEquals(field_max_length, 8)
     
-    def test_category_with_attr_name_max_lenght(self):
-        category = Category.objects.get(pk=1)
-        max_length = category._meta.get_field('name').max_length
-        self.assertEquals(max_length, 200)
+    def test_product_with_attr_fat_max_digit(self):
+        product = Product.objects.get(pk=1)
+        field_max_digit = product._meta.get_field('fat').max_digits
+        self.assertEquals(field_max_digit, 8)
     
-    def test_category_with_attr_url_max_lenght(self):
-        category = Category.objects.get(pk=1)
-        max_length = category._meta.get_field('url').max_length
-        self.assertEquals(max_length, 200)
+    def test_product_with_attr_fat_decimal_place(self):
+        product = Product.objects.get(pk=1)
+        field_decimal_places = product._meta.get_field('fat').decimal_places
+        self.assertEquals(field_decimal_places, 3)
+    
+
+    def test_product_with_attr_id(self):
+        product = Product.objects.get(pk=1)
+        self.assertEquals(product.id, 1)
+    
+    def test_product_with_attr_name(self):
+        product = Product.objects.get(pk=1)
+        self.assertEquals(product.name, "Product_for_test")
+    
