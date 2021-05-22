@@ -8,6 +8,7 @@ from supersub.manager.supersub_manager import SupersubManager
 from supersub.models.favorites import Favorites
 from supersub.models.product import Product
 from supersub.tests.unit.models.test_category import CategoryTest
+from supersub.tests.unit.models.test_favorites import FavoritesTest
 from supersub.tests.unit.models.test_product import ProductTest
 
 
@@ -30,7 +31,7 @@ class SupersubManagerTest(TestCase):
         cls.request_GET = RequestFactory().get('', data={'page':1})
         cls.request_POST = RequestFactory().post('', data={'page':1, 'product':cls.prod1.name})
         cls.paginator = Paginator(cls.prods_list, 6)
-        cls.emulate_favorites()
+        FavoritesTest.emulate_favorites()
         cls.emulate_custom_user()
         cls.custom_user = CustomUser.objects.get(pk=1)
     
@@ -65,10 +66,6 @@ class SupersubManagerTest(TestCase):
                 password='_Xxxxxxx',
                 first_name='tester')
     
-    @classmethod
-    def emulate_favorites(cls):
-        Favorites.objects.create(product_id=1, custom_user_id=1)
-
     def test__get_data(self):
         data = SupersubManager()._get_data()
         self.assertEqual(data, self.data)
