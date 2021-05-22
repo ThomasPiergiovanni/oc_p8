@@ -130,8 +130,6 @@ class ProductTest(TestCase):
             type(product_field),
             type(models.ForeignKey(Category, models.CASCADE)))
 
-
-
     def test_product_with_instance(self):
         product = Product.objects.get(pk=1)
         self.assertIsInstance(product, Product)
