@@ -94,23 +94,16 @@ class ProductTest(TestCase):
         self.assertEquals(type(product_field), type(models.CharField()))
         self.assertEquals(product_field.max_length, 8)
     
-
+    def test_product_with_attr_fat(self):
+        product_field = Product._meta.get_field('fat')
+        self.assertTrue(product_field)
+        self.assertEquals(type(product_field), type(models.DecimalField()))
+        self.assertEquals(product_field.max_digits, 8)
+        self.assertEquals(product_field.decimal_places, 3)
     
 
-    def test_product_with_attr_nutriscore_grade_max_lenght(self):
-        product = Product.objects.get(pk=1)
-        field_max_length = product._meta.get_field('nutriscore_grade').max_length
-        self.assertEquals(field_max_length, 8)
     
-    def test_product_with_attr_fat_max_digit(self):
-        product = Product.objects.get(pk=1)
-        field_max_digit = product._meta.get_field('fat').max_digits
-        self.assertEquals(field_max_digit, 8)
-    
-    def test_product_with_attr_fat_decimal_place(self):
-        product = Product.objects.get(pk=1)
-        field_decimal_places = product._meta.get_field('fat').decimal_places
-        self.assertEquals(field_decimal_places, 3)
+
     
 
     def test_product_with_attr_id(self):
