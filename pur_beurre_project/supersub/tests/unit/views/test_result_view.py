@@ -37,21 +37,21 @@ class ResultViewTest(TestCase):
     def test_post_with_warning_message(self):
         response = self.client.post(
             '/supersub/results/',
-            data={'product':'ZzzzZ'}, follow=True)
+            data={'product':"ZzzzZ"}, follow=True)
         for message in response.context['messages']:
             self.assertEqual(message.level_tag, 'warning')
             self.assertEqual(
                 message.message,
                 "Ce produit n'a pas été reconnu ou n'existe pas.")
     
-    # def test_post_with_error_message(self):
-    #     self.response = self.client.post(
-    #         '/supersub/results/',
-    #         data={'product': ''})
-    #     for message in self.response.context['messages']:
-    #         self.assertEqual(message.level_tag, 'error')
-    #         self.assertEqual(
-    #             message.message,
-    #             "Saisissez un produit")
+    def test_post_with_error_message(self):
+        self.response = self.client.post(
+            '/supersub/results/',
+            data={'product': ""}, follow=True)
+        for message in self.response.context['messages']:
+            self.assertEqual(message.level_tag, 'error')
+            self.assertEqual(
+                message.message,
+                "Saisissez un produit")
 
 
