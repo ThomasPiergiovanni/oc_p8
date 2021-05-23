@@ -15,10 +15,10 @@ class RegisterFavoriteViewTest(TestCase):
     """
     @classmethod
     def setUpTestData(cls):
-        CategoryTest().emulate_category()
-        ProductTest().emulate_product()
-        CustomUserTest().emulate_custom_user()
-        FavoritesTest().emulate_favorites()
+        CategoryTest.emulate_category()
+        ProductTest.emulate_product()
+        CustomUserTest.emulate_custom_user()
+        FavoritesTest.emulate_favorites()
     
     def setUp(self):
         self.client.login(email='testuser@email.com', password='_Xxxxxxx')
