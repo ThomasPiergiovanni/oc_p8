@@ -48,6 +48,14 @@ class RegisterFavoriteViewTest(TestCase):
             self.assertEqual(message.level_tag, 'success')
             self.assertEqual(message.message, "Produit enregistré!")
     
+    def test_get_with_redirect(self):
+        self.response = self.client.get(
+            '/supersub/register_favorite/2',
+            follow=True)
+        self.assertEquals(
+            self.response.redirect_chain[0][0],
+            '/supersub/product_detail/2')
+    
 
 
 
