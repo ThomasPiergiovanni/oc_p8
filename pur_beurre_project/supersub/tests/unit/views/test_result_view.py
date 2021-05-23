@@ -45,13 +45,17 @@ class ResultViewTest(TestCase):
                 "Ce produit n'a pas été reconnu ou n'existe pas.")
     
     def test_post_with_error_message(self):
-        self.response = self.client.post(
+        response = self.client.post(
             '/supersub/results/',
             data={'product': ""}, follow=True)
-        for message in self.response.context['messages']:
+        for message in response.context['messages']:
             self.assertEqual(message.level_tag, 'error')
-            self.assertEqual(
-                message.message,
-                "Saisissez un produit")
+            self.assertEqual(message.message, "Saisissez un produit")
+    
+    def test_post_with_redirect(self):
+        response = self.client.post(
+            '/supersub/results/',
+            data={'product': ""}, follow=True)
+        self.assertEquals(response.redirect_chain[0][0], '/supersub/')
 
 
