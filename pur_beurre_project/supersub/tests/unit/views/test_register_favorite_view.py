@@ -24,27 +24,33 @@ class RegisterFavoriteViewTest(TestCase):
         self.client.login(email='testuser@email.com', password='_Xxxxxxx')
         
     def test_get_with_status_code_200(self):
-        self.response = self.client.get('/supersub/register_favorite/1', follow=True)
+        self.response = self.client.get(
+            '/supersub/register_favorite/1',
+            follow=True)
         self.assertEqual(self.response.status_code, 200)
     
     def test_get_with_message_warning(self):
-        self.response = self.client.get('/supersub/register_favorite/1', follow=True)
-        messages = self.response.context['messages']
-        for message in messages:
+        self.response = self.client.get(
+            '/supersub/register_favorite/1',
+            follow=True)
+        for message in self.response.context['messages']:
             self.assertEqual(message.level_tag, 'warning')
             self.assertEqual(message.message, "Produit déja enregistré")
     
     def test_get_with_favorites_saved(self):
-        self.response = self.client.get('/supersub/register_favorite/2', follow=True)
+        self.response = self.client.get(
+            '/supersub/register_favorite/2',
+            follow=True)
         new_favorite = Favorites.objects.get(
             product_id__exact=2,
             custom_user_id__exact=1)
         self.assertTrue(new_favorite)
 
     def test_get_with_message_success(self):
-        self.response = self.client.get('/supersub/register_favorite/2', follow=True)
-        messages = self.response.context['messages']
-        for message in messages:
+        self.response = self.client.get(
+            '/supersub/register_favorite/2',
+            follow=True)
+        for message in self.response.context['messages']:
             self.assertEqual(message.level_tag, 'success')
             self.assertEqual(message.message, "Produit enregistré!")
     

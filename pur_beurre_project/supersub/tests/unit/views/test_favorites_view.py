@@ -53,7 +53,7 @@ class TestFavoritesView(TestCase):
         for message in messages:
             self.assertEqual(message.level_tag, 'warning')
             self.assertEqual(message.message, "Vous n'avez enregistré aucun"\
-            " favoris jusqu'à présent")
+                " favoris jusqu'à présent")
 
     def test_get_with_message_error(self):
         response = self.client.get('/supersub/favorites/', follow=True)
@@ -61,4 +61,4 @@ class TestFavoritesView(TestCase):
         for message in messages:
             self.assertEqual(message.level_tag, 'error')
             self.assertEqual(message.message, "Connectez-vous pour"\
-            " consulter vos favoris!")
+                " consulter vos favoris!")

@@ -27,10 +27,31 @@ class ResultViewTest(TestCase):
         product = Product.objects.get(pk=1)
         self.assertEqual(response.context['searched_prod'], product)
     
-    def test_post_with_page_objects(self):
+    def test_post_with_page_products(self):
         response = self.client.post(
             '/supersub/results/',
             data={'product':'Product_for_test'})
         self.assertEquals(response.context['page_obj'][0].id, 2)
         self.assertEquals(response.context['page_obj'][1].id, 3)
+    
+    def test_post_with_warning_message(self):
+        response = self.client.post(
+            '/supersub/results/',
+            data={'product':'ZzzzZ'}, follow=True)
+        for message in response.context['messages']:
+            self.assertEqual(message.level_tag, 'warning')
+            self.assertEqual(
+                message.message,
+                "Ce produit n'a pas été reconnu ou n'existe pas.")
+    
+    # def test_post_with_error_message(self):
+    #     self.response = self.client.post(
+    #         '/supersub/results/',
+    #         data={'product': ''})
+    #     for message in self.response.context['messages']:
+    #         self.assertEqual(message.level_tag, 'error')
+    #         self.assertEqual(
+    #             message.message,
+    #             "Saisissez un produit")
+
 
