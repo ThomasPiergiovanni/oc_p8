@@ -81,11 +81,3 @@ class OffApiManager:
                     self.products.append(raw_product)
             except KeyError as error:
                 print("Product key error: ", error)
-
-if __name__ == "__main__":
-    off_api_manager = OffApiManager()
-    off_api_manager.download_categories()
-    off_api_manager.filter_categories()
-    for raw in off_api_manager.categories:
-        print(raw)
-    # off_api_manager.download_products()
