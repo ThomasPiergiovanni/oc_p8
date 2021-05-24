@@ -30,10 +30,14 @@ class ResultViewTest(TestCase):
     
     def test_get_with_page_products(self):
         self.emulate_session()
-        response = self.client.get(
-            '/supersub/results/')
+        response = self.client.get('/supersub/results/')
         self.assertEquals(response.context['page_obj'][0].id, 2)
         self.assertEquals(response.context['page_obj'][1].id, 3)
+    
+    def test_get_with_render(self):
+        self.emulate_session()
+        response = self.client.get('/supersub/results/')
+        self.assertTemplateUsed(response, 'supersub/results.html')
 
     def test_post_with_response_200(self):
         response = self.client.post(
