@@ -18,3 +18,10 @@ class DbManagerTest(TestCase):
         categories = Category.objects.all()
         for category in categories:
             self.assertIsNone(category)
+    
+    def test_get_categories_with_categories(self):
+        CategoryTest.emulate_category()
+        self.db_manager.get_categories()
+        self.assertEquals(
+            self.db_manager.categories_in_db[0].name,
+            "CategorieOne")
