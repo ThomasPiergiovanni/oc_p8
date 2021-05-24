@@ -1,7 +1,6 @@
 from django.test import TestCase
 
 from supersub.forms import NavbarSearchForm
-from supersub.models.product import Product
 from supersub.tests.unit.models.test_category import CategoryTest
 from supersub.tests.unit.models.test_product import ProductTest
 
@@ -55,8 +54,7 @@ class ResultViewTest(TestCase):
         response = self.client.post(
             '/supersub/results/',
             data={'product':'Product_for_test'})
-        product = Product.objects.get(pk=1)
-        self.assertEqual(response.context['searched_prod'], product)
+        self.assertEqual(response.context['searched_prod'].id, 1)
     
     def test_post_with_page_products(self):
         response = self.client.post(
