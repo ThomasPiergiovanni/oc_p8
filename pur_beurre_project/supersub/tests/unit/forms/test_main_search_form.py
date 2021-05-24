@@ -1,28 +1,31 @@
 from django.test import TestCase
 
 from supersub.forms.main_search_form import MainSearchForm
-from supersub.forms.navbar_search_form import NavbarSearchForm
 
 
-class FormsTest(TestCase):
+class MainSearchFormTest(TestCase):
     """
     """
     def setUp(self):
         self.main_form = MainSearchForm()
     
-    def test_main_form_product_field_if_label_is_none(self):
+    def test_mainsearchform_with_attr_product_label(self):
         self.assertTrue(self.main_form.fields['product'].label == None)
     
-    def test_main_form_product_field_if_class_is_form_control(self):
+    def test_mainsearchform_with_attr_product_class(self):
         self.assertTrue(
             self.main_form.fields['product']
             .widget.attrs['class'] =='form-control')
     
-    def test_main_form_product_field_if_autofocus_is_true(self):
+    def test_mainsearchform_with_attr_product_autofocus(self):
         self.assertTrue(
             self.main_form.fields['product']
             .widget.attrs['autofocus'] is True)
     
-    def test_form_validation_for_blank_product(self):
+    def test_mainsearchform_with_validation_wo_input(self):
         form = MainSearchForm(data={'product':''})
         self.assertFalse(form.is_valid())
+    
+    def test_mainsearchform_with_validation_with_input(self):
+        form = MainSearchForm(data={'product':'Un produit test'})
+        self.assertTrue(form.is_valid())
