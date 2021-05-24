@@ -82,7 +82,6 @@ class OffApiManager:
             except KeyError as error:
                 print("Product key error: ", error)
 
-
 if __name__ == "__main__":
     off_api_manager = OffApiManager()
     off_api_manager.download_categories()
