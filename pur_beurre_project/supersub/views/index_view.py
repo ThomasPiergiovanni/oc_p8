@@ -1,6 +1,5 @@
 from django.shortcuts import render
 
-from supersub.forms import MainSearchForm, NavbarSearchForm
 from supersub.views.custom_view import CustomView
 
 

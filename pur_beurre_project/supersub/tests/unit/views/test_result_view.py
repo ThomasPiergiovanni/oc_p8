@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from supersub.forms import NavbarSearchForm
+from supersub.forms.navbar_search_form import NavbarSearchForm
 from supersub.tests.unit.models.test_category import CategoryTest
 from supersub.tests.unit.models.test_product import ProductTest
 

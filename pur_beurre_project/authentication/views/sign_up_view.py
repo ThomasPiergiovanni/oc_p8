@@ -4,7 +4,6 @@ from django.urls import reverse
 
 from authentication.forms import SignUpForm
 from authentication.models import CustomUser
-from supersub.forms import NavbarSearchForm
 from supersub.views.custom_view import CustomView
 
 

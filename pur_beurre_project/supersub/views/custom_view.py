@@ -1,6 +1,7 @@
 from django.views import View
 
-from supersub.forms import MainSearchForm, NavbarSearchForm
+from supersub.forms.main_search_form import MainSearchForm
+from supersub.forms.navbar_search_form import NavbarSearchForm
 from supersub.manager.supersub_manager import SupersubManager
 
 

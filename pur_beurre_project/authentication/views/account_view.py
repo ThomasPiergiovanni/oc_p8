@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 
-from supersub.forms import NavbarSearchForm
 from supersub.views.custom_view import CustomView
 
 

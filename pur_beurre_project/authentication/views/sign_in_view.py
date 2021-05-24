@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 
 from authentication.forms import SignInForm
-from supersub.forms import NavbarSearchForm
 from supersub.views.custom_view import CustomView
 
 
