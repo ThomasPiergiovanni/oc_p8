@@ -14,13 +14,19 @@ class ResultViewTest(TestCase):
         CategoryTest.emulate_category()
         ProductTest.emulate_product()
     
+    def setUp(self):
+        self.session = None
+
     def test_get_with_response_200(self):
+        self.emulate_session()
+        self.response = self.client.get('/supersub/results/')
+        self.assertEqual(self.response.status_code,200)
+    
+    def emulate_session(self):
         session = self.client.session
         session['prod_id'] = 1
         session['prods_ids'] = [2,3]
         session.save()
-        self.response = self.client.get('/supersub/results/')
-        self.assertEqual(self.response.status_code,200)
 
     def test_post_with_response_200(self):
         response = self.client.post(
