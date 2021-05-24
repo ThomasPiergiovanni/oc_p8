@@ -2,7 +2,9 @@
 """
 
 from supersub.manager.off_api_manager import OffApiManager
-from supersub.models import Category, Product, Favorites
+from supersub.models.category import Category
+from supersub.models.product import Product
+from supersub.models.favorites import Favorites
 from authentication.models import CustomUser
 
 
@@ -14,7 +16,6 @@ class DbManager():
                 "en:breakfast-cereals", "en:meals"]
         self.categories_in_db = []
         self.products_in_db = []
-        self.set_database()
     
     def set_database(self):
         """

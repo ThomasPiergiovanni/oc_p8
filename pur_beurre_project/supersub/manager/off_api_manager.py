@@ -15,6 +15,7 @@ class OffApiManager:
         self.products_amount = 1
         self.categories = []
         self.products = []
+        self.response = None
     
     def download_categories(self):
         """
@@ -24,7 +25,7 @@ class OffApiManager:
             headers=self.header,
             params=self.parameters
         )
-        response = response.json()
+        self.response = response.json()
         self.categories.append(response)
 
     def download_products(self, category):
