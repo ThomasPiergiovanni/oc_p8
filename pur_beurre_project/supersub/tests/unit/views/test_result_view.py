@@ -88,5 +88,11 @@ class ResultViewTest(TestCase):
             '/supersub/results/',
             data={'product': ""}, follow=True)
         self.assertEquals(response.redirect_chain[0][0], '/supersub/')
+    
+    def test_post_with_navbar_form(self):
+        response = self.client.post(
+            '/supersub/results/',
+            data={'product':"ZzzzZ"}, follow=True)
+        self.assertIsInstance(response.context['navbar_form'], NavbarSearchForm)
 
 
