@@ -83,8 +83,7 @@ class SupersubManager():
             prods_ids.append(candidate.id)
         return prods_ids
 
-    def _add_vars_to_session(
-            self, request, match_prod):
+    def _add_vars_to_session(self, request, match_prod):
         """
         """
         prods = self._get_session_prods(match_prod)
