@@ -1,5 +1,6 @@
 from django.test import TestCase
 
+from supersub.forms import NavbarSearchForm
 from supersub.models.product import Product
 from supersub.tests.unit.models.test_category import CategoryTest
 from supersub.tests.unit.models.test_product import ProductTest
@@ -38,6 +39,11 @@ class ResultViewTest(TestCase):
         self.emulate_session()
         response = self.client.get('/supersub/results/')
         self.assertTemplateUsed(response, 'supersub/results.html')
+    
+    def test_get_with_navbar_form(self):
+        self.emulate_session()
+        response = self.client.get('/supersub/results/')
+        self.assertIsInstance(response.context['navbar_form'], NavbarSearchForm)
 
     def test_post_with_response_200(self):
         response = self.client.post(
