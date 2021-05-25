@@ -18,9 +18,9 @@ class OffApiManagerTest(TestCase):
                 {
                     "id": "en:snacks",
                     "known": 1,
-                    "name": "Aliments et boissons à base de végétaux",
-                    "products": 106841,
-                    "url": "https://fr.openfoodfacts.org/categorie/aliments-et-boissons-a-base-de-vegetaux"
+                    "name": "Snacks",
+                    "products": 54568,
+                    "url": "https://fr.openfoodfacts.org/categorie/snacks"
                 },
                 {
                     "id": "en:plant-based-foods",
