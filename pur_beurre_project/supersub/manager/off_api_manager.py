@@ -15,9 +15,9 @@ class OffApiManager:
         self.header = {}
         self.parameters = {}
         self.products_amount = 1
-        self.cat_response = {}
+        self.categories_response = {}
         self.categories = []
-        self.prod_response = {}
+        self.products_response = {}
         self.products = []
     
     def download_categories(self):
@@ -28,12 +28,12 @@ class OffApiManager:
             headers=self.header,
             params=self.parameters
         )
-        self.cat_response = response.json()
+        self.categories_response = response.json()
     
     def filter_categories(self):
         """
         """
-        for raw_category in self.cat_response['tags']:
+        for raw_category in self.categories_response['tags']:
             try:
                 if (
                     raw_category['id'] in self.selected_categories and
@@ -59,12 +59,12 @@ class OffApiManager:
             headers=self.header,
             params=self.parameters
         )
-        self.prod_response = response.json()
+        self.products_response = response.json()
     
     def filter_products(self):
         """
         """
-        for raw_product in self.prod_response['products']:
+        for raw_product in self.products_response['products']:
             try:
                 if (
                         raw_product['id'] and
