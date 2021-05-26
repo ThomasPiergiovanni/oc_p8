@@ -10,6 +10,7 @@ class OffApiManagerTest(TestCase):
     def setUpTestData(cls):
         cls.emulate_categories_response()
         cls.emulate_products_response()
+        cls.manager = OffApiManager()
     
     @classmethod
     def emulate_categories_response(cls):
@@ -58,14 +59,20 @@ class OffApiManagerTest(TestCase):
     #     self.assertTrue(api_off.response)
 
     def test_filter_categories_with_raw_datas(self):
-        manager = OffApiManager()
-        manager.categories_response = self.categories_response
-        manager.filter_categories()
-        self.assertEqual(manager.categories[0]['id'], "en:snacks")
+        self.manager.categories_response = self.categories_response
+        self.manager.filter_categories()
+        self.assertEqual(self.manager.categories[0]['id'], "en:snacks")
+    
+    def test_filter_products_with_raw_datas(self):
+        self.manager.products_response = self.products_response
+        self.manager.filter_products()
+        self.assertEqual(
+            self.manager.products[0]['product_name'],
+            "Prince Chocolat")
     
     @classmethod
-    def emulate_products(cls):
-        cls.products = {
+    def emulate_products_response(cls):
+        cls.products_response = {
             "count": 54568,
             "page": 1,
             "page_count": 50,
@@ -416,7 +423,6 @@ class OffApiManagerTest(TestCase):
                             "coordinates_image_size": "full",
                             "geometry": "0x0--1--1",
                             "imgid": "195",
-                            "normalize": null,
                             "rev": "427",
                             "sizes": {
                                 "100": {
@@ -436,7 +442,6 @@ class OffApiManagerTest(TestCase):
                                     "w": 136
                                 }
                             },
-                            "white_magic": null,
                             "x1": "-1",
                             "x2": "-1",
                             "y1": "-1",
@@ -509,7 +514,6 @@ class OffApiManagerTest(TestCase):
                             "coordinates_image_size": "full",
                             "geometry": "0x0--1--1",
                             "imgid": "193",
-                            "normalize": null,
                             "rev": "406",
                             "sizes": {
                                 "100": {
@@ -529,7 +533,6 @@ class OffApiManagerTest(TestCase):
                                     "w": 1893
                                 }
                             },
-                            "white_magic": null,
                             "x1": "-1",
                             "x2": "-1",
                             "y1": "-1",
