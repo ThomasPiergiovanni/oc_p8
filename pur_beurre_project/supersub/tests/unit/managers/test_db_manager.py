@@ -10,11 +10,11 @@ class DbManagerTest(TestCase):
     """
     @classmethod
     def setUpTestData(cls):
-        cls.db_manager = DbManager()
         cls.emulate_off_api_manager_categories()
+        cls.db_manager = DbManager()
     
     @classmethod
-    def emulate_off_api_manager_categories(self):
+    def emulate_off_api_manager_categories(cls):
         cls.categories = [
             {
                 'id': 'en:snacks',
@@ -47,12 +47,7 @@ class DbManagerTest(TestCase):
             "CategorieOne")
     
     def test_insert_categories_with_category(self):
-        self.db_manager.off_api_manager.categories = cls.categories
+        self.db_manager.off_api_manager.categories = self.categories
         self.db_manager.insert_categories()
-        category. Category.objects.get(pk=1)
+        category = Category.objects.get(pk=1)
         self.assertEquals(category.name, "Snacks")
-
-    def emulate_off_api_manager_categories(self):
-        pass
-    
-
