@@ -25,11 +25,11 @@ class OffApiManagerTest(TestCase):
                     "url": "https://fr.openfoodfacts.org/categorie/snacks"
                 },
                 {
-                    "id": "en:plant-based-foods",
+                    "id": "en:viennoiseries",
                     "known": 1,
-                    "name": "Aliments d'origine végétale",
-                    "products": 92254,
-                    "url": "https://fr.openfoodfacts.org/categorie/aliments-d-origine-vegetale"
+                    "name": "Viennoiseries",
+                    "products": 4498,
+                    "url": "https://fr.openfoodfacts.org/categorie/viennoiseries"
                 }
             ]
         }

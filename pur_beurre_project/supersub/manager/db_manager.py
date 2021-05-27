@@ -13,6 +13,7 @@ class DbManager():
     """
     def __init__(self):
         self.categories_in_db = []
+        self.off_api_manager = OffApiManager()
     
     def reset_db(self, reset_user=False):
         """
@@ -20,6 +21,8 @@ class DbManager():
         self.drop_categories()
         self.drop_products()
         self.drop_favorites()
+        self.off_api_manager.download_categories()
+        self.off_api_manager.filter_categories()
         self.insert_categories()
         self.get_categories()
         self.insert_products()
@@ -42,10 +45,7 @@ class DbManager():
     def insert_categories(self):
         """
         """
-        off_api_manager = OffApiManager()
-        off_api_manager.download_categories()
-        off_api_manager.filter_categories()
-        for raw_category in off_api_manager.categories:
+        for raw_category in self.off_api_manager.categories:
             category = Category(
                 id_origin = raw_category['id'],
                 name = raw_category['name'],
