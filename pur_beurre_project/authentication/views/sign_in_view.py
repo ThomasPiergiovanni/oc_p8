@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 
-from authentication.forms import SignInForm
+from authentication.forms.sign_in_form import SignInForm
 from supersub.views.custom_view import CustomView
 
 

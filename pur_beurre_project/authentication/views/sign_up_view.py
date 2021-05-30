@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from authentication.forms import SignUpForm
+from authentication.forms.sign_up_form import SignUpForm
 from authentication.models import CustomUser
 from supersub.views.custom_view import CustomView
 

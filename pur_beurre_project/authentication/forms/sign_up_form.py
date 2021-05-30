@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
@@ -15,13 +15,3 @@ class SignUpForm(UserCreationForm):
     class Meta(UserCreationForm):
         model = CustomUser
         fields = ['first_name', 'email', 'password1', 'password2']
-
-
-class SignInForm(AuthenticationForm):
-    """
-    """
-    username = forms.CharField(label="Email", widget=forms.TextInput(attrs={'class': 'form-control', 'autofocus': True}))
-    password = forms.CharField(label="Mot de passe",widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-
-        
-    
