@@ -1,5 +1,7 @@
 from django.test import TestCase
 
+from authentication.models import CustomUser
+from authentication.tests.unit.models.test_custom_user import CustomUserTest
 from supersub.manager.db_manager import DbManager
 from supersub.models.category import Category
 from supersub.models.favorites import Favorites
@@ -133,6 +135,12 @@ class DbManagerTest(TestCase):
         favorites = Favorites.objects.all()
         for favorite in favorites:
             self.assertIsNone(favorite)
-        
+    
+    def test_drop_users_with_users(self):
+        CustomUserTest()
+        self.db_manager.drop_users()
+        custom_users = CustomUser.objects.all()
+        for custom_user in custom_users:
+            self.assertIsNone(custom_user)
     
 
