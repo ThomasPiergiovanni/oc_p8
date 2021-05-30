@@ -2,7 +2,9 @@ from django.test import TestCase
 
 from supersub.manager.db_manager import DbManager
 from supersub.models.category import Category
+from supersub.models.product import Product
 from supersub.tests.unit.models.test_category import CategoryTest
+from supersub.tests.unit.models.test_product import ProductTest
 
 
 class DbManagerTest(TestCase):
@@ -12,6 +14,7 @@ class DbManagerTest(TestCase):
     def setUpTestData(cls):
         cls.emulate_off_api_manager_categories()
         cls.db_manager = DbManager()
+        # cls.emulate_off_api_manager_products()
     
     @classmethod
     def emulate_off_api_manager_categories(cls):
@@ -32,6 +35,58 @@ class DbManagerTest(TestCase):
             }
         ]
 
+    @classmethod
+    def emulate_off_api_manager_products(cls):
+        """Emulation of off api manager products attribute. It consist of 
+        valid products that have been filtered out from api response to ensure
+        it suits db requirements
+        """
+        cls.products = [
+                {
+                    "categories": "Snacks,Snacks sucrés,Biscuits et gâteaux,Biscuits,Biscuits au chocolat",
+                    "categories_hierarchy": [
+                        "en:snacks",
+                        "en:sweet-snacks",
+                        "en:biscuits-and-cakes",
+                        "en:biscuits",
+                        "en:chocolate-biscuits"
+                    ],
+                    "id": "7622210449283",
+                    "image_small_url": "https://static.openfoodfacts.org/images/products/762/221/044/9283/front_fr.429.200.jpg",
+                    "nutriments": {
+                        "fat_100g": 17,
+                        "salt_100g": 0.58,
+                        "saturated-fat_100g": 5.6,
+                        "sugars_100g": 32
+                    },
+                    "nutriscore_grade": "d",
+                    "product_name": "Prince Chocolat",
+                    "url": "https://fr.openfoodfacts.org/produit/7622210449283/prince-chocolat-lu",
+                },
+                {
+                    "categories": "Snacks,Snacks sucrés,Biscuits et gâteaux,Biscuits,Biscuits au chocolat",
+                    "categories_hierarchy": [
+                        "en:snacks",
+                        "en:sweet-snacks",
+                        "en:biscuits-and-cakes",
+                        "en:biscuits",
+                        "en:chocolate-biscuits"
+                    ],
+                    "id": "7622210449283_dummy",
+                    "image_small_url": "https://static.openfoodfacts.org/images/products/762/221/044/9283/front_fr.429.200.jpg",
+                    "nutriments": {
+                        "fat_100g": 17,
+                        "salt_100g": 0.58,
+                        "saturated-fat_100g": 5.6,
+                        "sugars_100g": 32
+                    },
+                    "nutriscore_grade": "d",
+                    "product_name": "Prince Chocolat 2",
+                    "url": "https://fr.openfoodfacts.org/produit/7622210449283/prince-chocolat-lu",
+                },
+        ]
+    
+
     def test_drop_categories_with_categories(self):
         CategoryTest.emulate_category()
         self.db_manager.drop_categories()
@@ -51,3 +106,22 @@ class DbManagerTest(TestCase):
         self.db_manager.insert_categories()
         category = Category.objects.get(pk=1)
         self.assertEquals(category.name, "Snacks")
+
+    def test_drop_products_with_products(self):
+        ProductTest.emulate_product()
+        self.db_manager.drop_products()
+        products = Product.objects.all()
+        for product in products:
+            self.assertIsNone(product)
+    
+    def test_insert_products_with_product(self):
+        CategoryTest.emulate_category()
+        ProductTest.emulate_product()
+        product = Product.objects.get(pk=1)
+
+        self.db_manager.off_api_manager.products = self.products
+        self.db_manager.insert_products()
+        # category = Category.objects.get(pk=1)
+        # self.assertEquals(category.name, "Snacks")
+    
+
