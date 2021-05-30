@@ -13,8 +13,9 @@ class DbManagerTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.emulate_off_api_manager_categories()
+        cls.emulate_off_api_manager_products()
         cls.db_manager = DbManager()
-        # cls.emulate_off_api_manager_products()
+
     
     @classmethod
     def emulate_off_api_manager_categories(cls):
@@ -116,12 +117,12 @@ class DbManagerTest(TestCase):
     
     def test_insert_products_with_product(self):
         CategoryTest.emulate_category()
-        ProductTest.emulate_product()
-        product = Product.objects.get(pk=1)
-
+        self.db_manager.categories_in_db = Category.objects.all()
         self.db_manager.off_api_manager.products = self.products
         self.db_manager.insert_products()
-        # category = Category.objects.get(pk=1)
-        # self.assertEquals(category.name, "Snacks")
+        product = Product.objects.get(pk=1)
+        product_2 = Product.objects.get(pk=2)
+        self.assertEqual(product.name, "Prince Chocolat")
+        self.assertEqual(product_2.name, "Prince Chocolat 2")
     
 

@@ -64,10 +64,9 @@ class DbManager():
         """
         unique_prods_list =[]
         for category in self.categories_in_db:
-            off_api_manager = OffApiManager()
-            off_api_manager.download_products(category)
-            off_api_manager.filter_products()
-            for raw_product in off_api_manager.products:
+            self.off_api_manager.download_products(category)
+            self.off_api_manager.filter_products()
+            for raw_product in self.off_api_manager.products:
                 if raw_product['product_name'] not in unique_prods_list:
                     product = Product(
                         id_origin = raw_product['id'],
