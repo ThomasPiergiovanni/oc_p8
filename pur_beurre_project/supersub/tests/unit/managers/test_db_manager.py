@@ -2,8 +2,10 @@ from django.test import TestCase
 
 from supersub.manager.db_manager import DbManager
 from supersub.models.category import Category
+from supersub.models.favorites import Favorites
 from supersub.models.product import Product
 from supersub.tests.unit.models.test_category import CategoryTest
+from supersub.tests.unit.models.test_favorites import FavoritesTest
 from supersub.tests.unit.models.test_product import ProductTest
 
 
@@ -124,5 +126,13 @@ class DbManagerTest(TestCase):
         product_2 = Product.objects.get(pk=2)
         self.assertEqual(product.name, "Prince Chocolat")
         self.assertEqual(product_2.name, "Prince Chocolat 2")
+    
+    def test_drop_favorites_with_favorites(self):
+        FavoritesTest()
+        self.db_manager.drop_favorites()
+        favorites = Favorites.objects.all()
+        for favorite in favorites:
+            self.assertIsNone(favorite)
+        
     
 
