@@ -91,7 +91,6 @@ class DbManagerTest(TestCase):
                 },
         ]
     
-
     def test_drop_categories_with_categories(self):
         CategoryTest.emulate_category()
         self.db_manager.drop_categories()
@@ -124,10 +123,8 @@ class DbManagerTest(TestCase):
         self.db_manager.categories_in_db = Category.objects.all()
         self.db_manager.off_api_manager.products = self.products
         self.db_manager.insert_products()
-        product = Product.objects.get(pk=1)
-        product_2 = Product.objects.get(pk=2)
-        self.assertEqual(product.name, "Prince Chocolat")
-        self.assertEqual(product_2.name, "Prince Chocolat 2")
+        product = Product.objects.get(pk=2)
+        self.assertEqual(product.name, "Prince Chocolat 2")
     
     def test_drop_favorites_with_favorites(self):
         FavoritesTest()
@@ -143,4 +140,3 @@ class DbManagerTest(TestCase):
         for custom_user in custom_users:
             self.assertIsNone(custom_user)
     
-

@@ -6,6 +6,8 @@ from django.http import HttpResponse
 from supersub.manager.off_api_manager import OffApiManager
 
 
+
+
 class OffApiManagerTest(TestCase):
     """
     """
@@ -91,9 +93,24 @@ class OffApiManagerTest(TestCase):
             "skip": 0
         }
 
-    # @patch('supersub.manager.off_api_manager.OffApiManager.download_categories')
-    # def test_download_catgories_with_mock(self, mock_download_categories):
-    #     self.assertEqual(mock_download_categories.called, True)
+    def mock_requests_get(*args, **kwargs):
+        class MockResponse:
+            def __init__(self, endpoint, headers, params):
+                self.response = None
+
+            def json(self):
+                self.response = {"key1": "value1"}
+                return self.response
+
+        return MockResponse(endpoint=None, headers=None, params=None)
+
+    @patch(
+        'supersub.manager.off_api_manager.requests.get',
+        side_effect=mock_requests_get)
+    def test_download_catgories_with_mock(self, mock_get):
+        manager = OffApiManager()
+        manager.download_categories()
+        self.assertEqual(manager.categories_response, {"key1": "value1"})
 
     def test_filter_categories_with_category(self):
         self.manager.categories_response = self.categories_response
