@@ -93,16 +93,27 @@ class OffApiManagerTest(TestCase):
             "skip": 0
         }
 
+    # def mock_requests_get(*args, **kwargs):
+    #     class MockResponse:
+    #         def __init__(self, endpoint, headers, params):
+    #             self.response = None
+
+    #         def json(self):
+    #             self.response = {"key1": "value1"}
+    #             return self.response
+
+    #     return MockResponse(endpoint=None, headers=None, params=None)
+
     def mock_requests_get(*args, **kwargs):
         class MockResponse:
-            def __init__(self, endpoint, headers, params):
+            def __init__(self):
                 self.response = None
 
             def json(self):
                 self.response = {"key1": "value1"}
                 return self.response
 
-        return MockResponse(endpoint=None, headers=None, params=None)
+        return MockResponse()
 
     @patch(
         'supersub.manager.off_api_manager.requests.get',
