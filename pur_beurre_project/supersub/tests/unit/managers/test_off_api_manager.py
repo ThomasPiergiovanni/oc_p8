@@ -3,9 +3,10 @@ from unittest.mock import patch
 
 from django.http import HttpResponse
 
+from supersub.models.category import Category
+
 from supersub.manager.off_api_manager import OffApiManager
-
-
+from supersub.tests.unit.models.test_category import CategoryTest
 
 
 class OffApiManagerTest(TestCase):
@@ -16,6 +17,7 @@ class OffApiManagerTest(TestCase):
         cls.emulate_categories_response()
         cls.emulate_products_response()
         cls.manager = OffApiManager()
+        CategoryTest.emulate_category()
     
     @classmethod
     def emulate_categories_response(cls):
@@ -116,6 +118,15 @@ class OffApiManagerTest(TestCase):
         self.manager.categories_response = self.categories_response
         self.manager.filter_categories()
         self.assertEqual(self.manager.categories[0]['id'], "en:snacks")
+    
+    @patch(
+        'supersub.manager.off_api_manager.requests.get',
+        side_effect=mock_requests_get)
+    def test_download_products_with_mock(self, mock_get):
+        category = Category.objects.get(pk=1) 
+        manager = OffApiManager()
+        manager.download_products(category)
+        self.assertEqual(manager.products_response, {"key1": "value1"})
     
     def test_filter_products_with_missing_keyword(self):
         self.manager.products_response = self.products_response

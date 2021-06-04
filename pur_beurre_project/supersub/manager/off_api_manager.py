@@ -81,4 +81,3 @@ class OffApiManager:
                     self.products.append(raw_product)
             except KeyError as error:
                 pass
-                # print("Product key error: ", error)
