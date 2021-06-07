@@ -13,3 +13,7 @@ __pycache__/
 # Other unwanted file. to remove at the end
 .vscode
 
+# file containing migration
+pur_beurre_project/authentication/migrations/
+pur_beurre_project/supersub/migrations/
+
