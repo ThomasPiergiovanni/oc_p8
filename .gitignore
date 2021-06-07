@@ -16,4 +16,8 @@ __pycache__/
 # file containing migration
 pur_beurre_project/authentication/migrations/
 pur_beurre_project/supersub/migrations/
+pur_beurre_project/authentication/migrations/0001_initial.py
+pur_beurre_project/authentication/migrations/0002_auto_20210410_2330.py
+pur_beurre_project/supersub/migrations/0001_initial.py
+pur_beurre_project/supersub/migrations/0002_auto_20210413_2116.py
 
