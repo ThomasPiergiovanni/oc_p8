@@ -1,7 +1,6 @@
 from django.test import TestCase
 
 from authentication.forms.sign_up_form import SignUpForm
-from authentication.tests.unit.models.test_custom_user import CustomUserTest
 from supersub.forms.navbar_search_form import NavbarSearchForm
 
 
