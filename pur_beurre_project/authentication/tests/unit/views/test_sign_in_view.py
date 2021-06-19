@@ -17,3 +17,44 @@ class SignInViewTest(TestCase):
 
     def test_get_with_status_code_200(self):
         self.assertEqual(self.response_get.status_code, 200)
+    
+    def test_get_with_template(self):
+        self.assertTemplateUsed(
+            self.response_get, 'authentication/sign_in.html'
+        )
+
+    def test_get_with_form(self):
+        self.assertIsInstance(
+            self.response_get.context['form'], SignInForm
+        )
+
+    def test_get_with_navbarform(self):
+        self.assertIsInstance(
+            self.response_get.context['navbar_form'], NavbarSearchForm
+        )
+    
+    def test_post_with_redirect(self):
+        response = self.client.post(
+            '/authentication/sign_in/',
+            data={
+                'username': 'testuser@email.com',
+                'password': '_Xxxxxxx'
+            },
+            follow=True
+        )
+        self.assertEqual(
+            response.redirect_chain[0][0], '/supersub/'
+        )
+
+    def test_post_with_render(self):
+        response = self.client.post(
+            '/authentication/sign_in/',
+            data={
+                'username': 'noexists@email.com',
+                'password': '_Yyyyyyy'
+            },
+            follow=True
+        )
+        self.assertIsInstance(
+            response.context['form'], SignInForm
+        )
