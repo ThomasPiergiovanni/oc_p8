@@ -1,7 +1,10 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 
 from authentication.forms.sign_in_form import SignInForm
+from authentication.managers.authentication_manager import (
+    AuthenticationManager
+)
 from supersub.views.custom_view import CustomView
 
 
@@ -12,6 +15,7 @@ class SignInView(CustomView):
         """
         """
         super().__init__()
+        self.auth_manager = AuthenticationManager()
         self.data['redirect'] = 'supersub:index'
         self.data['render'] = 'authentication/sign_in.html'
 
@@ -25,14 +29,15 @@ class SignInView(CustomView):
     def post(self, request):
         """
         """
-        logout(request)
+        self.auth_manager._logout(request)
         form = SignInForm(data=request.POST)
         if form.is_valid():
-            email = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(email=email, password=password)
+            user = self.auth_manager._authenticate(
+                form.cleaned_data['username'],
+                form.cleaned_data['password']
+            )
             if user is not None:
-                login(request, user)
+                self.auth_manager._login(request, user)
                 return redirect(self.data['redirect'])
         else:
             self.data['ctxt']['form'] = form
