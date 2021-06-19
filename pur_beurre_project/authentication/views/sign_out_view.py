@@ -17,5 +17,5 @@ class SignOutView(CustomView):
     def get(self, request):
         """
         """
-        AuthenticationManager._logout(self, request)
+        AuthenticationManager()._logout(request)
         return redirect(self.data['redirect']) 
