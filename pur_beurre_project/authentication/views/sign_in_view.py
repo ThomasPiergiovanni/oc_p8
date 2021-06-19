@@ -1,4 +1,3 @@
-from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 
 from authentication.forms.sign_in_form import SignInForm
