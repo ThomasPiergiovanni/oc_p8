@@ -1,23 +1,29 @@
 """ DB manager module
 """
+from django.core.management.base import BaseCommand
 
-from supersub.manager.off_api_manager import OffApiManager
+from supersub.management.client.off_api_manager import OffApiManager
 from supersub.models.category import Category
 from supersub.models.product import Product
 from supersub.models.favorites import Favorites
 from authentication.models import CustomUser
 
 
-class DbManager():
+class Command(BaseCommand):
     """
     """
     def __init__(self):
         self.categories_in_db = []
         self.off_api_manager = OffApiManager()
-    
-    def reset_db(self, reset_user=False):
-        """
-        """
+
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--all',
+            action='store_true',
+            help='Reset all db values including users and superusers'
+        )
+
+    def handle(self, *args, **options):
         self.drop_categories()
         self.drop_products()
         self.drop_favorites()
@@ -26,9 +32,9 @@ class DbManager():
         self.insert_categories()
         self.get_categories()
         self.insert_products()
-        if reset_user:
+        if options['all']:
             self.drop_users()
-
+    
     def drop_categories(self):
         """
         """

@@ -5,7 +5,7 @@ from django.http import HttpResponse
 
 from supersub.models.category import Category
 
-from supersub.manager.off_api_manager import OffApiManager
+from supersub.management.client.off_api_manager import OffApiManager
 from supersub.tests.unit.models.test_category import CategoryTest
 
 
@@ -107,7 +107,7 @@ class OffApiManagerTest(TestCase):
         return MockResponse()
 
     @patch(
-        'supersub.manager.off_api_manager.requests.get',
+        'supersub.management.client.off_api_manager.requests.get',
         side_effect=mock_requests_get)
     def test_download_catgories_with_mock(self, mock_get):
         manager = OffApiManager()
@@ -120,7 +120,7 @@ class OffApiManagerTest(TestCase):
         self.assertEqual(self.manager.categories[0]['id'], "en:snacks")
     
     @patch(
-        'supersub.manager.off_api_manager.requests.get',
+        'supersub.management.client.off_api_manager.requests.get',
         side_effect=mock_requests_get)
     def test_download_products_with_mock(self, mock_get):
         category = Category.objects.get(pk=1) 

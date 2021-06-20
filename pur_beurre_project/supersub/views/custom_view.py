@@ -2,7 +2,7 @@ from django.views import View
 
 from supersub.forms.main_search_form import MainSearchForm
 from supersub.forms.navbar_search_form import NavbarSearchForm
-from supersub.manager.supersub_manager import SupersubManager
+from supersub.management.app.supersub_manager import SupersubManager
 
 
 class CustomView(View):

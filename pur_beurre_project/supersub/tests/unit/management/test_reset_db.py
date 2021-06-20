@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from authentication.models import CustomUser
 from authentication.tests.unit.models.test_custom_user import CustomUserTest
-from supersub.manager.db_manager import DbManager
+from supersub.management.commands.reset_db import Command
 from supersub.models.category import Category
 from supersub.models.favorites import Favorites
 from supersub.models.product import Product
@@ -11,14 +11,14 @@ from supersub.tests.unit.models.test_favorites import FavoritesTest
 from supersub.tests.unit.models.test_product import ProductTest
 
 
-class DbManagerTest(TestCase):
+class CommandTest(TestCase):
     """
     """
     @classmethod
     def setUpTestData(cls):
         cls.emulate_off_api_manager_categories()
         cls.emulate_off_api_manager_products()
-        cls.db_manager = DbManager()
+        cls.db_manager = Command()
 
     
     @classmethod
