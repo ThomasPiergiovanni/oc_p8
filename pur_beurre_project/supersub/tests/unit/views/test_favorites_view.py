@@ -25,12 +25,14 @@ class TestFavoritesView(TestCase):
     def test_init_with_attr_data_render(self):
         self.assertEqual(
             self.favorites_view.data['render'],
-            'supersub/favorites.html')
+            'supersub/favorites.html'
+        )
     
     def test_init_with_attr_data_redirect(self):
         self.assertEqual(
             self.favorites_view.data['redirect'],
-            'supersub:index')
+            'supersub:index'
+        )
     
     def test_get_with_response_200_with_favs_and_logged_in(self):
         FavoritesTest.emulate_favorites()
@@ -47,18 +49,23 @@ class TestFavoritesView(TestCase):
     def test_get_with_message_warning(self):
         self.client.login(
             email='testuser@email.com',
-            password='_Xxxxxxx')
+            password='_Xxxxxxx'
+        )
         response = self.client.get('/supersub/favorites/', follow=True)
         messages = response.context['messages']
         for message in messages:
             self.assertEqual(message.level_tag, 'warning')
-            self.assertEqual(message.message, "Vous n'avez enregistré aucun"\
-                " favoris jusqu'à présent")
+            self.assertEqual(
+                message.message,
+                "Vous n'avez enregistré aucun favoris jusqu'à présent"
+            )
 
     def test_get_with_message_error(self):
         response = self.client.get('/supersub/favorites/', follow=True)
         messages = response.context['messages']
         for message in messages:
             self.assertEqual(message.level_tag, 'error')
-            self.assertEqual(message.message, "Connectez-vous pour"\
-                " consulter vos favoris!")
+            self.assertEqual(
+                message.message,
+                "Connectez-vous pour consulter vos favoris!"
+            )

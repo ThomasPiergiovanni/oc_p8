@@ -25,7 +25,8 @@ class ProductDetailViewTest(TestCase):
     
     def test_get_with_navbar_form(self):
         self.assertIsInstance(
-            self.response.context['navbar_form'],   
+            self.response.context['navbar_form'],
+            NavbarSearchForm 
         )
     
     def test_get_with_product(self):
