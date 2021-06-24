@@ -1,0 +1,16 @@
+[run]
+omit = 
+    pur_beurre/*
+    authentication/__init__.py
+    authentication/admin.py
+    authentication/tests/*
+    authentication/migrations/*
+    supersub/__init__.py
+    supersub/tests/*
+    supersub/migrations/*
+    manage.py
+    db.sqlite3
+    .gitignore
+    credentials.txt
+    README.md
+    requirements.txt
