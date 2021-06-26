@@ -18,5 +18,12 @@ class NewVisitorTest(TestCase):
 
     def test_index_has_main_form(self):
         self.browser.get('http://127.0.0.1:8000/supersub/')
-        self.browser.find_element_by_id('product')
+        self.browser.find_element_by_id('index_main_search_form')
+    
+    def test_index_has_search_button(self):
+        self.browser.get('http://127.0.0.1:8000/supersub/')
+        self.browser.find_element_by_id('index_search_button')
+
+    def test_search_a_product_and_get_answer_back(self):
+        pass
     
