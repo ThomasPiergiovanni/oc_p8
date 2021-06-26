@@ -26,12 +26,12 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
             <div class="container">
-                <img src="{% static 'supersub/assets/img/logo_pur_beurre.png' %}" width="40" height="30" alt="Pur beurre logo">
-                <a class="navbar-brand js-scroll-trigger pl-2" href="{% url 'supersub:index'%}">Pur Beurre</a>
+                <img src="{% static 'supersub/assets/img/logo_pur_beurre.png' %}" id="navbar_bur_beurre_logo" width="40" height="30" alt="Pur beurre logo">
+                <a class="navbar-brand js-scroll-trigger pl-2" href="{% url 'supersub:index'%}" id="navbar_pur_beurre_texte">Pur Beurre</a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto my-2 my-lg-0 align-items-center">
-                        <form action="{% url 'supersub:results'%}" method="post" class="d-flex pl-4 pr-4" novalidate>
+                        <form id="navbar_search_form" action="{% url 'supersub:results'%}" method="post" class="d-flex pl-4 pr-4" novalidate>
                             {% csrf_token %}
                             {% for field in navbar_form %}
                                 {{ field }}
@@ -47,12 +47,12 @@
                         </li>
                         <li class="nav-item nav-link js-scroll-trigger navbar-brand">
                             <a href="{% url 'supersub:favorites' %}">
-                                <i class="fas fa-carrot" data-fa-transform="rotate-315"></i>
+                                <i class="fas fa-carrot" id="carrot_icon" data-fa-transform="rotate-315"></i>
                             </a>
                         </li>
                         <li class="nav-item nav-link js-scroll-trigger navbar-brand">
                             <a href="{% url 'authentication:sign_out'%}">
-                                <i class="fas fa-sign-out-alt"></i>
+                                <i class="fas fa-sign-out-alt" id="logout_icon"></i>
                             </a>
                         </li>
                     </ul>
