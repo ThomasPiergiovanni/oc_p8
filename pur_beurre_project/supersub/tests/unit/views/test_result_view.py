@@ -47,21 +47,20 @@ class ResultViewTest(TestCase):
     def test_post_with_response_200(self):
         response = self.client.post(
             '/supersub/results/',
-            data={'product':'Product_for_test'})
+            data={'product':'Pain 100% mie nature PT - Harrys - 500 g'})
         self.assertEqual(response.status_code,200)
     
     def test_post_with_product(self):
         response = self.client.post(
             '/supersub/results/',
-            data={'product':'Product_for_test'})
+            data={'product':'Pain'})
         self.assertEqual(response.context['searched_prod'].id, 1)
     
     def test_post_with_page_products(self):
         response = self.client.post(
             '/supersub/results/',
-            data={'product':'Product_for_test'})
+            data={'product':'Pain'})
         self.assertEquals(response.context['page_obj'][0].id, 2)
-        self.assertEquals(response.context['page_obj'][1].id, 3)
     
     def test_post_with_warning_message(self):
         response = self.client.post(

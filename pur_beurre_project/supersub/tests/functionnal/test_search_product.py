@@ -2,6 +2,9 @@ from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from time import sleep
 
+from supersub.tests.unit.models.test_category import CategoryTest
+from supersub.tests.unit.models.test_product import ProductTest
+
 
 class SearchProductTest(StaticLiveServerTestCase):
     """
@@ -13,6 +16,8 @@ class SearchProductTest(StaticLiveServerTestCase):
             'C:\Program Files\EdgeDriver\msedgedriver.exe'
         )
         cls.browser.implicitly_wait(10)
+        CategoryTest().emulate_category()
+        ProductTest().emulate_product()
 
     @classmethod
     def tearDownClass(cls):
@@ -57,14 +62,15 @@ class SearchProductTest(StaticLiveServerTestCase):
         self.assertTrue(self.browser.find_element_by_id('logout_icon'))
 
     def test_search_product_use_case(self):
-        # The user types "Pain" on teh main form
+        # The user types "Pain" on the main form
         sleep(2)
         self.browser.find_element_by_id('id_main_form').send_keys('Pain')
-        sleep(5)
+        sleep(2)
 
-        # The user clicks then "Chercher" button"
+        # The user clicks then "Chercher" button ans sees the proposed
+        # substitutes products
         self.browser.find_element_by_id('index_search_button').click()
         sleep(2)
-        # self.assertTrue(
-        #     self.browser.find_element_by_id('result_searched_product')
-        # )
+        self.assertTrue(
+           self.browser.find_element_by_id('result_searched_product')
+        )
