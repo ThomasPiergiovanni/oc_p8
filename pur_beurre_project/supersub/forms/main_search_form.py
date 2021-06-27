@@ -8,4 +8,5 @@ class MainSearchForm(forms.Form):
         label=None,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'autofocus': True}))
+            'autofocus': True,
+            'id':'id_main_form'}))
