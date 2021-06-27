@@ -8,7 +8,7 @@ from authentication.models import CustomUser
 class SignUpForm(UserCreationForm):
     """
     """
-    first_name = forms.CharField(label="Prénom", widget=forms.TextInput(attrs={'class': 'form-control', 'autofocus': True}))
+    first_name = forms.CharField(label="Prénom", widget=forms.TextInput(attrs={'class': 'form-control', 'autofocus': True, 'id':'id_first_name_form'}))
     email = forms.CharField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
     password1 = forms.CharField(label="Mot de passe", widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     password2 = forms.CharField(label="Confirmer le mot de passe",widget=forms.PasswordInput(attrs={'class': 'form-control'}))
