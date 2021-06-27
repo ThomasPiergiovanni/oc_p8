@@ -10,7 +10,7 @@ from supersub.tests.unit.models.test_product import ProductTest
 
 
 class SearchProductTest(StaticLiveServerTestCase):
-    """Search product use case class
+    """Search product use case test class
     """
     @classmethod
     def setUpClass(cls):
