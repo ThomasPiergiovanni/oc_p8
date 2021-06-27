@@ -1,13 +1,16 @@
+"""Module for search product use case functional test
+"""
+from time import sleep
+
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
-from time import sleep
 
 from supersub.tests.unit.models.test_category import CategoryTest
 from supersub.tests.unit.models.test_product import ProductTest
 
 
 class SearchProductTest(StaticLiveServerTestCase):
-    """
+    """Search product use case class
     """
     @classmethod
     def setUpClass(cls):
@@ -23,11 +26,11 @@ class SearchProductTest(StaticLiveServerTestCase):
     def tearDownClass(cls):
         cls.browser.quit()
         super().tearDownClass()
-    
+
     def setUp(self):
         # The user logs to the app page
         self.browser.get('%s%s' % (self.live_server_url, '/supersub/'))
-    
+
     def test_user_lands_on_home_page(self):
         # The user notices the page name and the header title
         self.assertIn("P8 - Pur-beurre", self.browser.title)
@@ -36,13 +39,9 @@ class SearchProductTest(StaticLiveServerTestCase):
             self.browser.find_element_by_tag_name('h1').text
         )
 
-        # The user notices a navbar composed of an image 
+        # The user notices a navbar composed of an image
         navbar_image = self.browser.find_element_by_tag_name('img')
         self.assertTrue(navbar_image)
-        #     navbar_image.get_attribute('src'),
-        #     'http://localhost:54687/static/supersub/assets/img/'\
-        #     'logo_pur_beurre.png'
-        # )
 
         #...  a title
         navbar_text = self.browser.find_element_by_id(
