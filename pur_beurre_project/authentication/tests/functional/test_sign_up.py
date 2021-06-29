@@ -27,20 +27,22 @@ class SignUpTest(StaticLiveServerTestCase):
     
     def setUp(self):
         # The user logs to the sign up page
-        self.browser.get('%s%s' % (
-            self.live_server_url,
-            '/authentication/sign_up/'
-        ))
+        self.browser.get(
+            '%s%s' % (
+                self.live_server_url,
+                '/authentication/sign_up/'
+            )
+        )
     
     def test_sign_up_use_case(self):
         # The user types its first name, email and its password twice in 
         # the form
         sleep(2)
         self.browser.find_element_by_id('id_first_name_input')\
-            .send_keys('Utilisateur')
+            .send_keys('Testeruser')
         sleep(1)
         self.browser.find_element_by_id('id_email_input')\
-            .send_keys('utilisateur@email.com')
+            .send_keys('testeruser@email.com')
         sleep(1)
         self.browser.find_element_by_id('id_pwd1_input')\
             .send_keys('_Yyyyyyy')
@@ -51,8 +53,5 @@ class SignUpTest(StaticLiveServerTestCase):
 
         # The user clicks then "Envoyer" button and lands on the sign in page
         self.browser.find_element_by_id('id_sign_up_button').click()
-        sleep(5)
-        self.assertIn(
-            'CONNECTION',
-            self.browser.find_element_by_tag_name('h2').text
-        )
+        sleep(1)
+ 
