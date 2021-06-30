@@ -93,9 +93,12 @@ class CommandTest(TestCase):
     
     def test_drop_categories_with_categories(self):
         CategoryTest.emulate_category()
+        init_categories = Category.objects.all()
+        for category in init_categories:
+            self.assertIsNotNone(category)
         self.db_manager.drop_categories()
-        categories = Category.objects.all()
-        for category in categories:
+        post_categories = Category.objects.all()
+        for category in post_categories:
             self.assertIsNone(category)
     
     def test_get_categories_with_categories(self):

@@ -19,7 +19,6 @@ class Command(BaseCommand):
 
     def __init__(self):
         super().__init__()
-        self.categories = None
         self.categories_in_db = []
         self.off_api_manager = OffApiManager()
 
