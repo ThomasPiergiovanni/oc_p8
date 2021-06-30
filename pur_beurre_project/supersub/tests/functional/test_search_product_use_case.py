@@ -9,7 +9,7 @@ from supersub.tests.unit.models.test_category import CategoryTest
 from supersub.tests.unit.models.test_product import ProductTest
 
 
-class SearchProductTest(StaticLiveServerTestCase):
+class SearchProductUseCaseTest(StaticLiveServerTestCase):
     """Search product use case test class
     """
     @classmethod

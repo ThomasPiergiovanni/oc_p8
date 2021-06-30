@@ -5,10 +5,8 @@ from time import sleep
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 
-from authentication.tests.unit.models.test_custom_user import CustomUserTest
 
-
-class SignUpTest(StaticLiveServerTestCase):
+class SignUpUseCaseTest(StaticLiveServerTestCase):
     """Sign up use case test class
     """
     @classmethod
@@ -18,7 +16,6 @@ class SignUpTest(StaticLiveServerTestCase):
             'C:\Program Files\EdgeDriver\msedgedriver.exe'
         )
         cls.browser.implicitly_wait(10)
-        CustomUserTest().emulate_custom_user()
 
     @classmethod
     def tearDownClass(cls):
@@ -53,5 +50,17 @@ class SignUpTest(StaticLiveServerTestCase):
 
         # The user clicks then "Envoyer" button and lands on the sign in page
         self.browser.find_element_by_id('id_sign_up_button').click()
-        sleep(1)
+        self.assertIn(
+            'Connection',
+            self.browser.find_element_by_tag_name('h2').text
+        )
+        self.assertTrue(
+            self.browser.find_element_by_id('id_signin_email_input')
+        )
+        self.assertTrue(
+            self.browser.find_element_by_id('id_signin_password_input')
+        )
+        sleep(2)
+
+        
  
