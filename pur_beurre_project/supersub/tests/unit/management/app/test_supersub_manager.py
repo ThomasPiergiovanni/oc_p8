@@ -121,7 +121,8 @@ class SupersubManagerTest(TestCase):
         form =  SupersubManager()._get_form(self.request_POST)
         self.assertTrue(
             type(form),
-            type(MainSearchForm()) or type(NavbarSearchForm()))
+            type(MainSearchForm()) or type(NavbarSearchForm())
+        )
     
     def test__get_page_from_form_with_prod_name(self):
         page = SupersubManager()._get_page_from_form(
