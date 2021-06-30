@@ -1,4 +1,5 @@
-""" DB manager module
+# pylint: disable=E1101,R0201
+""" DB management command
 """
 from django.core.management.base import BaseCommand
 
@@ -10,9 +11,15 @@ from authentication.models import CustomUser
 
 
 class Command(BaseCommand):
+    """ Reset DB from scratch by making request to OFF API. Use it with
+    option --all to reset all users as well. This including superuser
     """
-    """
+    help="Reset DB from scratch by making request to OFF API. Use it with"\
+        " option --all to reset all users as well. This including superuser"
+
     def __init__(self):
+        super().__init__()
+        self.categories = None
         self.categories_in_db = []
         self.off_api_manager = OffApiManager()
 
@@ -34,22 +41,28 @@ class Command(BaseCommand):
         self.insert_products()
         if options['all']:
             self.drop_users()
-    
+
     def drop_categories(self):
+        """Method thats drop categories entities from DB
         """
+        self._drop_objects(Category)
+
+    def _drop_objects(self, object_class):
+        """Manager method thats drop objects entities from DB
         """
-        all_categories = Category.objects.all()
-        all_categories.delete()
+        objects = object_class.objects.all()
+        objects.delete()
 
     def get_categories(self):
-        """
+        """Method thats select all categories entities from DB
         """
         all_categories = Category.objects.all()
         for category in all_categories:
             self.categories_in_db.append(category)
-    
+
     def insert_categories(self):
-        """
+        """Method that uses categories entities collected by OFF API manager
+        and insert those entities into DB.
         """
         for raw_category in self.off_api_manager.categories:
             category = Category(
@@ -60,13 +73,13 @@ class Command(BaseCommand):
             category.save()
 
     def drop_products(self):
+        """Method thats drops products entities from DB
         """
-        """
-        all_products = Product.objects.all()
-        all_products.delete()
-    
+        self._drop_objects(Product)
+
     def insert_products(self):
-        """
+        """Method that uses products entities collected by OFF API manager
+        and insert those entities into DB.
         """
         unique_prods_list =[]
         for category in self.categories_in_db:
@@ -79,7 +92,9 @@ class Command(BaseCommand):
                         name = raw_product['product_name'],
                         nutriscore_grade = raw_product['nutriscore_grade'],
                         fat = raw_product['nutriments']['fat_100g'],
-                        saturated_fat = raw_product['nutriments']['saturated-fat_100g'],
+                        saturated_fat = (
+                            raw_product['nutriments']['saturated-fat_100g']
+                        ),
                         sugar=raw_product['nutriments']['sugars_100g'],
                         salt=raw_product['nutriments']['salt_100g'],
                         image=raw_product['image_small_url'],
@@ -89,15 +104,13 @@ class Command(BaseCommand):
                     )
                     product.save()
                     unique_prods_list.append(raw_product['product_name'])
-    
+
     def drop_favorites(self):
+        """Method thats drops favorites entities from DB
         """
-        """
-        all_favorites = Favorites.objects.all()
-        all_favorites.delete()
-    
+        self._drop_objects(Favorites)
+
     def drop_users(self):
+        """Method thats drops users entities from DB
         """
-        """
-        all_users = CustomUser.objects.all()
-        all_users.delete()
+        self._drop_objects(CustomUser)

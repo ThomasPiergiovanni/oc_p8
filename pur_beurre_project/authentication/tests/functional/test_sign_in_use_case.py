@@ -34,9 +34,8 @@ class SignInUseCaseTest(StaticLiveServerTestCase):
             )
         )
 
-    
     def test_sign_in_use_case(self):
-        # The user types its email and password
+        # The user types its email and password.
         sleep(2)
         self.browser.find_element_by_id('id_signin_email_input')\
             .send_keys('testuser@email.com')
@@ -45,7 +44,8 @@ class SignInUseCaseTest(StaticLiveServerTestCase):
             .send_keys('_Xxxxxxx')
         sleep(1)
 
-        # The user clicks then "Envoyer" button and lands on the sign in page
+        # The user clicks then "Se connecter" button and lands on the
+        # home page.
         self.browser.find_element_by_id('id_sign_in_button').click()
         self.assertIn(
             'DU GRAS, OUI MAIS DE QUALITÉ',
