@@ -44,7 +44,7 @@ class OffApiManager:
                 ):
                     self.categories.append(raw_category)
             except KeyError as error:
-                print("Category key error:", error)
+                return error
 
     def download_products(self, category):
         """

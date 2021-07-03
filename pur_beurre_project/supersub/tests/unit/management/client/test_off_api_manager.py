@@ -15,6 +15,7 @@ class OffApiManagerTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.emulate_categories_response()
+        cls.emulate_keyrror_categories_response()
         cls.emulate_products_response()
         cls.manager = OffApiManager()
         CategoryTest.emulate_category()
@@ -37,6 +38,19 @@ class OffApiManagerTest(TestCase):
                     "name": "Viennoiseries",
                     "products": 4498,
                     "url": "https://fr.openfoodfacts.org/categorie/viennoiseries"
+                }
+            ]
+        }
+    @classmethod
+    def emulate_keyrror_categories_response(cls):
+        cls.keyrror_categories_response = {
+            "count": 19982,
+            "tags": [
+                {
+                    "id": "en:snacks",
+                    "known": 1,
+                    "products": 54568,
+                    "url": "https://fr.openfoodfacts.org/categorie/snacks"
                 }
             ]
         }
@@ -118,6 +132,11 @@ class OffApiManagerTest(TestCase):
         self.manager.categories_response = self.categories_response
         self.manager.filter_categories()
         self.assertEqual(self.manager.categories[0]['id'], "en:snacks")
+    
+    def test_filter_categories_with_keyerror(self):
+        self.manager.categories_response = self.keyrror_categories_response
+        error = self.manager.filter_categories()
+        self.assertTrue(error, KeyError)
     
     @patch(
         'supersub.management.client.off_api_manager.requests.get',
