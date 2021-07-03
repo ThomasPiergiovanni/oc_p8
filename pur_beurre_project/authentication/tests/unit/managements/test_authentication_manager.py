@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.test import RequestFactory, TestCase
 
-from authentication.managers.authentication_manager import AuthenticationManager
+from authentication.managements.authentication_manager import AuthenticationManager
 from authentication.tests.unit.models.test_custom_user import CustomUserTest
 
 
@@ -35,6 +35,6 @@ class AuthenticationManagerTest(TestCase):
         request = RequestFactory().post('')
         session_middleware = SessionMiddleware()
         session_middleware.process_request(request)
-        user = authenticate(email='testuser@email.com', password='_Xxxxxxx' )
+        user = authenticate(email='testuser@email.com', password='_Xxxxxxx')
         self.auth_manager._login(request, user)
         self.assertEqual(request.session.get('_auth_user_id'), "1")

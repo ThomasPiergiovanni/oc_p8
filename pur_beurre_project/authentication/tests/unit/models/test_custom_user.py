@@ -21,13 +21,17 @@ class CustomUserTest(TestCase):
     def test_custom_user_with_attr_username(self):
         user_field = CustomUser._meta.get_field('email')
         self.assertTrue(user_field)
-        self.assertEquals(type(user_field), type(models.EmailField()))
-        self.assertEquals(user_field.max_length, 250)
-        self.assertEquals(user_field.unique, True)
+        self.assertEqual(type(user_field), type(models.EmailField()))
+        self.assertEqual(user_field.max_length, 250)
+        self.assertEqual(user_field.unique, True)
     
     def test_custom_user_with_attr_first_name(self):
         user_field = CustomUser._meta.get_field('first_name')
         self.assertTrue(user_field)
-        self.assertEquals(type(user_field), type(models.TextField()))
-        self.assertEquals(user_field.max_length, 100)
-        self.assertEquals(user_field.null, False)
+        self.assertEqual(type(user_field), type(models.TextField()))
+        self.assertEqual(user_field.max_length, 100)
+        self.assertEqual(user_field.null, False)
+    
+    def test__str__with_email(self):
+        user = CustomUser.objects.get(pk=1)
+        self.assertEqual(user.__str__(), 'testuser@email.com')
