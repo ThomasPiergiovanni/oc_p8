@@ -2,6 +2,9 @@ from django.core.paginator import Paginator
 from django.test import TestCase, RequestFactory
 
 from authentication.models import CustomUser
+from authentication.tests.integration.models.test_custom_user import (
+    CustomUserTest
+)
 from supersub.forms.main_search_form import MainSearchForm
 from supersub.forms.navbar_search_form import NavbarSearchForm
 from supersub.management.app.supersub_manager import SupersubManager
@@ -23,17 +26,22 @@ class SupersubManagerTest(TestCase):
         cls.emulate_data()
         CategoryTest.emulate_category()
         ProductTest.emulate_product()
+        CustomUserTest.emulate_custom_user()
         cls.prod1 = Product.objects.get(pk=1)
         cls.prod2 = Product.objects.get(pk=2)
         cls.prod3 = Product.objects.get(pk=3)
         cls.prods_list = cls.emulate_prods_list(cls.prod1, cls.prod2)
         cls.prods_ids = cls.emulate_prods_ids_list(cls.prod1, cls.prod2)
         cls.request_GET = RequestFactory().get('', data={'page':1})
-        cls.request_POST = RequestFactory().post('', data={'page':1, 'product':cls.prod1.name})
+        cls.request_POST = RequestFactory().post(
+            '',
+            data={
+                'page':1,
+                'product':cls.prod1.name
+            }
+        )
         cls.paginator = Paginator(cls.prods_list, 6)
         FavoritesTest.emulate_favorites()
-        cls.emulate_custom_user()
-        cls.custom_user = CustomUser.objects.get(pk=1)
     
     @classmethod
     def emulate_data(cls):
@@ -58,22 +66,14 @@ class SupersubManagerTest(TestCase):
         prods_ids.append(prod_two.id)
         return prods_ids
        
-    @classmethod
-    def emulate_custom_user(cls):
-        custom_user = CustomUser.objects.create_user(
-            id=1,
-            email='testuser@email.com',
-            password='_Xxxxxxx',
-            first_name='tester'
-        )
-    
     def test__get_data(self):
         data = SupersubManager()._get_data()
         self.assertEqual(data, self.data)
 
     def test__get_page_from_session_vars_with_prod_name(self):
         page = SupersubManager()._get_page_from_session_vars(
-            self.request_GET, self.prods_ids)
+            self.request_GET, self.prods_ids
+        )
         self.assertEqual(
             page[0].name,
             'Pain 100% mie nature PT - Harrys - 500 g'
@@ -148,19 +148,36 @@ class SupersubManagerTest(TestCase):
         self.assertEqual(self.request_POST.session['prods_ids'], [2])
     
     def test__delete_session_vars_with_none(self):
-        setattr(self.request_GET, 'session', {
-            'prod_id': 1, 'prods_ids': [2, 3]})
+        setattr(
+            self.request_GET,
+            'session', 
+            {
+                'prod_id': 1,
+                'prods_ids': [2, 3]
+            }
+        )
         SupersubManager()._delete_session_vars(self.request_GET)
         self.assertEqual(
-            self.request_GET.session.get('prod_id', None), None)
+            self.request_GET.session.get('prod_id', None),
+            None
+        )
         self.assertEqual(
-            self.request_GET.session.get('prods_ids', None), None)
+            self.request_GET.session.get('prods_ids', None),
+            None
+        )
     
     def test__get_session_vars_with_prod_id_and_prods_ids(self):
         setattr(
-            self.request_GET, 'session', {'prod_id': 1,'prods_ids': [2, 3]})
+            self.request_GET,
+            'session',
+            {
+                'prod_id': 1,
+                'prods_ids': [2, 3]
+            }
+        )
         prod_id, prods_ids = (
-            SupersubManager()._get_session_vars(self.request_GET))
+            SupersubManager()._get_session_vars(self.request_GET)
+        )
         self.assertEqual(prod_id, 1)
         self.assertEqual(prods_ids, [2, 3])
     
