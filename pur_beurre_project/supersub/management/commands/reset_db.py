@@ -14,7 +14,7 @@ class Command(BaseCommand):
     """ Reset DB from scratch by making request to OFF API. Use it with
     option --all to reset all users as well. This including superuser
     """
-    help="Reset DB from scratch by making request to OFF API. Use it with"\
+    help = "Reset DB from scratch by making request to OFF API. Use it with"\
         " option --all to reset all users as well. This including superuser"
 
     def __init__(self):
@@ -65,9 +65,9 @@ class Command(BaseCommand):
         """
         for raw_category in self.off_api_manager.categories:
             category = Category(
-                id_origin = raw_category['id'],
-                name = raw_category['name'],
-                url = raw_category['url']
+                id_origin=raw_category['id'],
+                name=raw_category['name'],
+                url=raw_category['url']
             )
             category.save()
 
@@ -80,18 +80,18 @@ class Command(BaseCommand):
         """Method that uses products entities collected by OFF API manager
         and insert those entities into DB.
         """
-        unique_prods_list =[]
+        unique_prods_list = []
         for category in self.categories_in_db:
             self.off_api_manager.download_products(category)
             self.off_api_manager.filter_products()
             for raw_product in self.off_api_manager.products:
                 if raw_product['product_name'] not in unique_prods_list:
                     product = Product(
-                        id_origin = raw_product['id'],
-                        name = raw_product['product_name'],
-                        nutriscore_grade = raw_product['nutriscore_grade'],
-                        fat = raw_product['nutriments']['fat_100g'],
-                        saturated_fat = (
+                        id_origin=raw_product['id'],
+                        name=raw_product['product_name'],
+                        nutriscore_grade=raw_product['nutriscore_grade'],
+                        fat=raw_product['nutriments']['fat_100g'],
+                        saturated_fat=(
                             raw_product['nutriments']['saturated-fat_100g']
                         ),
                         sugar=raw_product['nutriments']['sugars_100g'],

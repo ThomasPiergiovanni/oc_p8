@@ -15,11 +15,7 @@ class SupersubManager():
     def _get_data(self):
         """Method that define and get the data dictionnary variable.
         """
-        data = {
-            'ctxt': {},
-            'render':"",
-            'redirect':""
-        }
+        data = {'ctxt': {}, 'render': "", 'redirect': ""}
         return data
 
     def _get_page_from_session_vars(self, request, prods_ids):
@@ -58,7 +54,7 @@ class SupersubManager():
     def _get_request_page_number(self, request):
         """Method that return a request from a specific page.
         """
-        return request.GET.get ('page')
+        return request.GET.get('page')
 
     def _get_form(self, request):
         """Method that returns a form.
@@ -81,13 +77,14 @@ class SupersubManager():
         return (
             Product.objects.filter(category_id=product.category_id)
             .filter(nutriscore_grade__lte=product.nutriscore_grade)
-            .exclude(id__exact=product.id).order_by('id'))
+            .exclude(id__exact=product.id).order_by('id')
+        )
 
     def _get_session_prods_ids(self, prods_candidates):
         """Method that gets subs and store their ids into
         a list.
         """
-        prods_ids =[]
+        prods_ids = []
         for candidate in prods_candidates:
             prods_ids.append(candidate.id)
         return prods_ids
@@ -119,6 +116,9 @@ class SupersubManager():
         """Method that get and return Favorites objects from DB.
         """
         try:
-            return Favorites.objects.get(product_id__exact=id_prod, custom_user_id__exact=id_user)
-        except:
+            return Favorites.objects.get(
+                product_id__exact=id_prod,
+                custom_user_id__exact=id_user
+            )
+        except Exception:
             return None

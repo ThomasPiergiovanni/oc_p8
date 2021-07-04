@@ -77,7 +77,7 @@ class OffApiManager:
                         raw_product['image_small_url'] and
                         raw_product['url'] and
                         raw_product['categories_hierarchy']
-                    ):
+                ):
                     self.products.append(raw_product)
             except KeyError:
                 pass
