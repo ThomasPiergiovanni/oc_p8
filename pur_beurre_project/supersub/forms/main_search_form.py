@@ -12,7 +12,7 @@ class MainSearchForm(forms.Form):
             attrs={
                 'class': 'form-control',
                 'autofocus': True,
-                'id':'id_main_form'
+                'id': 'id_main_form'
             }
         )
     )
