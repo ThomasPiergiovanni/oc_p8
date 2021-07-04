@@ -21,4 +21,6 @@ class Product(models.Model):
     url = models.URLField(max_length=200)
     categories = models.TextField()
     category = models.ForeignKey(Category, models.CASCADE)
-    relation_custom_user = models.ManyToManyField(CustomUser, through='Favorites')
+    relation_custom_user = models.ManyToManyField(
+        CustomUser, through='Favorites'
+    )
