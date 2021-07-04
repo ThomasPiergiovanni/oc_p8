@@ -4,7 +4,7 @@
 from unittest.mock import patch
 from django.test import TestCase
 
-from pur_beurre.tests_custom_settings import (
+from pur_beurre.custom_settings_for_tests import (
     OFF_API_CATEGORIES_W_KEYS,
     OFF_API_CATEGORIES_WO_KEYS,
     OFF_API_PRODUCTS
