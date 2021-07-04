@@ -18,7 +18,7 @@ class MainSearchFormTest(TestCase):
     def test_mainsearchform_with_attr_product_class(self):
         self.assertTrue(
             self.main_form.fields['product']
-            .widget.attrs['class'] =='form-control')
+            .widget.attrs['class'] == 'form-control')
 
     def test_mainsearchform_with_attr_product_autofocus(self):
         self.assertTrue(
@@ -26,9 +26,9 @@ class MainSearchFormTest(TestCase):
             .widget.attrs['autofocus'] is True)
 
     def test_mainsearchform_with_validation_wo_input(self):
-        form = MainSearchForm(data={'product':''})
+        form = MainSearchForm(data={'product': ''})
         self.assertFalse(form.is_valid())
 
     def test_mainsearchform_with_validation_with_input(self):
-        form = MainSearchForm(data={'product':'Un produit test'})
+        form = MainSearchForm(data={'product': 'Un produit test'})
         self.assertTrue(form.is_valid())

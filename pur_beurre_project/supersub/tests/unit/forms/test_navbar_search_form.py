@@ -18,17 +18,18 @@ class NavbarSearchFormTest(TestCase):
     def test_navbarsearchform_with_attr_product_class(self):
         self.assertTrue(
             self.form.fields['product']
-            .widget.attrs['class'] =='form-control mybox')
+            .widget.attrs['class'] == 'form-control mybox')
 
     def test_navbarsearchform_with_attr_product_autofocus(self):
         self.assertRaises(
             KeyError,
-            lambda: self.form.fields['product'].widget.attrs['autofocus'])
+            lambda: self.form.fields['product'].widget.attrs['autofocus']
+        )
 
     def test_navbarsearchform_with_validation_wo_input(self):
-        form = NavbarSearchForm(data={'product':''})
+        form = NavbarSearchForm(data={'product': ''})
         self.assertFalse(form.is_valid())
 
     def test_navbarsearchform_with_validation_with_input(self):
-        form = NavbarSearchForm(data={'product':'Un produit test'})
+        form = NavbarSearchForm(data={'product': 'Un produit test'})
         self.assertTrue(form.is_valid())
