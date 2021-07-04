@@ -1,3 +1,5 @@
+"""Products module model
+"""
 from django.db import models
 
 from authentication.models import CustomUser
@@ -5,6 +7,9 @@ from supersub.models.category import Category
 
 
 class Product(models.Model):
+    """Products class model. Category attribute is a foreign from Catgeory
+    class.
+    """
     id_origin = models.CharField(max_length=200)
     name = models.CharField(max_length=200, unique=True)
     nutriscore_grade = models.CharField(max_length=8)
