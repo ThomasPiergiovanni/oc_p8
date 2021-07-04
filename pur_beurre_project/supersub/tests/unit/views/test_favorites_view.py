@@ -4,9 +4,9 @@ from django.contrib.auth import login, logout
 
 from authentication.tests.unit.models.test_custom_user import CustomUserTest
 from supersub.views.favorites_view import FavoritesView
-from supersub.tests.unit.models.test_category import CategoryTest
-from supersub.tests.unit.models.test_favorites import FavoritesTest
-from supersub.tests.unit.models.test_product import ProductTest
+from supersub.tests.integration.models.test_category import CategoryTest
+from supersub.tests.integration.models.test_favorites import FavoritesTest
+from supersub.tests.integration.models.test_product import ProductTest
 
 
 class TestFavoritesView(TestCase):

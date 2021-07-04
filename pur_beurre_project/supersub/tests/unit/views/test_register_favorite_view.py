@@ -5,9 +5,9 @@ from django.urls import reverse
 from authentication.models import CustomUser
 from authentication.tests.unit.models.test_custom_user import CustomUserTest
 from supersub.models.favorites import Favorites
-from supersub.tests.unit.models.test_category import CategoryTest
-from supersub.tests.unit.models.test_product import ProductTest
-from supersub.tests.unit.models.test_favorites import FavoritesTest
+from supersub.tests.integration.models.test_category import CategoryTest
+from supersub.tests.integration.models.test_product import ProductTest
+from supersub.tests.integration.models.test_favorites import FavoritesTest
 
 
 class RegisterFavoriteViewTest(TestCase):

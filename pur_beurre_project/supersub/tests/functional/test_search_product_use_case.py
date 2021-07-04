@@ -5,8 +5,8 @@ from time import sleep
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 
-from supersub.tests.unit.models.test_category import CategoryTest
-from supersub.tests.unit.models.test_product import ProductTest
+from supersub.tests.integration.models.test_category import CategoryTest
+from supersub.tests.integration.models.test_product import ProductTest
 
 
 class SearchProductUseCaseTest(StaticLiveServerTestCase):

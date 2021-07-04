@@ -7,9 +7,9 @@ from supersub.forms.navbar_search_form import NavbarSearchForm
 from supersub.management.app.supersub_manager import SupersubManager
 from supersub.models.favorites import Favorites
 from supersub.models.product import Product
-from supersub.tests.unit.models.test_category import CategoryTest
-from supersub.tests.unit.models.test_favorites import FavoritesTest
-from supersub.tests.unit.models.test_product import ProductTest
+from supersub.tests.integration.models.test_category import CategoryTest
+from supersub.tests.integration.models.test_favorites import FavoritesTest
+from supersub.tests.integration.models.test_product import ProductTest
 
 
 

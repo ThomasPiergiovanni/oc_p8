@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from supersub.models.category import Category
 
 from supersub.management.client.off_api_manager import OffApiManager
-from supersub.tests.unit.models.test_category import CategoryTest
+from supersub.tests.integration.models.test_category import CategoryTest
 
 
 class OffApiManagerTest(TestCase):
