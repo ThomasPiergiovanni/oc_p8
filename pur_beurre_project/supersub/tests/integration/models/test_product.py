@@ -1,6 +1,5 @@
 from django.test import TestCase
 
-# from supersub.models.category import Category
 from supersub.models.product import Product
 from supersub.tests.integration.models.test_category import CategoryTest
 

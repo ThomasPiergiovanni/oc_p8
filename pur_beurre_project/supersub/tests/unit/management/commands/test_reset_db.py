@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from authentication.models import CustomUser
-from authentication.tests.unit.models.test_custom_user import CustomUserTest
+from authentication.tests.integration.models.test_custom_user import CustomUserTest
 from supersub.management.commands.reset_db import Command
 from supersub.models.category import Category
 from supersub.models.favorites import Favorites

@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from authentication.models import CustomUser
-from authentication.tests.unit.models.test_custom_user import CustomUserTest
+from authentication.tests.integration.models.test_custom_user import CustomUserTest
 from supersub.models.favorites import Favorites
 from supersub.tests.integration.models.test_category import CategoryTest
 from supersub.tests.integration.models.test_product import ProductTest

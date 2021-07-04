@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.test import TestCase
 from django.contrib.auth import login, logout
 
-from authentication.tests.unit.models.test_custom_user import CustomUserTest
+from authentication.tests.integration.models.test_custom_user import CustomUserTest
 from supersub.views.favorites_view import FavoritesView
 from supersub.tests.integration.models.test_category import CategoryTest
 from supersub.tests.integration.models.test_favorites import FavoritesTest
