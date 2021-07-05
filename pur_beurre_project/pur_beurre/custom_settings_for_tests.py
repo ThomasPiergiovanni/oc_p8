@@ -103,3 +103,74 @@ OFF_API_PRODUCTS = {
     ],
     "skip": 0
 }
+
+# DESCRIPTION: It consist of valid catgeories that have been filtered out 
+#   from OFF API response to ensure it suits db requirements.
+# MANDATORY: Yes.
+# CUSTOM SETTINGS: To adapt if tests changes.
+OFF_API_FILTERED_CATEGORIES = [
+    {
+        'id': 'en:snacks',
+        'known': 1,
+        'name': 'Snacks',
+        'products': 54568,
+        'url': 'https://fr.openfoodfacts.org/categorie/snacks'
+    },
+    {
+        "id": "en:breakfast-cereals",
+        "known": 1,
+        "name": "Céréales pour petit-déjeuner",
+        "products": 4602,
+        "url": "https://fr.openfoodfacts.org/categorie/cereales-pour-petit-dejeuner"
+    }
+]
+
+
+# DESCRIPTION: Filterd out OFF API products. It only has valid products(ie: 
+#   it has the correct keys.)
+# MANDATORY: Yes.
+# CUSTOM SETTINGS: To adapt if tests changes.
+OFF_API_FILTERED_PRODUCTS = [
+    {
+        "categories": "Snacks,Snacks sucrés,Biscuits et gâteaux,Biscuits,Biscuits au chocolat",
+        "categories_hierarchy": [
+            "en:snacks",
+            "en:sweet-snacks",
+            "en:biscuits-and-cakes",
+            "en:biscuits",
+            "en:chocolate-biscuits"
+        ],
+        "id": "7622210449283",
+        "image_small_url": "https://static.openfoodfacts.org/images/products/762/221/044/9283/front_fr.429.200.jpg",
+        "nutriments": {
+            "fat_100g": 17,
+            "salt_100g": 0.58,
+            "saturated-fat_100g": 5.6,
+            "sugars_100g": 32
+        },
+        "nutriscore_grade": "d",
+        "product_name": "Prince Chocolat",
+        "url": "https://fr.openfoodfacts.org/produit/7622210449283/prince-chocolat-lu",
+    },
+    {
+        "categories": "Snacks,Snacks sucrés,Biscuits et gâteaux,Biscuits,Biscuits au chocolat",
+        "categories_hierarchy": [
+            "en:snacks",
+            "en:sweet-snacks",
+            "en:biscuits-and-cakes",
+            "en:biscuits",
+            "en:chocolate-biscuits"
+        ],
+        "id": "7622210449283_dummy",
+        "image_small_url": "https://static.openfoodfacts.org/images/products/762/221/044/9283/front_fr.429.200.jpg",
+        "nutriments": {
+            "fat_100g": 17,
+            "salt_100g": 0.58,
+            "saturated-fat_100g": 5.6,
+            "sugars_100g": 32
+        },
+        "nutriscore_grade": "d",
+        "product_name": "Prince Chocolat 2",
+        "url": "https://fr.openfoodfacts.org/produit/7622210449283/prince-chocolat-lu",
+    },
+]
