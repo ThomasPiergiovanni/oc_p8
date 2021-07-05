@@ -1,3 +1,6 @@
+# pylint: disable=C0116, W0212
+"""Test custom view module.
+"""
 from django.test import TestCase
 
 from supersub.forms.main_search_form import MainSearchForm
@@ -7,7 +10,7 @@ from supersub.views.custom_view import CustomView
 
 
 class TestCustomView(TestCase):
-    """
+    """Test custom view class.
     """
     @classmethod
     def setUpTestData(cls):
@@ -30,17 +33,18 @@ class TestCustomView(TestCase):
         self.assertEqual(self.custom_view.data['ctxt']['form'], '')
         self.assertEqual(self.custom_view.data['render'], '')
         self.assertEqual(self.custom_view.data['redirect'], '')
-    
+
     def test_customview_with_attr_manager_type(self):
         self.assertEqual(type(self.custom_view.manager), type(self.manager))
-    
-    def test_customview_with_attr_data_ctxt_mainform_type(self):
-        self.assertEqual(
-            type(self.custom_view.data['ctxt']['main_form']),
-            type(MainSearchForm()))
 
     def test_customview_with_attr_data_ctxt_mainform_type(self):
         self.assertEqual(
+            type(self.custom_view.data['ctxt']['main_form']),
+            type(MainSearchForm())
+        )
+
+    def test_customview_with_attr_data_ctxt_navbarform_type(self):
+        self.assertEqual(
             type(self.custom_view.data['ctxt']['navbar_form']),
-            type(NavbarSearchForm()))
-            
+            type(NavbarSearchForm())
+        )
