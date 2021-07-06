@@ -1,17 +1,19 @@
+# pylint: disable=C0116, E1101
+"""Test product register favorite view module.
+"""
 from django.test import TestCase
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 
-from authentication.models import CustomUser
-from authentication.tests.integration.models.test_custom_user import CustomUserTest
+from authentication.tests.integration.models.test_custom_user import (
+    CustomUserTest
+)
 from supersub.models.favorites import Favorites
 from supersub.tests.integration.models.test_category import CategoryTest
-from supersub.tests.integration.models.test_product import ProductTest
 from supersub.tests.integration.models.test_favorites import FavoritesTest
+from supersub.tests.integration.models.test_product import ProductTest
 
 
 class RegisterFavoriteViewTest(TestCase):
-    """
+    """Test product register favorite view class.
     """
     @classmethod
     def setUpTestData(cls):
@@ -19,49 +21,48 @@ class RegisterFavoriteViewTest(TestCase):
         ProductTest.emulate_product()
         CustomUserTest.emulate_custom_user()
         FavoritesTest.emulate_favorites()
-    
+
     def setUp(self):
         self.client.login(email='testuser@email.com', password='_Xxxxxxx')
-        
+        self.response = None
+
     def test_get_with_status_code_200(self):
         self.response = self.client.get(
-            '/supersub/register_favorite/1',
-            follow=True)
+            '/supersub/register_favorite/1', follow=True
+        )
         self.assertEqual(self.response.status_code, 200)
-    
+
     def test_get_with_message_warning(self):
         self.response = self.client.get(
-            '/supersub/register_favorite/1',
-            follow=True)
+            '/supersub/register_favorite/1', follow=True
+        )
         for message in self.response.context['messages']:
             self.assertEqual(message.level_tag, 'warning')
             self.assertEqual(message.message, "Produit déja enregistré")
-    
+
     def test_get_with_favorites_saved(self):
         self.response = self.client.get(
-            '/supersub/register_favorite/2',
-            follow=True)
+            '/supersub/register_favorite/2', follow=True
+        )
         new_favorite = Favorites.objects.get(
             product_id__exact=2,
-            custom_user_id__exact=1)
+            custom_user_id__exact=1
+        )
         self.assertTrue(new_favorite)
 
     def test_get_with_message_success(self):
         self.response = self.client.get(
-            '/supersub/register_favorite/2',
-            follow=True)
+            '/supersub/register_favorite/2', follow=True
+        )
         for message in self.response.context['messages']:
             self.assertEqual(message.level_tag, 'success')
             self.assertEqual(message.message, "Produit enregistré!")
-    
+
     def test_get_with_redirect(self):
         self.response = self.client.get(
-            '/supersub/register_favorite/2',
-            follow=True)
-        self.assertEquals(
+            '/supersub/register_favorite/2', follow=True
+        )
+        self.assertEqual(
             self.response.redirect_chain[0][0],
-            '/supersub/product_detail/2')
-    
-
-
-
+            '/supersub/product_detail/2'
+        )
