@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.test import RequestFactory, TestCase
 
-from authentication.managements.authentication_manager import AuthenticationManager
+from authentication.management.authentication_manager import AuthenticationManager
 from authentication.tests.unit.models.test_custom_user import CustomUserTest
 
 

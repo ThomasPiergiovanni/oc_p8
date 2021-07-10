@@ -1,7 +1,7 @@
 from django.contrib.auth import logout
 from django.shortcuts import redirect
 
-from authentication.managements.authentication_manager import (
+from authentication.management.authentication_manager import (
     AuthenticationManager
 )
 from supersub.views.custom_view import CustomView

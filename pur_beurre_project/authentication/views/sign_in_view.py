@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from authentication.forms.sign_in_form import SignInForm
-from authentication.managements.authentication_manager import (
+from authentication.management.authentication_manager import (
     AuthenticationManager
 )
 from supersub.views.custom_view import CustomView

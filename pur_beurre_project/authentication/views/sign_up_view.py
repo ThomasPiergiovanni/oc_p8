@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from authentication.forms.sign_up_form import SignUpForm
-from authentication.managements.authentication_manager import (
+from authentication.management.authentication_manager import (
     AuthenticationManager
 )
 from authentication.models import CustomUser
