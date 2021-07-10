@@ -1,4 +1,5 @@
-"""Module for search product use case functional test
+# pylint: disable=C0116
+"""Test search product use case test module. Functional test
 """
 from time import sleep
 
@@ -10,13 +11,13 @@ from supersub.tests.unit.models.test_product import ProductTest
 
 
 class SearchProductUseCaseTest(StaticLiveServerTestCase):
-    """Search product use case test class
+    """Tes search product use case test class
     """
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.browser = webdriver.Edge(
-            'C:\Program Files\EdgeDriver\msedgedriver.exe'
+            r'C:\Program Files\EdgeDriver\msedgedriver.exe'
         )
         cls.browser.implicitly_wait(10)
         CategoryTest().emulate_category()
@@ -43,17 +44,17 @@ class SearchProductUseCaseTest(StaticLiveServerTestCase):
         navbar_image = self.browser.find_element_by_tag_name('img')
         self.assertTrue(navbar_image)
 
-        #...  a title
+        # ...  a title
         navbar_text = self.browser.find_element_by_id(
             'navbar_pur_beurre_texte'
         ).text
-        self.assertIn("Pur Beurre",navbar_text)
+        self.assertIn("Pur Beurre", navbar_text)
 
-        #... a form
+        # ... a form
         navbar_inputbox = self.browser.find_element_by_id(
             'navbar_search_form'
         )
-        self.assertEqual(navbar_inputbox.get_attribute('method'),'post')
+        self.assertEqual(navbar_inputbox.get_attribute('method'), 'post')
 
         # ... a user, a carrot and a logout icons
         self.assertTrue(self.browser.find_element_by_id('user_icon'))
