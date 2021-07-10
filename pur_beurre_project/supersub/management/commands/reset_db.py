@@ -27,7 +27,7 @@ class Command(BaseCommand):
         parser.add_argument(
             '--all',
             action='store_true',
-            help='Reset all db values including users and superusers'
+            help='Reset all DB tables values including users and superusers'
         )
 
     def handle(self, *args, **options):
