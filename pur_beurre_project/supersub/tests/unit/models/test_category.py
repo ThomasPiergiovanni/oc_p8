@@ -20,12 +20,12 @@ class CategoryTest(TestCase):
             id=1,
             name="CategorieOne",
             url="www.categorie_test.com")
-    
+
     def test_category_with_category(self):
         category = Category.objects.get(pk=1)
         self.assertIsInstance(category, Category)
-        self.assertEquals(category.name, "CategorieOne")
-        self.assertEquals(category.url, "www.categorie_test.com")
+        self.assertEqual(category.name, "CategorieOne")
+        self.assertEqual(category.url, "www.categorie_test.com")
 
     def test_category_with_attr_name(self):
         category_field = Category._meta.get_field('name')
