@@ -1,24 +1,29 @@
+# pylint: disable=C0116
+"""Test account view module.
+"""
 from django.test import TestCase
 
-from authentication.tests.unit.models.test_custom_user import CustomUserTest
+from authentication.views.account_view import AccountView
 
 
-class AccountViewTest(TestCase):
-    """
+class TestAccountView(TestCase):
+    """Test account view class.
     """
     @classmethod
     def setUpTestData(cls):
-        CustomUserTest.emulate_custom_user()
+        cls.account_view = AccountView()
 
-    def test_get_with_redirect(self):
-        response = self.client.get('/authentication/account/',follow=True)
+    def test_init__with_account_view(self):
+        self.assertTrue(self.account_view)
+
+    def test_init_with_attr_data_render(self):
         self.assertEqual(
-            response.redirect_chain[0][0],
-            '/authentication/sign_in/'
+            self.account_view.data['render'],
+            'authentication/account.html'
         )
-    
-    def test_get_with_render(self):
-        self.client.login(email='testuser@email.com', password='_Xxxxxxx')
-        response = self.client.get('/authentication/account/',follow=True)
-        self.assertTemplateUsed(response,'authentication/account.html')
-        self.assertEqual(response.context['user'].email, 'testuser@email.com')
+
+    def test_init_with_attr_data_redirect(self):
+        self.assertEqual(
+            self.account_view.data['redirect'],
+            'authentication:sign_in'
+        )
