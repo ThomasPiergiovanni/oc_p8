@@ -135,3 +135,12 @@ class SupersubManager():
             )
         except Exception:
             return None
+    
+    def _save_favorite(self, id_prod, id_user):
+        """Method that saves Favorites object from DB.
+        """
+        Favorites(
+            product_id=id_prod,
+            custom_user_id=id_user
+        ).save()
+

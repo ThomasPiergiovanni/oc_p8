@@ -22,9 +22,7 @@ class RegisterFavoriteView(CustomView):
             messages.add_message(
                 request, messages.WARNING,"Produit déja enregistré")
         else:
-            Favorites(
-                product_id=id_prod,
-                custom_user_id=request.user.id).save()
+            self.manager._save_favorite(id_prod, request.user.id)
             messages.add_message(
                 request, messages.SUCCESS,"Produit enregistré!")
         return HttpResponseRedirect(
