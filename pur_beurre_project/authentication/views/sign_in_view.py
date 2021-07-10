@@ -31,10 +31,7 @@ class SignInView(CustomView):
         self.auth_manager._logout(request)
         form = SignInForm(data=request.POST)
         if form.is_valid():
-            user = self.auth_manager._authenticate(
-                form.cleaned_data['username'],
-                form.cleaned_data['password']
-            )
+            user = self.auth_manager._authenticate(form.cleaned_data)
             if user is not None:
                 self.auth_manager._login(request, user)
                 return redirect(self.data['redirect'])

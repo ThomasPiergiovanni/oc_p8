@@ -1,59 +1,29 @@
+# pylint: disable=C0116
+"""Test sign up view module.
+"""
 from django.test import TestCase
 
-from authentication.forms.sign_up_form import SignUpForm
-from supersub.forms.navbar_search_form import NavbarSearchForm
+from authentication.views.sign_up_view import SignUpView
 
 
-class SignUpViewTest(TestCase):
+class TestSignUpView(TestCase):
+    """Test sign up view class.
     """
-    """
-    def setUp(self):
-        self.response_get = self.client.get('/authentication/sign_up/')
-    
-    def test_get_with_status_code_200(self):
-        self.assertEqual(self.response_get.status_code, 200)
-    
-    def test_get_with_template(self):
-        self.assertTemplateUsed(
-            self.response_get, 'authentication/sign_up.html'
-        )
-    
-    def test_get_with_form(self):
-        self.assertIsInstance(
-            self.response_get.context['form'], SignUpForm
-        )
-    
-    def test_get_with_navbarform(self):
-        self.assertIsInstance(
-            self.response_get.context['navbar_form'], NavbarSearchForm
-        )
+    @classmethod
+    def setUpTestData(cls):
+        cls.sign_up_view = SignUpView()
 
-    def test_post_with_redirect(self):
-        response = self.client.post(
-            '/authentication/sign_up/',
-            data={
-                'first_name': 'tester',
-                'email': 'testuser@email.com',
-                'password1':'_Xxxxxxx',
-                'password2':'_Xxxxxxx'
-            },
-            follow=True
-        )
+    def test_init__with_sign_up_view(self):
+        self.assertTrue(self.sign_up_view)
+
+    def test_init_with_attr_data_render(self):
         self.assertEqual(
-            response.redirect_chain[0][0], '/authentication/sign_in/'
+            self.sign_up_view.data['render'],
+            'authentication/sign_up.html'
         )
 
-    def test_post_with_render(self):
-        response = self.client.post(
-            '/authentication/sign_up/',
-            data={
-                'first_name': 'tester',
-                'email': 'testuser@email.com',
-                'password1':'rrr',
-                'password2':'aaa'
-            },
-            follow=True
-        ) 
-        self.assertIsInstance(
-            response.context['form'], SignUpForm
+    def test_init_with_attr_data_redirect(self):
+        self.assertEqual(
+            self.sign_up_view.data['redirect'],
+            'authentication:sign_in'
         )

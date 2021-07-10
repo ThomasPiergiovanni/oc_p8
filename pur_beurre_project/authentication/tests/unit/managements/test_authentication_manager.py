@@ -27,8 +27,11 @@ class AuthenticationManagerTest(TestCase):
         )
     
     def test_authenticate_with_email_and_password(self):
+        form_cleaned_data = {} 
+        form_cleaned_data['username'] = 'testuser@email.com'
+        form_cleaned_data['password'] =  '_Xxxxxxx'
         self.assertTrue(
-            self.auth_manager._authenticate('testuser@email.com','_Xxxxxxx')
+            self.auth_manager._authenticate(form_cleaned_data)
         )
 
     def test_login_with_client_login(self):
