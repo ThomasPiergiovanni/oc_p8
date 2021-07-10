@@ -11,7 +11,7 @@ class ProductDetailView(CustomView):
         """
         super().__init__()
         self.data['render'] = 'supersub/product_detail.html'
-        
+
     def get(self, request, id_prod):
         """
         """
