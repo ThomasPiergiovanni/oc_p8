@@ -1,11 +1,23 @@
+# pylint: disable=C0116
+"""Test sign out view module.
+"""
 from django.test import TestCase
 
-from authentication.tests.unit.models.test_custom_user import CustomUserTest
+from authentication.views.sign_out_view import SignOutView
 
 
-class SignOutViewTest(TestCase):
+class TestSignOutView(TestCase):
+    """Test sign out view class.
     """
-    """  
-    def test_get_with_redirect(self):
-        response = self.client.get('/authentication/sign_out/', follow=True)
-        self.assertEqual(response.redirect_chain[0][0], '/supersub/')
+    @classmethod
+    def setUpTestData(cls):
+        cls.sign_out_view = SignOutView()
+
+    def test_init__with_sign_out_view(self):
+        self.assertTrue(self.sign_out_view)
+
+    def test_init_with_attr_data_redirect(self):
+        self.assertEqual(
+            self.sign_out_view.data['redirect'],
+            'supersub:index'
+        )
