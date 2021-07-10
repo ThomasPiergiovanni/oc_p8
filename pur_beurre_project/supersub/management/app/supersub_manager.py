@@ -143,4 +143,3 @@ class SupersubManager():
             product_id=id_prod,
             custom_user_id=id_user
         ).save()
-

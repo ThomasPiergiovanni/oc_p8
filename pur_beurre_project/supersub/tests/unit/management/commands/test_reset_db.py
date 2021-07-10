@@ -4,7 +4,7 @@
 from django.test import TestCase
 
 from authentication.models import CustomUser
-from authentication.tests.integration.models.test_custom_user import (
+from authentication.tests.unit.models.test_custom_user import (
     CustomUserTest
 )
 from pur_beurre.custom_settings_for_tests import (
