@@ -9,7 +9,7 @@ from authentication.tests.integration.models.test_custom_user import (
 from supersub.models.favorites import Favorites
 from supersub.tests.unit.models.test_category import CategoryTest
 from supersub.tests.unit.models.test_favorites import FavoritesTest
-from supersub.tests.integration.models.test_product import ProductTest
+from supersub.tests.unit.models.test_product import ProductTest
 
 
 class RegisterFavoriteViewTest(TestCase):
