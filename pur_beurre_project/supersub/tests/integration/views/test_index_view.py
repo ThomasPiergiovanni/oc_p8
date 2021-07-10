@@ -1,3 +1,4 @@
+# pylint: disable=C0116
 """Test index view module.
 """
 from django.test import TestCase

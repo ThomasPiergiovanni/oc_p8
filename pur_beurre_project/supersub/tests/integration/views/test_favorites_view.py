@@ -19,7 +19,7 @@ class TestFavoritesView(TestCase):
         CategoryTest.emulate_category()
         ProductTest.emulate_product()
         CustomUserTest.emulate_custom_user()
-    
+
     def test_get_with_response_200_with_favs_and_logged_in(self):
         FavoritesTest.emulate_favorites()
         self.client.login(email='testuser@email.com', password='_Xxxxxxx')
