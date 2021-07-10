@@ -5,7 +5,7 @@ from django.test import TestCase
 
 from supersub.forms.navbar_search_form import NavbarSearchForm
 from supersub.models.product import Product
-from supersub.tests.integration.models.test_category import CategoryTest
+from supersub.tests.unit.models.test_category import CategoryTest
 from supersub.tests.integration.models.test_product import ProductTest
 
 
