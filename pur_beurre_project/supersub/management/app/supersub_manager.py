@@ -1,4 +1,4 @@
-# pylint: disable=E1101, R0201, R0903, W0702
+# pylint: disable=E1101, R0201, R0903, W0702, W0703
 """Supersub manager app module.
 """
 from django.core.paginator import Paginator
@@ -111,7 +111,7 @@ class SupersubManager():
         prod_id = request.session.get('prod_id', None)
         prods_ids = request.session.get('prods_ids', None)
         return prod_id, prods_ids
-    
+
     def _filter_favorites(self, id_user):
         """Method that filter and return Favorites objects from DB. Used
         for  retunrning the authenticated user favorites.
@@ -121,7 +121,6 @@ class SupersubManager():
             .filter(custom_user_id__exact=id_user)
             .select_related('product').order_by('id')
         )
-    
 
     def _get_favorite(self, id_prod, id_user):
         """Method that get and return Favorites object from DB. Used
@@ -135,7 +134,7 @@ class SupersubManager():
             )
         except Exception:
             return None
-    
+
     def _save_favorite(self, id_prod, id_user):
         """Method that saves Favorites object from DB.
         """
