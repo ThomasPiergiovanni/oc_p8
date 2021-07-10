@@ -5,7 +5,7 @@ from django.db import models
 from django.test import TestCase
 
 from authentication.models import CustomUser
-from authentication.tests.integration.models.test_custom_user import CustomUserTest
+from authentication.tests.unit.models.test_custom_user import CustomUserTest
 from supersub.models.favorites import Favorites
 from supersub.models.product import Product
 from supersub.tests.unit.models.test_category import CategoryTest

@@ -4,7 +4,7 @@
 from django.core.paginator import Paginator
 from django.test import TestCase, RequestFactory
 
-from authentication.tests.integration.models.test_custom_user import (
+from authentication.tests.unit.models.test_custom_user import (
     CustomUserTest
 )
 from supersub.forms.main_search_form import MainSearchForm

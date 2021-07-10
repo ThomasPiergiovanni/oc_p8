@@ -5,7 +5,7 @@ from time import sleep
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 
-from authentication.tests.integration.models.test_custom_user import CustomUserTest
+from authentication.tests.unit.models.test_custom_user import CustomUserTest
 
 
 class SignInUseCaseTest(StaticLiveServerTestCase):

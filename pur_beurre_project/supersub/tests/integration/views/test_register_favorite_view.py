@@ -3,7 +3,7 @@
 """
 from django.test import TestCase
 
-from authentication.tests.integration.models.test_custom_user import (
+from authentication.tests.unit.models.test_custom_user import (
     CustomUserTest
 )
 from supersub.models.favorites import Favorites
