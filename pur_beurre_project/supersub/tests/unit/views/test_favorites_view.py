@@ -7,7 +7,7 @@ from authentication.tests.integration.models.test_custom_user import (
     CustomUserTest
 )
 from supersub.tests.unit.models.test_category import CategoryTest
-from supersub.tests.integration.models.test_favorites import FavoritesTest
+from supersub.tests.unit.models.test_favorites import FavoritesTest
 from supersub.tests.integration.models.test_product import ProductTest
 from supersub.views.favorites_view import FavoritesView
 

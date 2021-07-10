@@ -15,7 +15,7 @@ from supersub.models.category import Category
 from supersub.models.favorites import Favorites
 from supersub.models.product import Product
 from supersub.tests.unit.models.test_category import CategoryTest
-from supersub.tests.integration.models.test_favorites import FavoritesTest
+from supersub.tests.unit.models.test_favorites import FavoritesTest
 from supersub.tests.integration.models.test_product import ProductTest
 
 
