@@ -1,3 +1,5 @@
+""" Custom view module
+"""
 from django.views import View
 
 from supersub.forms.main_search_form import MainSearchForm
@@ -6,11 +8,10 @@ from supersub.management.app.supersub_manager import SupersubManager
 
 
 class CustomView(View):
-    """
+    """Custom view class
     """
     def __init__(self):
-        """
-        """
+        super().__init__()
         self.manager = SupersubManager()
         self.data = SupersubManager()._get_data()
         self.data['ctxt']['main_form'] = MainSearchForm()
