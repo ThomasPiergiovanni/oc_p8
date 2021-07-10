@@ -16,7 +16,7 @@ class TestRegisterFavoriteView(TestCase):
     def test_init__with_register_favorite(self):
         self.assertTrue(self.register_favorite)
 
-    def test_init_with_attr_data_render(self):
+    def test_init_with_attr_data_redirect(self):
         self.assertEqual(
             self.register_favorite.data['redirect'],
             'supersub:product_detail'
