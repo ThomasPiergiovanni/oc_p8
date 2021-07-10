@@ -19,6 +19,7 @@ class FavoritesTest(TestCase):
     @classmethod
     def emulate_favorites(cls):
         Favorites.objects.create(product_id=1, custom_user_id=1)
+        Favorites.objects.create(product_id=2, custom_user_id=1)
     
     def test_favorites_with_instance(self):
         favorites = Favorites.objects.get(pk=1)

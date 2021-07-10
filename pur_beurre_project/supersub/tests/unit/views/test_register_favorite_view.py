@@ -52,7 +52,7 @@ class RegisterFavoriteViewTest(TestCase):
 
     def test_get_with_message_success(self):
         self.response = self.client.get(
-            '/supersub/register_favorite/2', follow=True
+            '/supersub/register_favorite/3', follow=True
         )
         for message in self.response.context['messages']:
             self.assertEqual(message.level_tag, 'success')

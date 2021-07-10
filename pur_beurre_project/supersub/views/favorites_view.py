@@ -19,23 +19,23 @@ class FavoritesView(CustomView):
 
     def get(self, request):
         if request.user.is_authenticated:
-            favorites = list(
-                Favorites.objects
-                .filter(custom_user_id__exact=request.user.id)
-                .select_related('product').order_by('id'))
+            favorites = list(self.manager._filter_favorites(request.user.id))
             if favorites:
                 self.data['ctxt']['page_obj'] = (
-                    self.manager._get_page(request, favorites))
+                    self.manager._get_page(request, favorites)
+                )
                 return render(
                     request, self.data['render'], self.data['ctxt'])
             else:
                 messages.add_message(
                     request,
                     messages.WARNING,
-                    "Vous n'avez enregistré aucun favoris jusqu'à présent")
+                    "Vous n'avez enregistré aucun favoris jusqu'à présent"
+                )
         else:
             messages.add_message(
                 request,
                 messages.ERROR,
-                "Connectez-vous pour consulter vos favoris!")
+                "Connectez-vous pour consulter vos favoris!"
+            )
         return HttpResponseRedirect(reverse(self.data['redirect']))

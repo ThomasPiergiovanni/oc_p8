@@ -20,6 +20,7 @@ class Command(BaseCommand):
     def __init__(self):
         super().__init__()
         self.categories_in_db = []
+        self.unique_prods_list = []
         self.off_api_manager = OffApiManager()
 
     def add_arguments(self, parser):
@@ -37,7 +38,10 @@ class Command(BaseCommand):
         self.off_api_manager.filter_categories()
         self.insert_categories()
         self.get_categories()
-        self.insert_products()
+        for category in self.categories_in_db:
+            self.off_api_manager.download_products(category)
+            self.off_api_manager.filter_products()
+            self.insert_products(category)
         if options['all']:
             self.drop_users()
 
@@ -76,33 +80,29 @@ class Command(BaseCommand):
         """
         self._drop_objects(Product)
 
-    def insert_products(self):
+    def insert_products(self, category):
         """Method that uses products entities collected by OFF API manager
         and insert those entities into DB.
         """
-        unique_prods_list = []
-        for category in self.categories_in_db:
-            self.off_api_manager.download_products(category)
-            self.off_api_manager.filter_products()
-            for raw_product in self.off_api_manager.products:
-                if raw_product['product_name'] not in unique_prods_list:
-                    product = Product(
-                        id_origin=raw_product['id'],
-                        name=raw_product['product_name'],
-                        nutriscore_grade=raw_product['nutriscore_grade'],
-                        fat=raw_product['nutriments']['fat_100g'],
-                        saturated_fat=(
-                            raw_product['nutriments']['saturated-fat_100g']
-                        ),
-                        sugar=raw_product['nutriments']['sugars_100g'],
-                        salt=raw_product['nutriments']['salt_100g'],
-                        image=raw_product['image_small_url'],
-                        url=raw_product['url'],
-                        categories=raw_product['categories_hierarchy'],
-                        category_id=category.id
-                    )
-                    product.save()
-                    unique_prods_list.append(raw_product['product_name'])
+        for raw_product in self.off_api_manager.products:
+            if raw_product['product_name'] not in self.unique_prods_list:
+                product = Product(
+                    id_origin=raw_product['id'],
+                    name=raw_product['product_name'],
+                    nutriscore_grade=raw_product['nutriscore_grade'],
+                    fat=raw_product['nutriments']['fat_100g'],
+                    saturated_fat=(
+                        raw_product['nutriments']['saturated-fat_100g']
+                    ),
+                    sugar=raw_product['nutriments']['sugars_100g'],
+                    salt=raw_product['nutriments']['salt_100g'],
+                    image=raw_product['image_small_url'],
+                    url=raw_product['url'],
+                    categories=raw_product['categories_hierarchy'],
+                    category_id=category.id
+                )
+                product.save()
+                self.unique_prods_list.append(raw_product['product_name'])
 
     def drop_favorites(self):
         """Method thats drops favorites entities from DB

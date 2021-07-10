@@ -111,9 +111,22 @@ class SupersubManager():
         prod_id = request.session.get('prod_id', None)
         prods_ids = request.session.get('prods_ids', None)
         return prod_id, prods_ids
+    
+    def _filter_favorites(self, id_user):
+        """Method that filter and return Favorites objects from DB. Used
+        for  retunrning the authenticated user favorites.
+        """
+        return (
+            Favorites.objects
+            .filter(custom_user_id__exact=id_user)
+            .select_related('product').order_by('id')
+        )
+    
 
     def _get_favorite(self, id_prod, id_user):
-        """Method that get and return Favorites objects from DB.
+        """Method that get and return Favorites object from DB. Used
+        for  checking if that favorite is not already savec by the querrying
+        user.
         """
         try:
             return Favorites.objects.get(
