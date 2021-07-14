@@ -1,4 +1,3 @@
-# pylint: disable=
 """Sign up form module.
 """
 from django import forms
