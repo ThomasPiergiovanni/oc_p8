@@ -1,3 +1,5 @@
+"""Custom user manager module.
+"""
 from django.contrib.auth.base_user import BaseUserManager
 
 
