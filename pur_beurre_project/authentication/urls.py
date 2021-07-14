@@ -1,3 +1,6 @@
+# pylint: disable=C0103
+"""urls module.
+"""
 from django.urls import path
 
 from .views.account_view import AccountView
