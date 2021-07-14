@@ -1,4 +1,5 @@
-"""
+# pylint: disable=C0116
+"""Test sign in view module.
 """
 from django.test import TestCase
 
@@ -8,7 +9,7 @@ from supersub.forms.navbar_search_form import NavbarSearchForm
 
 
 class SignInViewTest(TestCase):
-    """
+    """Test sign in view class.
     """
     @classmethod
     def setUpTestData(cls):
@@ -19,7 +20,7 @@ class SignInViewTest(TestCase):
 
     def test_get_with_status_code_200(self):
         self.assertEqual(self.response_get.status_code, 200)
-    
+
     def test_get_with_template(self):
         self.assertTemplateUsed(
             self.response_get, 'authentication/sign_in.html'
@@ -34,7 +35,7 @@ class SignInViewTest(TestCase):
         self.assertIsInstance(
             self.response_get.context['navbar_form'], NavbarSearchForm
         )
-    
+
     def test_post_with_redirect(self):
         response = self.client.post(
             '/authentication/sign_in/',
