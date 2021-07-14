@@ -1,23 +1,23 @@
+"""Accout view module.
+"""
 from django.shortcuts import render, redirect
 
 from supersub.views.custom_view import CustomView
 
 
 class AccountView(CustomView):
-    """
+    """Accout view class.
     """
     def __init__(self):
-        """
-        """
         super().__init__()
         self.data['redirect'] = 'authentication:sign_in'
         self.data['render'] = 'authentication/account.html'
 
     def get(self, request):
-        """
+        """Account view method on client get request. View is dipslayed if the
+        user is authenticated.
         """
         if not request.user.is_authenticated:
             return redirect(self.data['redirect'])
-        else:
-            self.data['ctxt']['user'] = request.user
-            return render(request, self.data['render'], self.data['ctxt'])   
+        self.data['ctxt']['user'] = request.user
+        return render(request, self.data['render'], self.data['ctxt'])
