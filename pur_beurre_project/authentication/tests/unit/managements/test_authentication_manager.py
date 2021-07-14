@@ -1,3 +1,6 @@
+# pylint: disable=C0116, W0212
+"""Test authentication manager module(unitary test).
+"""
 from django.contrib.auth import authenticate
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.test import RequestFactory, TestCase
@@ -7,13 +10,13 @@ from authentication.tests.unit.models.test_custom_user import CustomUserTest
 
 
 class AuthenticationManagerTest(TestCase):
-    """
+    """Test authentication manager module.
     """
     @classmethod
     def setUpTestData(cls):
         CustomUserTest.emulate_custom_user()
         cls.auth_manager = AuthenticationManager()
-    
+
     def setUp(self):
         pass
 
@@ -25,9 +28,9 @@ class AuthenticationManagerTest(TestCase):
         self.assertFalse(
             self.auth_manager._logout(self.client)
         )
-    
+
     def test_authenticate_with_email_and_password(self):
-        form_cleaned_data = {} 
+        form_cleaned_data = {}
         form_cleaned_data['username'] = 'testuser@email.com'
         form_cleaned_data['password'] =  '_Xxxxxxx'
         self.assertTrue(
