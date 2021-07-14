@@ -1,4 +1,5 @@
-"""Module for sign up use case functional test
+# pylint: disable=C0116
+"""Test module for sign up use case functional test
 """
 from time import sleep
 
@@ -13,7 +14,7 @@ class SignUpUseCaseTest(StaticLiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.browser = webdriver.Edge(
-            'C:\Program Files\EdgeDriver\msedgedriver.exe'
+            r'C:\Program Files\EdgeDriver\msedgedriver.exe'
         )
         cls.browser.implicitly_wait(10)
 
@@ -21,19 +22,16 @@ class SignUpUseCaseTest(StaticLiveServerTestCase):
     def tearDownClass(cls):
         cls.browser.quit()
         super().tearDownClass()
-    
+
     def setUp(self):
-        # The user logs to the sign up page
+        # The user logs to the sign up page.
         self.browser.get(
-            '%s%s' % (
-                self.live_server_url,
-                '/authentication/sign_up/'
-            )
+            '%s%s' % (self.live_server_url, '/authentication/sign_up/')
         )
-    
+
     def test_sign_up_use_case(self):
-        # The user types its first name, email and its password twice in 
-        # the form
+        # The user types its first name, email and its password twice in
+        # the form.
         sleep(2)
         self.browser.find_element_by_id('id_first_name_input')\
             .send_keys('Testeruser')
@@ -48,7 +46,7 @@ class SignUpUseCaseTest(StaticLiveServerTestCase):
             .send_keys('_Yyyyyyy')
         sleep(1)
 
-        # The user clicks then "Envoyer" button and lands on the sign in page
+        # The user clicks then "Envoyer" button and lands on the sign in page.
         self.browser.find_element_by_id('id_sign_up_button').click()
         self.assertIn(
             'Connection',
@@ -61,6 +59,3 @@ class SignUpUseCaseTest(StaticLiveServerTestCase):
             self.browser.find_element_by_id('id_signin_password_input')
         )
         sleep(2)
-
-        
- 

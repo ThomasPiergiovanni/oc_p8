@@ -1,4 +1,5 @@
-"""Module for sign in use case functional test
+# pylint: disable=C0116
+"""Test module for sign in use case functional test
 """
 from time import sleep
 
@@ -15,7 +16,7 @@ class SignInUseCaseTest(StaticLiveServerTestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.browser = webdriver.Edge(
-            'C:\Program Files\EdgeDriver\msedgedriver.exe'
+            r'C:\Program Files\EdgeDriver\msedgedriver.exe'
         )
         cls.browser.implicitly_wait(10)
         CustomUserTest.emulate_custom_user()
@@ -24,7 +25,7 @@ class SignInUseCaseTest(StaticLiveServerTestCase):
     def tearDownClass(cls):
         cls.browser.quit()
         super().tearDownClass()
-    
+
     def setUp(self):
         # The user logs to the sign up page
         self.browser.get(
