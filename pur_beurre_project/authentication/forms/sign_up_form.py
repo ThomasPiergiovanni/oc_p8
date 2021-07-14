@@ -1,12 +1,14 @@
-from django.contrib.auth.forms import UserCreationForm
+# pylint: disable=
+"""Sign up form module.
+"""
 from django import forms
-from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.forms import UserCreationForm
 
 from authentication.models import CustomUser
 
 
 class SignUpForm(UserCreationForm):
-    """
+    """Sign up form class.
     """
     first_name = forms.CharField(
         label="Prénom",
@@ -14,7 +16,7 @@ class SignUpForm(UserCreationForm):
             attrs={
                 'class': 'form-control',
                 'autofocus': True,
-                'id':'id_first_name_input'
+                'id': 'id_first_name_input'
             }
         )
     )
@@ -22,7 +24,7 @@ class SignUpForm(UserCreationForm):
         widget=forms.EmailInput(
             attrs={
                 'class': 'form-control',
-                'id':'id_email_input'
+                'id': 'id_email_input'
             }
         )
     )
@@ -31,7 +33,7 @@ class SignUpForm(UserCreationForm):
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control',
-                'id':'id_pwd1_input'
+                'id': 'id_pwd1_input'
             }
         )
     )
@@ -40,11 +42,13 @@ class SignUpForm(UserCreationForm):
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control',
-                'id':'id_pwd2_input'
+                'id': 'id_pwd2_input'
             }
         )
     )
 
     class Meta(UserCreationForm):
+        """Meta model gives CustomUser "params" to Signupform lcass.
+        """
         model = CustomUser
         fields = ['first_name', 'email', 'password1', 'password2']

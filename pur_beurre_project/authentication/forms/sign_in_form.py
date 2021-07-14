@@ -1,10 +1,11 @@
+"""Sign in form module.
+"""
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
-from django.utils.translation import gettext_lazy as _
 
 
 class SignInForm(AuthenticationForm):
-    """
+    """Sign in form class.
     """
     username = forms.CharField(
         label="Email",
@@ -12,7 +13,7 @@ class SignInForm(AuthenticationForm):
             attrs={
                 'class': 'form-control',
                 'autofocus': True,
-                'id':'id_signin_email_input'
+                'id': 'id_signin_email_input'
             }
         )
     )
@@ -21,7 +22,7 @@ class SignInForm(AuthenticationForm):
         widget=forms.PasswordInput(
             attrs={
                 'class': 'form-control',
-                'id':'id_signin_password_input'
+                'id': 'id_signin_password_input'
             }
         )
     )
