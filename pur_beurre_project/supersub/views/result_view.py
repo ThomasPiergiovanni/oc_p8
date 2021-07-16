@@ -23,10 +23,10 @@ class ResultView(CustomView):
         product(after its capture on a previous post request)
         and its potential substitutes
         """
-        prod_id, prods_ids = self.manager._get_session_vars(request)
-        self.data['ctxt']['searched_prod'] = self.manager._get_product(prod_id)
+        prod_id, prods_ids = self._get_session_vars(request)
+        self.data['ctxt']['searched_prod'] = self._get_product(prod_id)
         self.data['ctxt']["page_obj"] = (
-            self.manager._get_page_from_session_vars(request, prods_ids))
+            self._get_page_from_session_vars(request, prods_ids))
         return render(request, self.data['render'], self.data['ctxt'])
 
     def post(self, request):
@@ -37,7 +37,7 @@ class ResultView(CustomView):
         is typed into the form and submitted an error messages is displayed
         and the user is redirected to the index page.
         """
-        form = self.manager._get_form(request)
+        form = self._get_form(request)
         if form.is_valid():
             match_prods = (
                 Product.objects.filter(
@@ -47,9 +47,9 @@ class ResultView(CustomView):
             if match_prods:
                 self.data['ctxt']['searched_prod'] = match_prods[0]
                 self.data['ctxt']["page_obj"] = (
-                    self.manager._get_page_from_form(request, match_prods[0])
+                    self._get_page_from_form(request, match_prods[0])
                 )
-                self.manager._add_vars_to_session(request, match_prods[0])
+                self._add_vars_to_session(request, match_prods[0])
                 self.data['ctxt']['user'] = request.user
                 return render(
                     request, self.data['render'], self.data['ctxt']

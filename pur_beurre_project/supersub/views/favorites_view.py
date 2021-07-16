@@ -25,10 +25,10 @@ class FavoritesView(CustomView):
         favorites.
         """
         if request.user.is_authenticated:
-            favorites = list(self.manager._filter_favorites(request.user.id))
+            favorites = list(self._filter_favorites(request.user.id))
             if favorites:
                 self.data['ctxt']['page_obj'] = (
-                    self.manager._get_page(request, favorites)
+                    self._get_page(request, favorites)
                 )
                 return render(
                     request, self.data['render'], self.data['ctxt'])

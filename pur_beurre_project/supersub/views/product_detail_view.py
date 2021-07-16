@@ -16,5 +16,5 @@ class ProductDetailView(CustomView):
     def get(self, request, id_prod):
         """Product detail page view method on client get request.
         """
-        self.data['ctxt']['prod'] = self.manager._get_product(id_prod)
+        self.data['ctxt']['prod'] = self._get_product(id_prod)
         return render(request, self.data['render'], self.data['ctxt'])

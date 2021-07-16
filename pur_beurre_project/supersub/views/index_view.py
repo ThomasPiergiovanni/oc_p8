@@ -16,5 +16,5 @@ class IndexView(CustomView):
     def get(self, request):
         """Index/home page view method on client get request.
         """
-        self.manager._delete_session_vars(request)
+        self._delete_session_vars(request)
         return render(request, self.data['render'], self.data['ctxt'])
