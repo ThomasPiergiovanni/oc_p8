@@ -22,19 +22,19 @@ class SignUpFormTest(TestCase):
     def test_signupform_with_all_attrs_class(self):
         self.assertTrue(
             self.form.fields['first_name']
-            .widget.attrs['class'] =='form-control'
+            .widget.attrs['class'] == 'form-control'
         )
         self.assertTrue(
             self.form.fields['email']
-            .widget.attrs['class'] =='form-control'
+            .widget.attrs['class'] == 'form-control'
         )
         self.assertTrue(
             self.form.fields['password1']
-            .widget.attrs['class'] =='form-control'
+            .widget.attrs['class'] == 'form-control'
         )
         self.assertTrue(
             self.form.fields['password2']
-            .widget.attrs['class'] =='form-control'
+            .widget.attrs['class'] == 'form-control'
         )
 
     def test_signupform_with_attr_first_name_autofocus(self):
@@ -46,10 +46,10 @@ class SignUpFormTest(TestCase):
     def test_signupform_with_validation_wo_input(self):
         form = SignUpForm(
             data={
-                'first_name':'',
-                'email':'',
-                'password1':'',
-                'password2':'',
+                'first_name': '',
+                'email': '',
+                'password1': '',
+                'password2': '',
             }
         )
         self.assertFalse(form.is_valid())
@@ -57,10 +57,10 @@ class SignUpFormTest(TestCase):
     def test_signupform_with_validation_wrong_email_input(self):
         form = SignUpForm(
             data={
-                'first_name':'firname',
-                'email':'wrongemail',
-                'password1':'_Xxxxxxx',
-                'password2':'_Xxxxxxx',
+                'first_name': 'firname',
+                'email': 'wrongemail',
+                'password1': '_Xxxxxxx',
+                'password2': '_Xxxxxxx',
             }
         )
         self.assertFalse(form.is_valid())
@@ -68,10 +68,10 @@ class SignUpFormTest(TestCase):
     def test_signupform_with_validation_wrong_pswd_input(self):
         form = SignUpForm(
             data={
-                'first_name':'firname',
-                'email':'correct@email.com',
-                'password1':'_Xxxxxxx',
-                'password2':'_Zzzzzzz',
+                'first_name': 'firname',
+                'email': 'correct@email.com',
+                'password1': '_Xxxxxxx',
+                'password2': '_Zzzzzzz',
             }
         )
         self.assertFalse(form.is_valid())
@@ -79,10 +79,10 @@ class SignUpFormTest(TestCase):
     def test_signupform_with_validation_with_input(self):
         form = SignUpForm(
             data={
-                'first_name':'firname',
-                'email':'correct@email.com',
-                'password1':'_Xxxxxxx',
-                'password2':'_Xxxxxxx',
+                'first_name': 'firname',
+                'email': 'correct@email.com',
+                'password1': '_Xxxxxxx',
+                'password2': '_Xxxxxxx',
             }
         )
         self.assertTrue(form.is_valid())

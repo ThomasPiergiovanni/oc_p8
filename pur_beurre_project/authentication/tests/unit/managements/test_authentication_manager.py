@@ -5,7 +5,9 @@ from django.contrib.auth import authenticate
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.test import RequestFactory, TestCase
 
-from authentication.management.authentication_manager import AuthenticationManager
+from authentication.management.authentication_manager import (
+    AuthenticationManager
+)
 from authentication.tests.unit.models.test_custom_user import CustomUserTest
 
 
@@ -32,7 +34,7 @@ class AuthenticationManagerTest(TestCase):
     def test_authenticate_with_email_and_password(self):
         form_cleaned_data = {}
         form_cleaned_data['username'] = 'testuser@email.com'
-        form_cleaned_data['password'] =  '_Xxxxxxx'
+        form_cleaned_data['password'] = '_Xxxxxxx'
         self.assertTrue(
             self.auth_manager._authenticate(form_cleaned_data)
         )

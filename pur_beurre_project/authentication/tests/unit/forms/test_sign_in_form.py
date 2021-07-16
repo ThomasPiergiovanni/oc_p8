@@ -24,11 +24,11 @@ class SignInFormTest(TestCase):
     def test_signinform_with_attr_username_class(self):
         self.assertTrue(
             self.form.fields['username']
-            .widget.attrs['class'] =='form-control'
+            .widget.attrs['class'] == 'form-control'
         )
         self.assertTrue(
             self.form.fields['password']
-            .widget.attrs['class'] =='form-control'
+            .widget.attrs['class'] == 'form-control'
         )
 
     def test_signinform_with_attr_username_autofocus(self):
@@ -38,14 +38,14 @@ class SignInFormTest(TestCase):
         )
 
     def test_signinform_with_validation_wo_input(self):
-        form = SignInForm(data={'username':'', 'password':''})
+        form = SignInForm(data={'username': '', 'password': ''})
         self.assertFalse(form.is_valid())
 
     def test_signinform_with_validation_wrong_input(self):
         form = SignInForm(
             data={
-                'username':'testuser@email.com',
-                'password':'_ysssz'
+                'username': 'testuser@email.com',
+                'password': '_ysssz'
             }
         )
         self.assertFalse(form.is_valid())
@@ -53,8 +53,8 @@ class SignInFormTest(TestCase):
     def test_signinform_with_validation_with_input(self):
         form = SignInForm(
             data={
-                'username':'testuser@email.com',
-                'password':'_Xxxxxxx'
+                'username': 'testuser@email.com',
+                'password': '_Xxxxxxx'
             }
         )
         self.assertTrue(form.is_valid())
