@@ -31,39 +31,39 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        self.drop_categories()
-        self.drop_products()
-        self.drop_favorites()
+        self.__drop_categories()
+        self.__drop_products()
+        self.__drop_favorites()
         self.off_api_manager.download_categories()
         self.off_api_manager.filter_categories()
-        self.insert_categories()
-        self.get_categories()
+        self.__insert_categories()
+        self.__get_categories()
         for category in self.categories_in_db:
             self.off_api_manager.download_products(category)
             self.off_api_manager.filter_products()
-            self.insert_products(category)
+            self.__insert_products(category)
         if options['all']:
-            self.drop_users()
+            self.__drop_users()
 
-    def drop_categories(self):
+    def __drop_categories(self):
         """Method thats drop categories entities from DB
         """
-        self._drop_objects(Category)
+        self.__drop_objects(Category)
 
-    def _drop_objects(self, object_class):
+    def __drop_objects(self, object_class):
         """Manager method thats drop objects entities from DB
         """
         objects = object_class.objects.all()
         objects.delete()
 
-    def get_categories(self):
+    def __get_categories(self):
         """Method thats select all categories entities from DB
         """
         all_categories = Category.objects.all()
         for category in all_categories:
             self.categories_in_db.append(category)
 
-    def insert_categories(self):
+    def __insert_categories(self):
         """Method that uses categories entities collected by OFF API manager
         and insert those entities into DB.
         """
@@ -75,12 +75,12 @@ class Command(BaseCommand):
             )
             category.save()
 
-    def drop_products(self):
+    def __drop_products(self):
         """Method thats drops products entities from DB
         """
-        self._drop_objects(Product)
+        self.__drop_objects(Product)
 
-    def insert_products(self, category):
+    def __insert_products(self, category):
         """Method that uses products entities collected by OFF API manager
         and insert those entities into DB.
         """
@@ -104,12 +104,12 @@ class Command(BaseCommand):
                 product.save()
                 self.unique_prods_list.append(raw_product['product_name'])
 
-    def drop_favorites(self):
+    def __drop_favorites(self):
         """Method thats drops favorites entities from DB
         """
-        self._drop_objects(Favorites)
+        self.__drop_objects(Favorites)
 
-    def drop_users(self):
+    def __drop_users(self):
         """Method thats drops users entities from DB
         """
-        self._drop_objects(CustomUser)
+        self.__drop_objects(CustomUser)

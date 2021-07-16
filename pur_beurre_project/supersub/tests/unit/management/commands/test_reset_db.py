@@ -51,27 +51,27 @@ class CommandTest(TestCase):
         init_categories = Category.objects.all()
         for category in init_categories:
             self.assertIsNotNone(category)
-        self.db_manager.drop_categories()
+        self.db_manager._Command__drop_categories()
         post_categories = Category.objects.all()
         for category in post_categories:
             self.assertIsNone(category)
 
     def test_get_categories_with_categories(self):
         CategoryTest.emulate_category()
-        self.db_manager.get_categories()
+        self.db_manager._Command__get_categories()
         self.assertEqual(
             self.db_manager.categories_in_db[0].name,
             "CategorieOne")
 
     def test_insert_categories_with_category(self):
         self.db_manager.off_api_manager.categories = self.categories
-        self.db_manager.insert_categories()
+        self.db_manager._Command__insert_categories()
         category = Category.objects.get(pk=1)
         self.assertEqual(category.name, "Snacks")
 
     def test_drop_products_with_products(self):
         ProductTest.emulate_product()
-        self.db_manager.drop_products()
+        self.db_manager._Command__drop_products()
         products = Product.objects.all()
         for product in products:
             self.assertIsNone(product)
@@ -80,20 +80,20 @@ class CommandTest(TestCase):
         CategoryTest.emulate_category()
         self.db_manager.categories_in_db = Category.objects.all()
         self.db_manager.off_api_manager.products = self.products
-        self.db_manager.insert_products(self.db_manager.categories_in_db[0])
+        self.db_manager._Command__insert_products(self.db_manager.categories_in_db[0])
         product = Product.objects.get(pk=2)
         self.assertEqual(product.name, "Prince Chocolat 2")
 
     def test_drop_favorites_with_favorites(self):
         FavoritesTest()
-        self.db_manager.drop_favorites()
+        self.db_manager._Command__drop_favorites()
         favorites = Favorites.objects.all()
         for favorite in favorites:
             self.assertIsNone(favorite)
 
     def test_drop_users_with_users(self):
         CustomUserTest()
-        self.db_manager.drop_users()
+        self.db_manager._Command__drop_users()
         custom_users = CustomUser.objects.all()
         for custom_user in custom_users:
             self.assertIsNone(custom_user)
