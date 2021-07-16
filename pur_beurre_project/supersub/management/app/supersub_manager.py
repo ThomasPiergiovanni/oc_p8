@@ -22,11 +22,11 @@ class SupersubManager():
         """Method that get page objects (Products) based on previously
         strored sessions variable.
         """
-        prods_candidates = self._get_results_prods(prods_ids)
+        prods_candidates = self.__get_results_prods(prods_ids)
         page_obj = self._get_page(request, prods_candidates)
         return page_obj
 
-    def _get_results_prods(self, prods_ids):
+    def __get_results_prods(self, prods_ids):
         """Method that gets Products list from DB based on session variable.
         """
         prods_candidates = []
@@ -42,16 +42,16 @@ class SupersubManager():
     def _get_page(self, request, objects_list):
         """Method that get one page.
         """
-        paginator = self._get_paginator(objects_list)
-        page_number = self._get_request_page_number(request)
+        paginator = self.__get_paginator(objects_list)
+        page_number = self.__get_request_page_number(request)
         return paginator.get_page(page_number)
 
-    def _get_paginator(self, objects_list):
+    def __get_paginator(self, objects_list):
         """Method that return a Paginator object.
         """
         return Paginator(objects_list, 6)
 
-    def _get_request_page_number(self, request):
+    def __get_request_page_number(self, request):
         """Method that return a request from a specific page.
         """
         return request.GET.get('page')
@@ -66,11 +66,11 @@ class SupersubManager():
     def _get_page_from_form(self, request, product):
         """Method that get page objects (Products) based on form input.
         """
-        prods_candidates = self._get_session_prods(product)
+        prods_candidates = self.__get_session_prods(product)
         page_obj = self._get_page(request, prods_candidates)
         return page_obj
 
-    def _get_session_prods(self, product):
+    def __get_session_prods(self, product):
         """ Method that gets more or equaly healthy Product (i.e. subs)
         based on form input.
         """
@@ -80,7 +80,15 @@ class SupersubManager():
             .exclude(id__exact=product.id).order_by('id')
         )
 
-    def _get_session_prods_ids(self, prods_candidates):
+    def _add_vars_to_session(self, request, match_prod):
+        """Method that adds product and subs into session vars.
+        """
+        prods = self.__get_session_prods(match_prod)
+        prods_ids = self.__get_session_prods_ids(prods)
+        request.session['prod_id'] = match_prod.id
+        request.session['prods_ids'] = prods_ids
+
+    def __get_session_prods_ids(self, prods_candidates):
         """Method that gets subs and store their ids into
         a list.
         """
@@ -88,14 +96,6 @@ class SupersubManager():
         for candidate in prods_candidates:
             prods_ids.append(candidate.id)
         return prods_ids
-
-    def _add_vars_to_session(self, request, match_prod):
-        """Method that adds product and subs into session vars.
-        """
-        prods = self._get_session_prods(match_prod)
-        prods_ids = self._get_session_prods_ids(prods)
-        request.session['prod_id'] = match_prod.id
-        request.session['prods_ids'] = prods_ids
 
     def _delete_session_vars(self, request):
         """Method that delete session vars.

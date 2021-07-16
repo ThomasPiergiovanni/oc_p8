@@ -57,12 +57,15 @@ class SupersubManagerTest(TestCase):
         prods_ids.append(prod_two.id)
         return prods_ids
 
+    def setUp(self):
+        self.manager = SupersubManager()
+
     def test__get_data(self):
-        data = SupersubManager()._get_data()
+        data = self.manager._get_data()
         self.assertEqual(data, self.data)
 
     def test__get_page_from_session_vars_with_prod_name(self):
-        page = SupersubManager()._get_page_from_session_vars(
+        page = self.manager._get_page_from_session_vars(
             self.request_GET, self.prods_ids
         )
         self.assertEqual(
@@ -71,26 +74,33 @@ class SupersubManagerTest(TestCase):
         )
 
     def test__get_results_prods_with_prods_list(self):
-        products = SupersubManager()._get_results_prods(self.prods_ids)
+        # manager = SupersubManager()
+        products = (
+            self.manager._SupersubManager__get_results_prods(self.prods_ids)
+        )
         self.assertEqual(products, self.prods_list)
 
     def test__get_product_with_product(self):
-        product = SupersubManager()._get_product(self.prod1.id)
+        product = self.manager._get_product(self.prod1.id)
         self.assertEqual(product, self.prod1)
 
     def test__get_page_with_prod_name(self):
-        page = SupersubManager()._get_page(self.request_GET, self.prods_list)
+        page = self.manager._get_page(self.request_GET, self.prods_list)
         self.assertEqual(
             page[0].name,
             'Pain 100% mie nature PT - Harrys - 500 g'
         )
 
     def test__get_paginator_with_num_pages(self):
-        paginator = SupersubManager()._get_paginator(self.prods_list)
+        paginator = (
+            self.manager._SupersubManager__get_paginator(self.prods_list)
+        )
         self.assertEqual(paginator.num_pages, self.paginator.num_pages)
 
     def test__get_paginator_with_prod_name(self):
-        paginator = SupersubManager()._get_paginator(self.prods_list)
+        paginator = (
+            self.manager._SupersubManager__get_paginator(self.prods_list)
+        )
 
         def get_paginator_product_name(paginator):
             for page in paginator:
@@ -104,20 +114,21 @@ class SupersubManagerTest(TestCase):
         )
 
     def test__request_page_number_with_page_number(self):
-        page_number = SupersubManager()._get_request_page_number(
-            self.request_GET
+        page_number = (
+            self.manager.
+            _SupersubManager__get_request_page_number(self.request_GET)
         )
         self.assertEqual(page_number, '1')
 
     def test__get_form_with_form(self):
-        form = SupersubManager()._get_form(self.request_POST)
+        form = self.manager._get_form(self.request_POST)
         self.assertTrue(
             type(form),
             type(MainSearchForm()) or type(NavbarSearchForm())
         )
 
     def test__get_page_from_form_with_prod_name(self):
-        page = SupersubManager()._get_page_from_form(
+        page = self.manager._get_page_from_form(
             self.request_POST, self.prod1
         )
         self.assertEqual(
@@ -126,11 +137,14 @@ class SupersubManagerTest(TestCase):
         )
 
     def test__get_session_prods_with_prod_id(self):
-        prods = SupersubManager()._get_session_prods(self.prod1)
+        prods = self.manager._SupersubManager__get_session_prods(self.prod1)
         self.assertEqual(prods[0].id, 2)
 
     def test__get_session_prods_ids_with_prods_list(self):
-        prods_ids = SupersubManager()._get_session_prods_ids(self.prods_list)
+        prods_ids = (
+            self.manager
+            ._SupersubManager__get_session_prods_ids(self.prods_list)
+        )
         self.assertEqual(prods_ids, self.prods_ids)
 
     def test__add_vars_to_session_with_prod_id_and_prods_ids(self):
@@ -138,7 +152,7 @@ class SupersubManagerTest(TestCase):
             self.request_POST,
             'session', {'prod_id': '', 'prods_ids': ''}
         )
-        SupersubManager()._add_vars_to_session(self.request_POST, self.prod1)
+        self.manager._add_vars_to_session(self.request_POST, self.prod1)
         self.assertEqual(self.request_POST.session['prod_id'], 1)
         self.assertEqual(self.request_POST.session['prods_ids'], [2])
 
@@ -147,7 +161,7 @@ class SupersubManagerTest(TestCase):
             self.request_GET,
             'session', {'prod_id': 1, 'prods_ids': [2, 3]}
         )
-        SupersubManager()._delete_session_vars(self.request_GET)
+        self.manager._delete_session_vars(self.request_GET)
         self.assertEqual(
             self.request_GET.session.get('prod_id', None),
             None
@@ -167,25 +181,25 @@ class SupersubManagerTest(TestCase):
             }
         )
         prod_id, prods_ids = (
-            SupersubManager()._get_session_vars(self.request_GET)
+            self.manager._get_session_vars(self.request_GET)
         )
         self.assertEqual(prod_id, 1)
         self.assertEqual(prods_ids, [2, 3])
 
     def test__filter_favorites_with(self):
-        favorites = SupersubManager()._filter_favorites(1)
+        favorites = self.manager._filter_favorites(1)
         self.assertEqual(favorites[0].product_id, 1)
         self.assertEqual(favorites[1].product_id, 2)
 
     def test__get_favorite_with_class_type_is_true(self):
-        favorite = SupersubManager()._get_favorite(1, 1)
+        favorite = self.manager._get_favorite(1, 1)
         self.assertTrue(favorite, type(Favorites()))
 
     def test__get_favorite_with_class_type_is_none(self):
-        favorite = SupersubManager()._get_favorite(1, 2)
+        favorite = self.manager._get_favorite(1, 2)
         self.assertFalse(favorite, type(Favorites()))
 
     def test__save_favorite_with_class_type_is_true(self):
-        SupersubManager()._save_favorite(3, 1)
+        self.manager._save_favorite(3, 1)
         favorite = Favorites.objects.get(product_id__exact=3)
         self.assertTrue(favorite, type(Favorites()))
