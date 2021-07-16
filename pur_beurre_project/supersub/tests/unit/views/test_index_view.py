@@ -18,6 +18,6 @@ class TestIndexView(TestCase):
 
     def test_init_with_attr_data_render(self):
         self.assertEqual(
-            self.index_view.data['render'],
+            self.index_view._data['render'],
             'supersub/index.html'
         )

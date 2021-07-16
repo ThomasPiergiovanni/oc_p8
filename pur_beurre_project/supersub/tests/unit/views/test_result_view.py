@@ -18,12 +18,12 @@ class TestResultView(TestCase):
 
     def test_init_with_attr_data_render(self):
         self.assertEqual(
-            self.result_view.data['render'],
+            self.result_view._data['render'],
             'supersub/results.html'
         )
 
     def test_init_with_attr_data_redirect(self):
         self.assertEqual(
-            self.result_view.data['redirect'],
+            self.result_view._data['redirect'],
             'supersub:index'
         )

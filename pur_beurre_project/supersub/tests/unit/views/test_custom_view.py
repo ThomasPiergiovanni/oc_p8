@@ -20,25 +20,25 @@ class TestCustomView(TestCase):
         self.assertTrue(self.custom_view)
 
     def test_customview_with_attr_manager_are_true(self):
-        self.assertTrue(self.custom_view.data)
-        self.assertTrue(self.custom_view.data['ctxt']['main_form'])
-        self.assertTrue(self.custom_view.data['ctxt']['navbar_form'])
-        self.assertEqual(self.custom_view.data['ctxt']['searched_prod'], '')
-        self.assertEqual(self.custom_view.data['ctxt']['prod'], '')
-        self.assertEqual(self.custom_view.data['ctxt']['page_obj'], '')
-        self.assertEqual(self.custom_view.data['ctxt']['user'], '')
-        self.assertEqual(self.custom_view.data['ctxt']['form'], '')
-        self.assertEqual(self.custom_view.data['render'], '')
-        self.assertEqual(self.custom_view.data['redirect'], '')
+        self.assertTrue(self.custom_view._data)
+        self.assertTrue(self.custom_view._data['ctxt']['main_form'])
+        self.assertTrue(self.custom_view._data['ctxt']['navbar_form'])
+        self.assertEqual(self.custom_view._data['ctxt']['searched_prod'], '')
+        self.assertEqual(self.custom_view._data['ctxt']['prod'], '')
+        self.assertEqual(self.custom_view._data['ctxt']['page_obj'], '')
+        self.assertEqual(self.custom_view._data['ctxt']['user'], '')
+        self.assertEqual(self.custom_view._data['ctxt']['form'], '')
+        self.assertEqual(self.custom_view._data['render'], '')
+        self.assertEqual(self.custom_view._data['redirect'], '')
 
     def test_customview_with_attr_data_ctxt_mainform_type(self):
         self.assertEqual(
-            type(self.custom_view.data['ctxt']['main_form']),
+            type(self.custom_view._data['ctxt']['main_form']),
             type(MainSearchForm())
         )
 
     def test_customview_with_attr_data_ctxt_navbarform_type(self):
         self.assertEqual(
-            type(self.custom_view.data['ctxt']['navbar_form']),
+            type(self.custom_view._data['ctxt']['navbar_form']),
             type(NavbarSearchForm())
         )

@@ -14,11 +14,11 @@ class SignOutView(CustomView, AuthenticationManager):
     """
     def __init__(self):
         super().__init__()
-        self.data['redirect'] = 'supersub:index'
+        self._data['redirect'] = 'supersub:index'
 
     def get(self, request):
         """Sign out method on client get request. After logging the user
         out, the user is redirected to the index page.
         """
         self._logout(request)
-        return redirect(self.data['redirect'])
+        return redirect(self._data['redirect'])

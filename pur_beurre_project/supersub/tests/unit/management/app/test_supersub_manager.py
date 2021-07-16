@@ -33,15 +33,14 @@ class SupersubManagerTest(TestCase):
         cls.prods_ids = cls.emulate_prods_ids_list(cls.prod1, cls.prod2)
         cls.request_GET = RequestFactory().get('', data={'page': 1})
         cls.request_POST = RequestFactory().post(
-            '',
-            data={'page': 1, 'product': cls.prod1.name}
+            '', data={'page': 1, 'product': cls.prod1.name}
         )
         cls.paginator = Paginator(cls.prods_list, 6)
         FavoritesTest.emulate_favorites()
 
     @classmethod
     def emulate_data(cls):
-        cls.data = {'ctxt': {}, 'render': "", 'redirect': ""}
+        cls._data = {'ctxt': {}, 'render': "", 'redirect': ""}
 
     @classmethod
     def emulate_prods_list(cls, prod_one, prod_two):
@@ -62,7 +61,7 @@ class SupersubManagerTest(TestCase):
 
     def test__get_data(self):
         data = self.manager._get_data()
-        self.assertEqual(data, self.data)
+        self.assertEqual(data, self._data)
 
     def test__get_page_from_session_vars_with_prod_name(self):
         page = self.manager._get_page_from_session_vars(

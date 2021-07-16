@@ -18,6 +18,6 @@ class TestLegalMentionsView(TestCase):
 
     def test_init_with_attr_data_render(self):
         self.assertEqual(
-            self.legal_mentions_view.data['render'],
+            self.legal_mentions_view._data['render'],
             'supersub/legal_mentions.html'
         )

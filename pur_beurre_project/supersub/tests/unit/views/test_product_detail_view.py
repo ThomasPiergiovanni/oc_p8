@@ -18,6 +18,6 @@ class TestProductDetailView(TestCase):
 
     def test_init_with_attr_data_render(self):
         self.assertEqual(
-            self.product_detail_view.data['render'],
+            self.product_detail_view._data['render'],
             'supersub/product_detail.html'
         )

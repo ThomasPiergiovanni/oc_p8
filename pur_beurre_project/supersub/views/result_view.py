@@ -15,8 +15,8 @@ class ResultView(CustomView):
     """
     def __init__(self):
         super().__init__()
-        self.data['render'] = 'supersub/results.html'
-        self.data['redirect'] = 'supersub:index'
+        self._data['render'] = 'supersub/results.html'
+        self._data['redirect'] = 'supersub:index'
 
     def get(self, request):
         """Result page view method on client get request. Renders the selected
@@ -24,10 +24,10 @@ class ResultView(CustomView):
         and its potential substitutes
         """
         prod_id, prods_ids = self._get_session_vars(request)
-        self.data['ctxt']['searched_prod'] = self._get_product(prod_id)
-        self.data['ctxt']["page_obj"] = (
+        self._data['ctxt']['searched_prod'] = self._get_product(prod_id)
+        self._data['ctxt']["page_obj"] = (
             self._get_page_from_session_vars(request, prods_ids))
-        return render(request, self.data['render'], self.data['ctxt'])
+        return render(request, self._data['render'], self._data['ctxt'])
 
     def post(self, request):
         """Result page view method on client post request. Renders the
@@ -45,14 +45,14 @@ class ResultView(CustomView):
                 )[:1]
             )
             if match_prods:
-                self.data['ctxt']['searched_prod'] = match_prods[0]
-                self.data['ctxt']["page_obj"] = (
+                self._data['ctxt']['searched_prod'] = match_prods[0]
+                self._data['ctxt']["page_obj"] = (
                     self._get_page_from_form(request, match_prods[0])
                 )
                 self._add_vars_to_session(request, match_prods[0])
-                self.data['ctxt']['user'] = request.user
+                self._data['ctxt']['user'] = request.user
                 return render(
-                    request, self.data['render'], self.data['ctxt']
+                    request, self._data['render'], self._data['ctxt']
                 )
             messages.add_message(
                 request, messages.WARNING,
@@ -62,4 +62,4 @@ class ResultView(CustomView):
             messages.add_message(
                 request, messages.ERROR, "Saisissez un produit"
             )
-        return HttpResponseRedirect(reverse(self.data['redirect']))
+        return HttpResponseRedirect(reverse(self._data['redirect']))

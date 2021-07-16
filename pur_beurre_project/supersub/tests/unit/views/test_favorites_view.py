@@ -18,12 +18,12 @@ class TestFavoritesView(TestCase):
 
     def test_init_with_attr_data_render(self):
         self.assertEqual(
-            self.favorites_view.data['render'],
+            self.favorites_view._data['render'],
             'supersub/favorites.html'
         )
 
     def test_init_with_attr_data_redirect(self):
         self.assertEqual(
-            self.favorites_view.data['redirect'],
+            self.favorites_view._data['redirect'],
             'supersub:index'
         )

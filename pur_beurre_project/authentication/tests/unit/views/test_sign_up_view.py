@@ -18,12 +18,12 @@ class TestSignUpView(TestCase):
 
     def test_init_with_attr_data_render(self):
         self.assertEqual(
-            self.sign_up_view.data['render'],
+            self.sign_up_view._data['render'],
             'authentication/sign_up.html'
         )
 
     def test_init_with_attr_data_redirect(self):
         self.assertEqual(
-            self.sign_up_view.data['redirect'],
+            self.sign_up_view._data['redirect'],
             'authentication:sign_in'
         )

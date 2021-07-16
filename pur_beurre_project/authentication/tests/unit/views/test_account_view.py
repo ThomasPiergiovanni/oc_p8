@@ -18,12 +18,12 @@ class TestAccountView(TestCase):
 
     def test_init_with_attr_data_render(self):
         self.assertEqual(
-            self.account_view.data['render'],
+            self.account_view._data['render'],
             'authentication/account.html'
         )
 
     def test_init_with_attr_data_redirect(self):
         self.assertEqual(
-            self.account_view.data['redirect'],
+            self.account_view._data['redirect'],
             'authentication:sign_in'
         )
