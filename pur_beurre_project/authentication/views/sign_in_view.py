@@ -10,12 +10,11 @@ from authentication.management.authentication_manager import (
 from supersub.views.custom_view import CustomView
 
 
-class SignInView(CustomView):
+class SignInView(CustomView, AuthenticationManager):
     """Sign in view class.
     """
     def __init__(self):
         super().__init__()
-        self.auth_manager = AuthenticationManager()
         self.data['redirect'] = 'supersub:index'
         self.data['render'] = 'authentication/sign_in.html'
 
@@ -32,12 +31,12 @@ class SignInView(CustomView):
         index page. If any of those criteria is not met, the same page is
         rendered to the user.
         """
-        self.auth_manager._logout(request)
+        self._logout(request)
         form = SignInForm(data=request.POST)
         if form.is_valid():
-            user = self.auth_manager._authenticate(form.cleaned_data)
+            user = self._authenticate(form.cleaned_data)
             if user is not None:
-                self.auth_manager._login(request, user)
+                self._login(request, user)
                 return redirect(self.data['redirect'])
         self.data['ctxt']['form'] = form
         return render(request, self.data['render'], self.data['ctxt'])
