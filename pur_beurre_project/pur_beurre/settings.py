@@ -14,7 +14,7 @@ import django_heroku # required for heroku prod
 
 from pathlib import Path
 
-from config.custom_settings.environnement_variables import (
+from pur_beurre.custom_settings.environnement_variables import (
     EnvironnementVariables
 )
 
@@ -66,7 +66,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = 'pur_beurre.urls'
 
 TEMPLATES = [
     {
@@ -84,7 +84,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = 'pur_beurre.wsgi.application'
 
 
 # Database
