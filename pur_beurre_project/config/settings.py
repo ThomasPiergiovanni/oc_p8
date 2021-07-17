@@ -10,8 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
-
-# import django_heroku
+import django_heroku # required for heroku prod
 
 from pathlib import Path
 
@@ -22,25 +21,28 @@ from config.custom_settings.environnement_variables import (
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
-# The following line is for dev
-#BASE_DIR = Path(__file__).resolve().parent.parent
+# The is works in dev
+# BASE_DIR = Path(__file__).resolve().parent.parent 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) # required for prod
+# required for heroku prod
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = EnvironnementVariables().SECRET_KEY
+SECRET_KEY = EnvironnementVariables().APP_SECRET_KEY
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-# ALLOWED_HOSTS = ['.herokuapps.com','127.0.0.1']
+DEBUG = False if EnvironnementVariables().APP_ENV == 'prod' else True
 
 ALLOWED_HOSTS = []
+
+# required for heroku prod
+if EnvironnementVariables().APP_ENV == 'prod':
+    ALLOWED_HOSTS = ['.herokuapps.com','127.0.0.1'] 
 
 
 # Application definition
@@ -138,13 +140,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-
-
-
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # required for prod
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # required for heroku prod
 
 
 AUTH_USER_MODEL = "authentication.CustomUser"
 
-# django_heroku.settings(locals()) # required for prod
+if EnvironnementVariables().APP_ENV == 'prod':
+    django_heroku.settings(locals()) # required for heroku prod
