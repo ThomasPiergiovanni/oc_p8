@@ -1,4 +1,4 @@
-""" Custom settings module
+""" Tests variable module
 """
 # DESCRIPTION: OFF API categorie response emulation.  Dictionnary
 #   has all keys.

@@ -1,4 +1,4 @@
-""" Custom settings module
+""" Functionnal variable module
 """
 # DESCRIPTION: OpenFoodFacts (OFF) API categories list endpoint.
 # MANDATORY: Yes.
