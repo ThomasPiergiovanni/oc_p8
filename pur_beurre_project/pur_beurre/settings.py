@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 
+import django_heroku
+
 from pathlib import Path
 
 from pur_beurre.custom_settings.environnement_variables import (
@@ -139,15 +141,17 @@ USE_TZ = True
 # The following line is for prod
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATIC_URL = '/supersub/static/'
+STATIC_URL = '/static/'
 
 # The following line is for prod
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, '/static/'),
 )
 
 # on heroku recommandation, the following is added
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 AUTH_USER_MODEL = "authentication.CustomUser"
+
+django_heroku.settings(locals())
