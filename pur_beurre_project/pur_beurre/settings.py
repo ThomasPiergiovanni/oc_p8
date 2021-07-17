@@ -14,7 +14,7 @@ import django_heroku # required for heroku prod
 
 from pathlib import Path
 
-from pur_beurre.custom_settings.environnement_variables import (
+from custom_settings.environnement_variables import (
     EnvironnementVariables
 )
 
