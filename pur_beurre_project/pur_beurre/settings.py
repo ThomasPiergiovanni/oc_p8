@@ -138,7 +138,7 @@ USE_TZ = True
 # The following line is for prod
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-STATIC_URL = '/static/'
+STATIC_URL = '/supersub/static/'
 
 # The following line is for prod
 # Extra places for collectstatic to find static files.
