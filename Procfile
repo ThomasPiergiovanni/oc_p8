@@ -1,1 +1,0 @@
-web: gunicorn pur_beurre_project/pur_beurre.wsgi --log-file -

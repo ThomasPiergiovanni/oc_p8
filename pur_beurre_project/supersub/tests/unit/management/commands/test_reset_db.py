@@ -7,7 +7,7 @@ from authentication.models import CustomUser
 from authentication.tests.unit.models.test_custom_user import (
     CustomUserTest
 )
-from pur_beurre.custom_settings.tests_variables import (
+from config.custom_settings.tests_variables import (
     OFF_API_FILTERED_PRODUCTS, OFF_API_FILTERED_CATEGORIES
 )
 from supersub.management.commands.reset_db import Command

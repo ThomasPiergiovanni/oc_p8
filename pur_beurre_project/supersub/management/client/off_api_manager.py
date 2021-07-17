@@ -3,7 +3,7 @@
 """
 import requests
 
-from pur_beurre.custom_settings.functional_variables import (
+from config.custom_settings.functional_variables import (
     CATEGORIES_ENDPOINT,
     SELECTED_CATEGORIES,
     PRODUCTS_ENDPOINT,

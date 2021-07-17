@@ -11,11 +11,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 
-import django_heroku
+# import django_heroku
 
 from pathlib import Path
 
-from pur_beurre.custom_settings.environnement_variables import (
+from config.custom_settings.environnement_variables import (
     EnvironnementVariables
 )
 
@@ -36,9 +36,11 @@ SECRET_KEY = EnvironnementVariables().SECRET_KEY
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['.herokuapps.com','127.0.0.1']
+# ALLOWED_HOSTS = ['.herokuapps.com','127.0.0.1']
+
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -64,7 +66,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'pur_beurre.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -82,7 +84,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'pur_beurre.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
@@ -140,9 +142,9 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # required for prod
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # required for prod
 
 
 AUTH_USER_MODEL = "authentication.CustomUser"
 
-django_heroku.settings(locals())
+# django_heroku.settings(locals()) # required for prod
