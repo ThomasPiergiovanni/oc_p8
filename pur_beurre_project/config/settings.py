@@ -42,7 +42,7 @@ ALLOWED_HOSTS = []
 
 # required for heroku prod
 if EnvironnementVariables().APP_ENV == 'prod':
-    ALLOWED_HOSTS = ['.herokuapps.com','127.0.0.1'] 
+    ALLOWED_HOSTS = ['.herokuapps.com', 'localhost', '127.0.0.1'] 
 
 
 # Application definition
