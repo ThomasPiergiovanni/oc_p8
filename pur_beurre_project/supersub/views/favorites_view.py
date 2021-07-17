@@ -14,8 +14,8 @@ class FavoritesView(CustomView):
     """
     def __init__(self):
         super().__init__()
-        self.data['render'] = 'supersub/favorites.html'
-        self.data['redirect'] = 'supersub:index'
+        self._data['render'] = 'supersub/favorites.html'
+        self._data['redirect'] = 'supersub:index'
 
     def get(self, request):
         """ Favorite view method on client get request. The response renders
@@ -25,13 +25,13 @@ class FavoritesView(CustomView):
         favorites.
         """
         if request.user.is_authenticated:
-            favorites = list(self.manager._filter_favorites(request.user.id))
+            favorites = list(self._filter_favorites(request.user.id))
             if favorites:
-                self.data['ctxt']['page_obj'] = (
-                    self.manager._get_page(request, favorites)
+                self._data['ctxt']['page_obj'] = (
+                    self._get_page(request, favorites)
                 )
                 return render(
-                    request, self.data['render'], self.data['ctxt'])
+                    request, self._data['render'], self._data['ctxt'])
             messages.add_message(
                 request,
                 messages.WARNING,
@@ -43,4 +43,4 @@ class FavoritesView(CustomView):
                 messages.ERROR,
                 "Connectez-vous pour consulter vos favoris!"
             )
-        return HttpResponseRedirect(reverse(self.data['redirect']))
+        return HttpResponseRedirect(reverse(self._data['redirect']))

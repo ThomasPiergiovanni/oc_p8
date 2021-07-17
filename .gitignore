@@ -2,7 +2,6 @@
 env/
 
 # file containing private settings
-pur_beurre_project/pur_beurre/settings.py
 
 #  pychache repos
 __pycache__/

@@ -1,6 +1,6 @@
 [run]
 omit = 
-    pur_beurre/*
+    config/*
     authentication/__init__.py
     authentication/admin.py
     authentication/tests/*

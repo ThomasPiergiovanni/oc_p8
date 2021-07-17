@@ -11,9 +11,9 @@ class LegalMentionsView(CustomView):
     """
     def __init__(self):
         super().__init__()
-        self.data['render'] = 'supersub/legal_mentions.html'
+        self._data['render'] = 'supersub/legal_mentions.html'
 
     def get(self, request):
         """Legal mention page view method on client get request.
         """
-        return render(request, self.data['render'], self.data['ctxt'])
+        return render(request, self._data['render'], self._data['ctxt'])

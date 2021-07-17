@@ -6,6 +6,7 @@ from django.test import TestCase
 
 from authentication.models import CustomUser
 
+
 class CustomUserTest(TestCase):
     """Test custom user model module class.
     """

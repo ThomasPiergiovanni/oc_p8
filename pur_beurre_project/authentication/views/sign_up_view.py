@@ -12,21 +12,20 @@ from authentication.management.authentication_manager import (
 from supersub.views.custom_view import CustomView
 
 
-class SignUpView(CustomView):
+class SignUpView(CustomView, AuthenticationManager):
     """Sign up view class.
     """
     def __init__(self):
         super().__init__()
-        self.auth_manager = AuthenticationManager()
-        self.data['redirect'] = 'authentication:sign_in'
-        self.data['render'] = 'authentication/sign_up.html'
+        self._data['redirect'] = 'authentication:sign_in'
+        self._data['render'] = 'authentication/sign_up.html'
 
     def get(self, request):
         """Sign up view method on client get request.
         """
         form = SignUpForm()
-        self.data['ctxt']['form'] = form
-        return render(request, self.data['render'], self.data['ctxt'])
+        self._data['ctxt']['form'] = form
+        return render(request, self._data['render'], self._data['ctxt'])
 
     def post(self, request):
         """Sign up view method on client post request. If the user is not
@@ -36,7 +35,7 @@ class SignUpView(CustomView):
         """
         form = SignUpForm(request.POST)
         if form.is_valid():
-            self.auth_manager._create_user(form.cleaned_data)
-            return HttpResponseRedirect(reverse(self.data['redirect']))
-        self.data['ctxt']['form'] = form
-        return render(request, self.data['render'], self.data['ctxt'])
+            self._create_user(form.cleaned_data)
+            return HttpResponseRedirect(reverse(self._data['redirect']))
+        self._data['ctxt']['form'] = form
+        return render(request, self._data['render'], self._data['ctxt'])

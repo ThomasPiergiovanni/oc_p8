@@ -1,4 +1,4 @@
-""" Custom settings module
+""" Functionnal variable module
 """
 # DESCRIPTION: OpenFoodFacts (OFF) API categories list endpoint.
 # MANDATORY: Yes.
@@ -41,4 +41,4 @@ PRODUCTS_ENDPOINT = "https://fr.openfoodfacts.org/cgi/search.pl"
 # DEFAULT SETTINGS: 50.
 # CUSTOM SETTINGS: Can be changed but should not exceed 2000 to avoid
 # upload failure.
-PRODUCTS_AMOUNT = 1000
+PRODUCTS_AMOUNT = 50

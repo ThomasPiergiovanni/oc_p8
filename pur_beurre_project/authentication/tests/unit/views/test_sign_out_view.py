@@ -18,6 +18,6 @@ class TestSignOutView(TestCase):
 
     def test_init_with_attr_data_redirect(self):
         self.assertEqual(
-            self.sign_out_view.data['redirect'],
+            self.sign_out_view._data['redirect'],
             'supersub:index'
         )

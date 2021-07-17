@@ -11,10 +11,10 @@ class IndexView(CustomView):
     """
     def __init__(self):
         super().__init__()
-        self.data['render'] = 'supersub/index.html'
+        self._data['render'] = 'supersub/index.html'
 
     def get(self, request):
         """Index/home page view method on client get request.
         """
-        self.manager._delete_session_vars(request)
-        return render(request, self.data['render'], self.data['ctxt'])
+        self._delete_session_vars(request)
+        return render(request, self._data['render'], self._data['ctxt'])

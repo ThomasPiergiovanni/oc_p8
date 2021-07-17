@@ -13,7 +13,7 @@ class RegisterFavoriteView(CustomView):
     """
     def __init__(self):
         super().__init__()
-        self.data['redirect'] = 'supersub:product_detail'
+        self._data['redirect'] = 'supersub:product_detail'
 
     def get(self, request, id_prod):
         """Register favorite method on client get request. On the attempt
@@ -22,15 +22,15 @@ class RegisterFavoriteView(CustomView):
         a waring message. If the favorite is not already a user favorite, a
         success message is displayed.
         """
-        if self.manager._get_favorite(id_prod, request.user.id):
+        if self._get_favorite(id_prod, request.user.id):
             messages.add_message(
                 request, messages.WARNING, "Produit déja enregistré"
             )
         else:
-            self.manager._save_favorite(id_prod, request.user.id)
+            self._save_favorite(id_prod, request.user.id)
             messages.add_message(
                 request, messages.SUCCESS, "Produit enregistré!"
             )
         return HttpResponseRedirect(
-            reverse(self.data['redirect'], args=[id_prod])
+            reverse(self._data['redirect'], args=[id_prod])
         )
