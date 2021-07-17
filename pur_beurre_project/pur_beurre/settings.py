@@ -25,8 +25,7 @@ from pur_beurre.custom_settings.environnement_variables import (
 # The following line is for dev
 #BASE_DIR = Path(__file__).resolve().parent.parent
 
-# The following line is for prod
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) # required for prod
 
 
 # Quick-start development settings - unsuitable for production
@@ -39,7 +38,7 @@ SECRET_KEY = EnvironnementVariables().SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.herokuapps.com','127.0.0.1']
 
 
 # Application definition
@@ -63,7 +62,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',# on heroku recommandation, the following is added
 ]
 
 ROOT_URLCONF = 'pur_beurre.urls'
@@ -138,19 +136,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-# The following line is for prod
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # required for prod
 
-# The following line is for prod
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, '/static/'),
-)
-
-# on heroku recommandation, the following is added
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 AUTH_USER_MODEL = "authentication.CustomUser"
 
