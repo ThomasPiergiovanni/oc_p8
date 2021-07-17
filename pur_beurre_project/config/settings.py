@@ -38,11 +38,9 @@ SECRET_KEY = EnvironnementVariables().APP_SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if EnvironnementVariables().APP_ENV == 'prod' else True
 
-ALLOWED_HOSTS = []
 
 # required for heroku prod
-if EnvironnementVariables().APP_ENV == 'prod':
-    ALLOWED_HOSTS = ['.herokuapps.com', 'localhost', '127.0.0.1'] 
+ALLOWED_HOSTS = ['.herokuapps.com', 'localhost', '127.0.0.1'] 
 
 
 # Application definition
@@ -96,8 +94,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql', # on utilise l'adaptateur postgresql
         'NAME': 'pur_beurre', # le nom de notre base de donnees creee precedemment
-        'USER': EnvironnementVariables().POSTGRES_USER, # attention : remplacez par votre nom d'utilisateur
-        'PASSWORD': EnvironnementVariables().POSTGRES_PWD,
+        'USER': 'postgres', # attention : remplacez par votre nom d'utilisateur
+        'PASSWORD': 'postgres',
         'HOST': '',
         'PORT': '5432',
     }
@@ -146,5 +144,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # required for heroku prod
 
 AUTH_USER_MODEL = "authentication.CustomUser"
 
-if EnvironnementVariables().APP_ENV == 'prod':
-    django_heroku.settings(locals()) # required for heroku prod
+
+django_heroku.settings(locals()) # required for heroku prod
