@@ -38,7 +38,7 @@ PRODUCTS_ENDPOINT = "https://fr.openfoodfacts.org/cgi/search.pl"
 
 # DESCRIPTION: Amount of product to get from OFF API per product category.
 # MANDATORY: Yes.
-# DEFAULT SETTINGS: 50.
+# DEFAULT SETTINGS: 1000.
 # CUSTOM SETTINGS: Can be changed but should not exceed 2000 to avoid
 # upload failure.
-PRODUCTS_AMOUNT = 50
+PRODUCTS_AMOUNT = 1000
