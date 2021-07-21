@@ -58,4 +58,4 @@ class SignUpUseCaseTest(StaticLiveServerTestCase):
         self.assertTrue(
             self.browser.find_element_by_id('id_signin_password_input')
         )
-        sleep(2)
+        sleep(1)

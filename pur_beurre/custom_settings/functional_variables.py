@@ -21,7 +21,8 @@ CATEGORIES_ENDPOINT = "https://fr.openfoodfacts.org/categories.json"
 # For more information, please check "https://documenter.getpostman.com/view/
 # 8470508/SVtN3Wzy?version=latest#intro".
 SELECTED_CATEGORIES = [
-    "en:snacks", "en:desserts", "en:breads","en:breakfast-cereals", "en:meals"
+    "en:snacks", "en:desserts", "en:breads", "en:breakfast-cereals",
+    "en:meals"
 ]
 
 # DESCRIPTION: OFF API products research functionality endpoint.

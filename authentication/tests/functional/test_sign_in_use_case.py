@@ -52,4 +52,4 @@ class SignInUseCaseTest(StaticLiveServerTestCase):
             'DU GRAS, OUI MAIS DE QUALITÉ',
             self.browser.find_element_by_tag_name('h1').text
         )
-        sleep(2)
+        sleep(1)

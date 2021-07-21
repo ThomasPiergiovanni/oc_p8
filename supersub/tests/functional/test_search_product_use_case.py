@@ -30,7 +30,7 @@ class SearchProductUseCaseTest(StaticLiveServerTestCase):
 
     def setUp(self):
         # The user logs to the app page
-        self.browser.get('%s%s' % (self.live_server_url, '/supersub/'))
+        self.browser.get('%s%s' % (self.live_server_url, ''))
 
     def test_user_lands_on_home_page(self):
         # The user notices the page name and the header title
