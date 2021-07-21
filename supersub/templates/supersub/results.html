@@ -20,7 +20,9 @@
             <div class="container h-100">
                 <div class="row h-100 align-items-center justify-content-center text-center"> 
                     <div class="col-lg-8 align-self-center mb-2">
-                        <h2 id="result_searched_product" class="text-white-75 mb-4">[ {{ searched_prod.name }} ]</h2> 
+                        <a href="{% url 'supersub:product_detail' id_prod=searched_prod.id %}" class="product-text">
+                            <h2 id="result_searched_product" class="mb-4"> {{ searched_prod.name }} </h2>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -31,21 +33,21 @@
                 <h4 class="text-dark text-center text-secondary-50 mb-4"> Vous pouvez remplacer ce produit par:  </h4>
                 <hr class="divider my-4" />
                 <div class="row">
-                    {% for paginator in page_obj %}
+                    {% for product in page_obj %}
                         <div class="col-lg-4 col-sm-6 text-center">
                             <div class="m-4 results-image">
-                                <a href="{% url 'supersub:product_detail' id_prod=paginator.id %}" class="ele_dark_href">
-                                    <img style="max-height: 80px;"  src=" {{ paginator.image }} " alt="" />
-                                    <p class="h5 m-1"> {{ paginator.name }} </p>
+                                <a href="{% url 'supersub:product_detail' id_prod=product.id %}" class="ele_dark_href">
+                                    <img style="max-height: 80px;"  src=" {{ product.image }} " alt="" />
+                                    <p class="h5 m-1"> {{ product.name }} </p>
                                 </a>
                                 <div class="nutriscore-circle">
                                     <i class="fas fa-circle"></i>
                                 </div>
                                 <div class="nutriscore-letter text-uppercase">
-                                    <p>{{ paginator.nutriscore_grade }}</p>
+                                    <p>{{ product.nutriscore_grade }}</p>
                                 </div>
                                 {% if user.is_authenticated %}
-                                    <a href="{% url 'supersub:register_favorite' id_prod=paginator.id%}" class="ele_dark_href">
+                                    <a href="{% url 'supersub:register_favorite' id_prod=product.id%}" class="ele_dark_href">
                                         <p class="mb-0">
                                             <span>
                                                 <i class="fas fa-save"></i>

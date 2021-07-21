@@ -27,6 +27,7 @@ class ResultView(CustomView):
         self._data['ctxt']['searched_prod'] = self._get_product(prod_id)
         self._data['ctxt']["page_obj"] = (
             self._get_page_from_session_vars(request, prods_ids))
+        self._data['ctxt']['user'] = request.user
         return render(request, self._data['render'], self._data['ctxt'])
 
     def post(self, request):

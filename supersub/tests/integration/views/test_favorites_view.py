@@ -23,13 +23,13 @@ class TestFavoritesView(TestCase):
     def test_get_with_response_200_with_favs_and_logged_in(self):
         FavoritesTest.emulate_favorites()
         self.client.login(email='testuser@email.com', password='_Xxxxxxx')
-        response = self.client.get('/supersub/favorites/')
+        response = self.client.get('/favorites/')
         self.assertEqual(response.status_code, 200)
 
     def test_get_with_favorite(self):
         FavoritesTest.emulate_favorites()
         self.client.login(email='testuser@email.com', password='_Xxxxxxx')
-        response = self.client.get('/supersub/favorites/')
+        response = self.client.get('/favorites/')
         self.assertEqual(response.context['page_obj'][0].custom_user_id, 1)
 
     def test_get_with_message_warning(self):
@@ -37,7 +37,7 @@ class TestFavoritesView(TestCase):
             email='testuser@email.com',
             password='_Xxxxxxx'
         )
-        response = self.client.get('/supersub/favorites/', follow=True)
+        response = self.client.get('/favorites/', follow=True)
         messages = response.context['messages']
         for message in messages:
             self.assertEqual(message.level_tag, 'warning')
@@ -47,7 +47,7 @@ class TestFavoritesView(TestCase):
             )
 
     def test_get_with_message_error(self):
-        response = self.client.get('/supersub/favorites/', follow=True)
+        response = self.client.get('/favorites/', follow=True)
         messages = response.context['messages']
         for message in messages:
             self.assertEqual(message.level_tag, 'error')

@@ -28,13 +28,13 @@ class RegisterFavoriteViewTest(TestCase):
 
     def test_get_with_status_code_200(self):
         self.response = self.client.get(
-            '/supersub/register_favorite/1', follow=True
+            '/register_favorite/1', follow=True
         )
         self.assertEqual(self.response.status_code, 200)
 
     def test_get_with_message_warning(self):
         self.response = self.client.get(
-            '/supersub/register_favorite/1', follow=True
+            '/register_favorite/1', follow=True
         )
         for message in self.response.context['messages']:
             self.assertEqual(message.level_tag, 'warning')
@@ -42,7 +42,7 @@ class RegisterFavoriteViewTest(TestCase):
 
     def test_get_with_favorites_saved(self):
         self.response = self.client.get(
-            '/supersub/register_favorite/2', follow=True
+            '/register_favorite/2', follow=True
         )
         new_favorite = Favorites.objects.get(
             product_id__exact=2,
@@ -52,7 +52,7 @@ class RegisterFavoriteViewTest(TestCase):
 
     def test_get_with_message_success(self):
         self.response = self.client.get(
-            '/supersub/register_favorite/3', follow=True
+            '/register_favorite/3', follow=True
         )
         for message in self.response.context['messages']:
             self.assertEqual(message.level_tag, 'success')
@@ -60,9 +60,9 @@ class RegisterFavoriteViewTest(TestCase):
 
     def test_get_with_redirect(self):
         self.response = self.client.get(
-            '/supersub/register_favorite/2', follow=True
+            '/register_favorite/2', follow=True
         )
         self.assertEqual(
             self.response.redirect_chain[0][0],
-            '/supersub/product_detail/2'
+            '/product_detail/2'
         )

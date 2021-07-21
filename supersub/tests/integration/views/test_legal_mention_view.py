@@ -10,7 +10,7 @@ class LegalMentionsViewTest(TestCase):
     """Test legal mention view class.
     """
     def setUp(self):
-        self.response = self.client.get('/supersub/legal_mentions/')
+        self.response = self.client.get('/legal_mentions/')
 
     def test_get_with_status_code_200(self):
         self.assertEqual(self.response.status_code, 200)

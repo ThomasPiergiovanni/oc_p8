@@ -1,4 +1,4 @@
-# pylint: disable=C0116
+# pylint: disable=C0116, W0212
 """Test register favorite module.
 """
 from django.test import TestCase

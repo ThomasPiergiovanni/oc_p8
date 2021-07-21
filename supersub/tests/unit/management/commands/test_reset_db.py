@@ -1,4 +1,4 @@
-# pylint: disable=C0116, E1101
+# pylint: disable=C0116, E1101, W0212
 """Test resest DB module
 """
 from django.test import TestCase
@@ -80,7 +80,9 @@ class CommandTest(TestCase):
         CategoryTest.emulate_category()
         self.db_manager.categories_in_db = Category.objects.all()
         self.db_manager.off_api_manager.products = self.products
-        self.db_manager._Command__insert_products(self.db_manager.categories_in_db[0])
+        self.db_manager._Command__insert_products(
+            self.db_manager.categories_in_db[0]
+        )
         product = Product.objects.get(pk=2)
         self.assertEqual(product.name, "Prince Chocolat 2")
 

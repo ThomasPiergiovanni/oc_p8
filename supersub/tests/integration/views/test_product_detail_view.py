@@ -18,7 +18,7 @@ class ProductDetailViewTest(TestCase):
         ProductTest().emulate_product()
 
     def setUp(self):
-        self.response = self.client.get('/supersub/product_detail/1')
+        self.response = self.client.get('/product_detail/1')
 
     def test_get_with_status_code_200(self):
         self.assertEqual(self.response.status_code, 200)

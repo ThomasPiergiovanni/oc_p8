@@ -46,7 +46,7 @@ class SignInViewTest(TestCase):
             follow=True
         )
         self.assertEqual(
-            response.redirect_chain[0][0], '/supersub/'
+            response.redirect_chain[0][0], '/'
         )
 
     def test_post_with_render(self):

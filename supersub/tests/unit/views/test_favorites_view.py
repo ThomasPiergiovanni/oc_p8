@@ -1,4 +1,4 @@
-# pylint: disable=C0116
+# pylint: disable=C0116, W0212
 """Test Favorites view module.
 """
 from django.test import TestCase
