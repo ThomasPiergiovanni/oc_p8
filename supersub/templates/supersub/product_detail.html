@@ -31,7 +31,7 @@
                 <div class="col-md-6 text-center">
                     <p class="h5 m-2">Nutriscore</p>
                     <ul class="list-group mt-4">
-                        <h4 class="list-group-item-heading font-weight-bold text-uppercase"> {{ prod.nutriscore_grade }} </h4>
+                        <li class="list-group h4 text-uppercase"> {{ prod.nutriscore_grade }} </li>
                     </ul>
                 </div>
                 <div class="col-md-6 text-center">
@@ -46,9 +46,9 @@
             </div>
             <div class="row">
                 <div class="col pt-5 text-center">
-                    <a href='{{ prod.url }}'>
-                        <button type="button" id="off_aliment" class="btn btn-primary">Voir la fiche d'OpenFoodFacts</button>
-                    </a>
+                    <form action='{{ prod.url }}'>
+                        <button type="submit" id="off_aliment" class="btn btn-primary">Voir la fiche d'OpenFoodFacts</button>
+                    </form>
                 </div>
             </div>
         </div>
