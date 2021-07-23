@@ -2,23 +2,11 @@
 
 {% block content %}
     <!-- Masthead-->
-        <header 
-            style="
-                padding-top: 10rem;
-                padding-bottom: calc(10rem - 4.5rem);
-                background: 
-                    linear-gradient(
-                        to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%
-                    ),
-                    url('{{prod.image}}');
-                background-position: center;
-                background-attachment: scroll;
-                background-size: cover;"
-            class="searchhead" id="searchhead">
+        <header class="searchhead lg" id="searchhead" style="background-image:url('{{prod.image}}');">
             <div class="container h-100">
                 <div class="row h-100 align-items-center justify-content-center text-center"> 
                     <div class="col-lg-8 align-self-center mb-2">
-                        <h2 class="text-white-75 mb-4"> {{ prod.name }} </h2>
+                        <h2 class="text-white-75 zl mb-4"> {{ prod.name }} </h2>
                         {% if messages %}
                             {% for message in messages %}
                                 <div class="row">
