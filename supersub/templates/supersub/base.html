@@ -15,7 +15,7 @@
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Scope+One"rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Scope+One" rel="stylesheet" type="text/css" />
         <!-- Third party plugin CSS-->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
@@ -31,15 +31,17 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto my-2 my-lg-0 align-items-center">
-                        <form id="navbar_search_form" action="{% url 'supersub:results'%}" method="post" class="d-flex pl-4 pr-4" novalidate>
-                            {% csrf_token %}
-                            {% for field in navbar_form %}
-                                {{ field }}
-                                {% for error in field.errors %}
-                                    <p class="text-primary"> {{ error }}</p>
+                        <li>
+                            <form id="navbar_search_form" action="{% url 'supersub:results'%}" method="post" class="d-flex pl-4 pr-4" novalidate>
+                                {% csrf_token %}
+                                {% for field in navbar_form %}
+                                    {{ field }}
+                                    {% for error in field.errors %}
+                                        <p class="text-primary"> {{ error }}</p>
+                                    {% endfor %}
                                 {% endfor %}
-                            {% endfor %}
-                        </form>
+                            </form>
+                        </li>
                         <li class="nav-item nav-link js-scroll-trigger navbar-brand">
                             <a href="{% url 'authentication:account'%}">
                                 <i class="fas fa-user" id="user_icon"></i>
