@@ -37,9 +37,9 @@ class SignUpFormTest(TestCase):
             .widget.attrs['class'] == 'form-control'
         )
 
-    def test_signupform_with_attr_first_name_autofocus(self):
+    def test_signupform_with_attr_email_autofocus(self):
         self.assertTrue(
-            self.form.fields['first_name']
+            self.form.fields['email']
             .widget.attrs['autofocus'] is True
         )
 
