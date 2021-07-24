@@ -22,6 +22,7 @@ class SignUpForm(UserCreationForm):
         widget=forms.EmailInput(
             attrs={
                 'class': 'form-control',
+                'autofocus': False,
                 'id': 'id_email_input'
             }
         )
