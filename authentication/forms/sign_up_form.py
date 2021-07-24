@@ -14,7 +14,6 @@ class SignUpForm(UserCreationForm):
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'autofocus': True,
                 'id': 'id_first_name_input'
             }
         )
