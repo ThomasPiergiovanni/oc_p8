@@ -2,14 +2,30 @@
 
 ## !!!WORK IN PROGRESS!!!
 
-## 1. IntroductionSSSS.
+## 1. Introduction.
 
-NA
+This program is named "pur beurre". It's a web program that allow user to search for healthier or equaly ealthier food product that than the one he.she usually consume.
+
+The web app offers ' different use case to the user:
+
+1. Create an account
+2. Log in
+3. Search for healthier product than a selected one.
+4. Check that product and its potential substitutes bunutritionnal infos.
+5. For loged in users, save their favorites substitutes.
+6. Logout.
+
+The programm is built on Django framework. Data used to provide the service are comming from th Open Food Facts API. The programm is hosted by Heroku cloud plateform.
+
+You can check the app on  : https://thpi-purbeurreapp.herokuapp.com
  
 
 ## 2. Prerequisite.
 This program requires the following components:
-* Python 3.9.0
+* Python 3.9.2
+* psql (PostgreSQL) 13.2
+
+The others required program will be installed via pip using requirements.txt file (see further).
 
 
 ## 3. Installation.
