@@ -22,7 +22,6 @@ class SignUpForm(UserCreationForm):
         widget=forms.EmailInput(
             attrs={
                 'class': 'form-control',
-                'autofocus': False,
                 'id': 'id_email_input'
             }
         )
@@ -51,3 +50,7 @@ class SignUpForm(UserCreationForm):
         """
         model = CustomUser
         fields = ['first_name', 'email', 'password1', 'password2']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'autofocus': False})
