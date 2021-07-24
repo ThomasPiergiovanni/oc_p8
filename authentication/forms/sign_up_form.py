@@ -53,4 +53,4 @@ class SignUpForm(UserCreationForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs.update({'autofocus': False})
+        self.fields['email'].widget.attrs.update({'autofocus': False})
