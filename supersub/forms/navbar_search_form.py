@@ -11,7 +11,8 @@ class NavbarSearchForm(forms.Form):
         label=None,
         widget=forms.TextInput(
             attrs={
-                'class': 'form-control mybox'
+                'class': 'form-control mybox',
+                'autofocus': False
             }
         )
     )
