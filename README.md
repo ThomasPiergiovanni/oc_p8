@@ -4,22 +4,15 @@
 
 ## 1. Introduction.
 
-This program is named "pur beurre". It's a web app that allow user to search for healthier or equaly ealthier food product that than the one he.she usually consumes.
-
-The web app offers ' different use case to the user:
-
-1. Create an account
-2. Log in
-3. Search for healthier product than a selected one.
-4. Check products nutritionnal infos.
-5. For loged in users, save their favorites substitutes products.
-6. Logout.
+This program is named "pur beurre". It's a web app that allow user to search for healthier or equaly ealthier food product than the one he or she usually consumes. User can also create n acoount and login in order to save its choice for later consultations.
 
 The programm is built on Django framework. Data used to provide the service are comming from th Open Food Facts API. The programm is hosted by Heroku cloud plateform.
 
 You can check the app on  : https://thpi-purbeurreapp.herokuapp.com
 
-The here below installation steps describes how to make the install on a dev and local environnment.
+The here below installation steps describes how to make the install on a dev and local environment.
+
+NB: It's a programm written in the context of a Django app eductation module delivered by OpenClassRooms
  
 
 ## 2. Prerequisite.
@@ -74,7 +67,7 @@ Please refer to [Django documentation](https://docs.djangoproject.com/fr/3.1/) f
 
 ### 3.7. Application mandatory settings.
 1. Change constants with the appropriate value into **pur_beurre/settings.py** :
-* SECRET_KEY = Either add a secret key in your environnment variables or directly add a secret key here.
+* SECRET_KEY = Either add a secret key in your environment variables or directly add a secret key here.
 * DATABASE =  Set the appropriate database name, username and password as defined in step 3.4
 
 Example:
@@ -108,7 +101,7 @@ Statement to remove:
 To start the program, type the following in your bash.
 > python manage.py runserver
 
-The program is now ready to be used on your local environnment at the following adress: http://127.0.0.1:8000/.
+The program is now ready to be used on your local environment at the following adress: http://127.0.0.1:8000/.
 
 Please check *5. Users' guide* section bellow to use it.
 
@@ -124,7 +117,7 @@ Once you're done using the program, you should leave the virtual environment. Si
 If you want to uninstall the program, simply delete the complete repository form your device.
 
 ## 4. Settings.
-* Changing settings **must be** done in **pur_beurre/settings.py** file. Make sure to read *3.6. Application mandatory settings*.
+* Changing settings **must be** done in **pur_beurre/settings.py** file. Make sure to read section *3.7. Application mandatory settings*.
 * Changing settings **can be** done in:
  * **pur_beurre/custom_settings/functional_variables.py** file.
  * **pur_beurre/custom_settings/tests_variables.py** file.
@@ -135,7 +128,7 @@ If you want to uninstall the program, simply delete the complete repository form
 DESCRIPTION: Secret key required for Django.  
 MANDATORY: Yes.  
 DEFAULT SETTINGS: os.environ.get("APP_SECRET_KEY").  
-CUSTOM SETTINGS: In a dev environnment, you can either  type a secret key here or create environment variable of that name, i.e. APP_SECRET_KEY, with your a secret value(only known to you).
+CUSTOM SETTINGS: In a dev environment, you can either  type a secret key here or create environment variable of that name, i.e. APP_SECRET_KEY, with your a secret value(only known to you).
 
 #### 4.1.2. DATABASES.
 DESCRIPTION: PostgreSQL database settings.  
@@ -150,7 +143,7 @@ DEFAULT SETTINGS: {
         'PORT': '5432',
     }
 }.   
-CUSTOM SETTINGS: In a dev environnment, you can define DATABASES 'NAME', 'USER' and 'PASSWORD' keys.
+CUSTOM SETTINGS: In a dev environment, you can define DATABASES 'NAME', 'USER' and 'PASSWORD' keys.
 
 ### 4.2. pur_beurre/custom_settings/functional_variables.py
 
@@ -187,7 +180,13 @@ CUSTOM SETTINGS: Can be changed but should not exceed 2000 to avoid upload failu
 ## 5. Users' guide.
 
 ### 5.1. Program functionalities
-NA
+The programm provides the following functionalities:
+1. Create an account
+2. Log in
+3. Search for healthier product than a selected one.
+4. Check products nutritionnal infos.
+5. For loged in users, save their favorites substitutes products.
+6. Logout.
 
 ### 5.2. How to.
-NA
+* Browse to the app url i.e. http://127.0.0.1:8000/ (on the dev environment) and make the research you want. You can create an account and login in order to save your choices for a later sessions.
