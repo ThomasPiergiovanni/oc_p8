@@ -126,28 +126,58 @@ Once you're done using the program, you should leave the virtual environment. Si
 If you want to uninstall the program, simply delete the complete repository form your device.
 
 ## 4. Settings.
-* Changing settings **must be** done in **configuration/env.py** file. Make sure to read *3.6. Application mandatory settings*.
-* Changing settings **can be** done in **configuration/config.py** file.
+* Changing settings **must be** done in **pur_beurre/settings.py** file. Make sure to read *3.6. Application mandatory settings*.
+* Changing settings **can be** done in:
+ * **pur_beurre/custom_settings/functional_variables.py** file.
+ * **pur_beurre/custom_settings/tests_variables.py** file.
 
-### 4.1. env.py.
-Located in **configuration/** package.
+### 4.1. *pur_beurre/settings.py.
 
-#### 4.1.1. NA.
-DESCRIPTION: NA.
-MANDATORY: NA. 
-DEFAULT SETTINGS: NA. 
-CUSTOM SETTINGS: NA.
+#### 4.1.1. APP_SECRET_KEY.
+DESCRIPTION: Secret key required for Django.
+MANDATORY: Yes.  
+DEFAULT SETTINGS: os.environ.get("APP_SECRET_KEY"). 
+CUSTOM SETTINGS: In a dev environnment, you can either  type a secret key here or create environment variable of that name, i.e. APP_SECRET_KEY, with your a secret value(only known to you).
 
+#### 4.1.2. DATABASES.
+DESCRIPTION: PostgreSQL database settings.
+MANDATORY: Yes.  
+DEFAULT SETTINGS: {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'pur_beurre',
+        'USER': 'username',
+        'PASSWORD': 'userpassword',
+        'HOST': '',
+        'PORT': '5432',
+    }
+}. 
+CUSTOM SETTINGS: In a dev environnment, you can define DATABASES 'NAME', 'USER' and 'PASSWORD' keys.
 
-### 4.2. config.py.
-Located in **configuration/** package.
+### 4.2. pur_beurre/custom_settings/functional_variables.py
 
-#### 4.2.1. NA
-DESCRIPTION: NA.  
-MANDATORY: NA.  
-DEFAULT SETTINGS: NA.  
-CUSTOM SETTINGS: NA.  
+#### 4.2.1. CATEGORIES_ENDPOINT
+DESCRIPTION: OpenFoodFacts (OFF) API categories list endpoint.
+MANDATORY: Yes.
+DEFAULT SETTINGS: "https://fr.openfoodfacts.org/categories.json".
+CUSTOM SETTINGS: To use the application with product references from
+another country than France, use the appropriate ISO-3166-1
+Alpha 2 code and replace it in the endpoint (e.g. "https://es.openfoodfacts.org/categories.json" for Spain).
+For more information, please check "https://documenter.getpostman.com/view/8470508/SVtN3Wzy?version=latest#intro". 
 
+#### 4.2.2. SELECTED_CATEGORIES
+DESCRIPTION: OFF API products categories type used in the application.
+MANDATORY: Yes.
+DEFAULT SETTINGS: ["en:snacks", "en:desserts", "en:breads",
+"en:breakfast-cereals", "en:meals"].
+CUSTOM SETTINGS: Categories can be changed. Value to use can be found in
+"https://world.openfoodfacts.org/categories.json" in the
+category "tags" "id".
+For more information, please check "https://documenter.getpostman.com/view/8470508/SVtN3Wzy?version=latest#intro".
+SELECTED_CATEGORIES = [
+    "en:snacks", "en:desserts", "en:breads", "en:breakfast-cereals",
+    "en:meals"
+]
 
 ## 5. Users' guide.
 
