@@ -24,7 +24,7 @@ OFF_API_CATEGORIES_W_KEYS = {
     ]
 }
 
-# DESCRIPTION: OFF API categorie response emulation.  Dictionnary
+# DESCRIPTION: OFF API categories response emulation.  Dictionnary
 # misses a keys.
 # MANDATORY: Yes.
 # CUSTOM SETTINGS: To adapt if tests changes.

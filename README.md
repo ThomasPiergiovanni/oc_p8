@@ -70,8 +70,7 @@ Documentation is also available on the [python official website](https://www.pyt
 Install Django and the others programms on you virtual environment using the requirements.txt file.
 >pip install -r requirements.txt
 
-Please refer to [Django documentation]() for more information.  
-Please refer to [Requests certified documentation](https://requests.readthedocs.io/en/master/) for more information.  
+Please refer to [Django documentation](https://docs.djangoproject.com/fr/3.1/) for more information.
 
 ### 3.7. Application mandatory settings.
 1. Change constants with the appropriate value into **pur_beurre/settings.py** :
@@ -93,7 +92,8 @@ Example:
 * Also remove the following statement at the bottom of the file:
 
 Statement to remove:
-    django_heroku.settings(locals())
+
+        django_heroku.settings(locals())
 
 ### 3.8. Apply DB migrations.
 1. Run migration to setup the DB corectly.
@@ -111,8 +111,6 @@ To start the program, type the following in your bash.
 The program is now ready to be used on your local environnment at the following adress: http://127.0.0.1:8000/.
 
 Please check *5. Users' guide* section bellow to use it.
-
-*Note that this is the way for starting the app on a local environment. Starting the app on a production environment is different. You'll have to check depending on you deployment environment*
 
 ### 3.11. Test the program.
 If you want to perform test after having modified the code, you can run tests.
@@ -158,26 +156,45 @@ CUSTOM SETTINGS: In a dev environnment, you can define DATABASES 'NAME', 'USER' 
 
 #### 4.2.1. CATEGORIES_ENDPOINT
 DESCRIPTION: OpenFoodFacts (OFF) API categories list endpoint.
+
 MANDATORY: Yes.
+
 DEFAULT SETTINGS: "https://fr.openfoodfacts.org/categories.json".
-CUSTOM SETTINGS: To use the application with product references from
-another country than France, use the appropriate ISO-3166-1
-Alpha 2 code and replace it in the endpoint (e.g. "https://es.openfoodfacts.org/categories.json" for Spain).
+
+CUSTOM SETTINGS: To use the application with product references from another country than France, use the appropriate ISO-3166-1
+Alpha 2 code and replace it in the endpoint (e.g. "https://es.openfoodfacts.org/categories.json" for Spain).  
 For more information, please check "https://documenter.getpostman.com/view/8470508/SVtN3Wzy?version=latest#intro". 
 
 #### 4.2.2. SELECTED_CATEGORIES
 DESCRIPTION: OFF API products categories type used in the application.
+
 MANDATORY: Yes.
+
 DEFAULT SETTINGS: ["en:snacks", "en:desserts", "en:breads",
 "en:breakfast-cereals", "en:meals"].
+
 CUSTOM SETTINGS: Categories can be changed. Value to use can be found in
 "https://world.openfoodfacts.org/categories.json" in the
-category "tags" "id".
+category "tags" "id".  
 For more information, please check "https://documenter.getpostman.com/view/8470508/SVtN3Wzy?version=latest#intro".
-SELECTED_CATEGORIES = [
-    "en:snacks", "en:desserts", "en:breads", "en:breakfast-cereals",
-    "en:meals"
-]
+
+#### 4.2.3. PRODUCTS_ENDPOINT
+DESCRIPTION: OFF API products research functionality endpoint. It returns the product research functionality per country.
+
+MANDATORY: Yes.
+
+DEFAULT SETTINGS: "https://fr.openfoodfacts.org/cgi/search.pl".
+
+CUSTOM SETTINGS: To use the application with product references from another country than France, use the appropriate ISO-3166-1. Alpha 2 code and replace it in the endpoint (e.g. "https://es.openfoodfacts.org/cgi/search.pl"). For more information, please check "https://documenter.getpostman.com/view/8470508/SVtN3Wzy?version=latest#intro".
+
+#### 4.2.4. PRODUCTS_AMOUNT
+DESCRIPTION: Amount of product to get from OFF API per product category.
+
+MANDATORY: Yes.
+
+DEFAULT SETTINGS: 1000.
+
+CUSTOM SETTINGS: Can be changed but should not exceed 2000 to avoid upload failure.
 
 ## 5. Users' guide.
 
