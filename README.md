@@ -1,7 +1,5 @@
 # P8 - Create a platform for nutella amateur.
 
-## !!!WORK IN PROGRESS!!!
-
 ## 1. Introduction.
 
 This program is named "pur beurre". It's a web app that allow user to search for healthier or equaly ealthier food product than the one he or she usually consumes. User can also create n acoount and login in order to save its choice for later consultations.
