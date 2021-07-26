@@ -4,20 +4,22 @@
 
 ## 1. Introduction.
 
-This program is named "pur beurre". It's a web program that allow user to search for healthier or equaly ealthier food product that than the one he.she usually consume.
+This program is named "pur beurre". It's a web app that allow user to search for healthier or equaly ealthier food product that than the one he.she usually consumes.
 
 The web app offers ' different use case to the user:
 
 1. Create an account
 2. Log in
 3. Search for healthier product than a selected one.
-4. Check that product and its potential substitutes bunutritionnal infos.
-5. For loged in users, save their favorites substitutes.
+4. Check products nutritionnal infos.
+5. For loged in users, save their favorites substitutes products.
 6. Logout.
 
 The programm is built on Django framework. Data used to provide the service are comming from th Open Food Facts API. The programm is hosted by Heroku cloud plateform.
 
 You can check the app on  : https://thpi-purbeurreapp.herokuapp.com
+
+The here below installation steps describes how to make the install on a dev and local environnment.
  
 
 ## 2. Prerequisite.
@@ -27,8 +29,9 @@ This program requires the following components:
 
 The others required program will be installed via pip using requirements.txt file (see further).
 
-
 ## 3. Installation.
+
+These instructions are for deployment on a local machine i.e.  for development use.
 
 ### 3.1. Download.
 Download/clone this repository on your system, at the location that suits you best.
@@ -40,10 +43,19 @@ Make sure you have Python 3 installed.
 
 If not, you can download it and install it from the [python official website](https://www.python.org/). You will find the necessary documentation there.
 
-### 3.3 Get a Google API Key.
-NA
+### 3.3. PostgreSQL 13 install and start.
+Make sure you have PostgreSQL 13 installed.
+> psql --version
 
-### 3.4. Create & activate a virtual environment (recommended).
+If not, you can download it and install it from the [postgresql official website](https://www.postgresql.org/download/). You will find the necessary documentation there.
+
+### 3.4. Create DB.
+Create database.
+> createdb -U yourusername --maintenance-db=dbnamethatyouwant
+
+If not, you can download it and install it from the [postgresql official website](https://www.postgresql.org/download/). You will find the necessary documentation there.
+
+### 3.5. Create & activate a virtual environment (recommended).
 In order to avoid system conflicts:
 
 1. Go into your local repository and create a virtual environment using venv package.
@@ -54,37 +66,61 @@ In order to avoid system conflicts:
 
 Documentation is also available on the [python official website](https://www.python.org/).
 
-### 3.5. Django and Requests install
-Install Django and Requests on you virtual environment using the requirements.txt file.
+### 3.6. Django and other programms install
+Install Django and the others programms on you virtual environment using the requirements.txt file.
 >pip install -r requirements.txt
 
 Please refer to [Django documentation]() for more information.  
 Please refer to [Requests certified documentation](https://requests.readthedocs.io/en/master/) for more information.  
 
-### 3.6. Application mandatory settings.
-1. Change constants with the appropriate value into **configuration/env.py** :
-    * NA.
+### 3.7. Application mandatory settings.
+1. Change constants with the appropriate value into **pur_beurre/settings.py** :
+* SECRET_KEY = Either add a secret key in your environnment variables or directly add a secret key here.
+* DATABASE =  Set the appropriate database name, username and password as defined in step 3.4
+
+Example:
+
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'dbnamethatyouwant',
+                'USER': 'yourusername',
+                'PASSWORD': 'yourpassowrd',
+                'HOST': '',
+                'PORT': '5432',
+            }
+        }
+* Also remove the following statement at the bottom of the file:
+
+Statement to remove:
+    django_heroku.settings(locals())
+
+### 3.8. Apply DB migrations.
+1. Run migration to setup the DB corectly.
+> python manage.py migrate
+
+### 3.9. Import values into DB.
+1. Populate the database
+> python manage.py reset_db
 
 
-For more detailed information on application settings, please check *4.1. env.py* section bellow.
-
-### 3.7. Start the program "NA".
+### 3.10. Start the program.
 To start the program, type the following in your bash.
-> NA
+> python manage.py runserver
 
-The program is now ready to be used. Please check *5. Users' guide* section bellow to use it.
+The program is now ready to be used on your local environnment at the following adress: http://127.0.0.1:8000/.
+
+Please check *5. Users' guide* section bellow to use it.
 
 *Note that this is the way for starting the app on a local environment. Starting the app on a production environment is different. You'll have to check depending on you deployment environment*
 
-### 3.8. Deactivate the virtual environment.
+### 3.11. Test the program.
+If you want to perform test after having modified the code, you can run tests.
+> python manage.py test
+
+### 3.12. Deactivate the virtual environment.
 Once you're done using the program, you should leave the virtual environment. Simply type the following statement in your bash.
 > deactivate
-
-### 3.9. Test.
-If you want to modify the code, you can run unit test using pytest for testing.  
-> pytest
-
-*Note that you shouldn't deactivate the virtual environment if you want to process pytest.*
 
 ### 3.10. Uninstall.
 If you want to uninstall the program, simply delete the complete repository form your device.
