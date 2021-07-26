@@ -132,13 +132,13 @@ If you want to uninstall the program, simply delete the complete repository form
 ### 4.1. *pur_beurre/settings.py.
 
 #### 4.1.1. APP_SECRET_KEY.
-DESCRIPTION: Secret key required for Django.
+DESCRIPTION: Secret key required for Django.  
 MANDATORY: Yes.  
-DEFAULT SETTINGS: os.environ.get("APP_SECRET_KEY"). 
+DEFAULT SETTINGS: os.environ.get("APP_SECRET_KEY").  
 CUSTOM SETTINGS: In a dev environnment, you can either  type a secret key here or create environment variable of that name, i.e. APP_SECRET_KEY, with your a secret value(only known to you).
 
 #### 4.1.2. DATABASES.
-DESCRIPTION: PostgreSQL database settings.
+DESCRIPTION: PostgreSQL database settings.  
 MANDATORY: Yes.  
 DEFAULT SETTINGS: {
     'default': {
@@ -149,7 +149,7 @@ DEFAULT SETTINGS: {
         'HOST': '',
         'PORT': '5432',
     }
-}. 
+}.   
 CUSTOM SETTINGS: In a dev environnment, you can define DATABASES 'NAME', 'USER' and 'PASSWORD' keys.
 
 ### 4.2. pur_beurre/custom_settings/functional_variables.py
