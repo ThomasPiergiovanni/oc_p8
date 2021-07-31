@@ -1,4 +1,4 @@
-# P8 - Create a platform for nutella amateur.
+# P8 - Create a platform for Nutella amateur.
 
 ## 1. Introduction.
 
@@ -10,7 +10,7 @@ You can check the app on  : https://thpi-purbeurreapp.herokuapp.com
 
 The here below installation steps describes how to make the install on a dev and local environment.
 
-NB: It's a programm written in the context of a Django app eductation module delivered by OpenClassRooms
+NB: It's a programm written in the context of a Django app eductation module delivered by OpenClassRooms.
  
 
 ## 2. Prerequisite.
@@ -44,8 +44,6 @@ If not, you can download it and install it from the [postgresql official website
 Create database.
 > createdb -U yourusername --maintenance-db=dbnamethatyouwant
 
-If not, you can download it and install it from the [postgresql official website](https://www.postgresql.org/download/). You will find the necessary documentation there.
-
 ### 3.5. Create & activate a virtual environment (recommended).
 In order to avoid system conflicts:
 
@@ -53,12 +51,12 @@ In order to avoid system conflicts:
 > python -m venv env
 
 2. Activate the virtual environment.
-> source env/scripts/activate
+> env/scripts/activate
 
 Documentation is also available on the [python official website](https://www.python.org/).
 
 ### 3.6. Django and other programms install
-Install Django and the others programms on you virtual environment using the requirements.txt file.
+Install Django and the others programs on you virtual environment using the requirements.txt file.
 >pip install -r requirements.txt
 
 Please refer to [Django documentation](https://docs.djangoproject.com/fr/3.1/) for more information.
@@ -66,7 +64,9 @@ Please refer to [Django documentation](https://docs.djangoproject.com/fr/3.1/) f
 ### 3.7. Application mandatory settings.
 1. Change constants with the appropriate value into **pur_beurre/settings.py** :
 * SECRET_KEY = Either add a secret key in your environment variables or directly add a secret key here.
-* DATABASE =  Set the appropriate database name, username and password as defined in step 3.4
+* DATABASE =  Set the appropriate database name, username and password as defined in step 3.4.
+* DEBUG = Set to True in dev env mode.
+* ALLOWED_HOSTS = Set to [] in dev env mode. NB: You need to allow more than only localhost as the selenium, when runnig test generates radom server adresses. 
 
 Example:
 
@@ -80,18 +80,20 @@ Example:
                 'PORT': '5432',
             }
         }
-* Also remove the following statement at the bottom of the file:
+2. Also remove the following statement at the bottom of the file:
 
 Statement to remove:
 
         django_heroku.settings(locals())
 
+NB: This statement ius purely when deploying the app on Heroku server.
+
 ### 3.8. Apply DB migrations.
-1. Run migration to setup the DB corectly.
+Run migration to setup the DB correctly.
 > python manage.py migrate
 
 ### 3.9. Import values into DB.
-1. Populate the database
+Populate the database with the custom command *reset_db*.
 > python manage.py reset_db
 
 
@@ -111,7 +113,7 @@ If you want to perform test after having modified the code, you can run tests.
 Once you're done using the program, you should leave the virtual environment. Simply type the following statement in your bash.
 > deactivate
 
-### 3.10. Uninstall.
+### 3.13. Uninstall.
 If you want to uninstall the program, simply delete the complete repository form your device.
 
 ## 4. Settings.
@@ -131,22 +133,24 @@ CUSTOM SETTINGS: In a dev environment, you can either  type a secret key here or
 #### 4.1.2. DATABASES.
 DESCRIPTION: PostgreSQL database settings.  
 MANDATORY: Yes.  
-DEFAULT SETTINGS: {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pur_beurre',
-        'USER': 'username',
-        'PASSWORD': 'userpassword',
-        'HOST': '',
-        'PORT': '5432',
-    }
-}.   
+DEFAULT SETTINGS:
+
+        {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'pur_beurre',
+                'USER': 'username',
+                'PASSWORD': 'userpassword',
+                'HOST': '',
+                'PORT': '5432',
+            }
+        }.   
 CUSTOM SETTINGS: In a dev environment, you can define DATABASES 'NAME', 'USER' and 'PASSWORD' keys.
 
-### 4.2. pur_beurre/custom_settings/functional_variables.py
+### 4.2. *pur_beurre/custom_settings/functional_variables.py
 
 #### 4.2.1. CATEGORIES_ENDPOINT
-DESCRIPTION: OpenFoodFacts (OFF) API categories list endpoint.  
+DESCRIPTION: Open Food Facts (OFF) API categories list endpoint.  
 MANDATORY: Yes.  
 DEFAULT SETTINGS: "https://fr.openfoodfacts.org/categories.json".
 CUSTOM SETTINGS: To use the application with product references from another country than France, use the appropriate ISO-3166-1
@@ -178,11 +182,11 @@ CUSTOM SETTINGS: Can be changed but should not exceed 2000 to avoid upload failu
 ## 5. Users' guide.
 
 ### 5.1. Program functionalities
-The programm provides the following functionalities:
-1. Create an account
-2. Log in
+The program provides the following functionalities:
+1. Create an account.
+2. Log in.
 3. Search for healthier product than a selected one.
-4. Check products nutritionnal infos.
+4. Check products nutritional info.
 5. For loged in users, save their favorites substitutes products.
 6. Logout.
 

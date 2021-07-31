@@ -22,9 +22,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get("APP_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False if os.environ.get("APP_ENV") == 'prod' else True
+DEBUG = True
+ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = ['.herokuapps.com', 'localhost', '127.0.0.1']
+if os.environ.get("APP_ENV") == 'prod':
+    DEBUG = False
+    ALLOWED_HOSTS = ['.herokuapps.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -130,4 +133,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 AUTH_USER_MODEL = "authentication.CustomUser"
 
-django_heroku.settings(locals())
+# Remove the following line in dev mode
+# django_heroku.settings(locals())
