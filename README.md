@@ -65,8 +65,8 @@ Please refer to [Django documentation](https://docs.djangoproject.com/fr/3.1/) f
 1. Change constants with the appropriate value into **pur_beurre/settings.py** :
 * SECRET_KEY = Either add a secret key in your environment variables or directly add a secret key here.
 * DATABASE =  Set the appropriate database name, username and password as defined in step 3.4.
-* DEBUG = Set to True in dev env mode.
-* ALLOWED_HOSTS = Set to [] in dev env mode. NB: You need to allow more than only localhost as the selenium, when runnig test generates radom server adresses. 
+* DEBUG = Set *True* in dev env mode.
+* ALLOWED_HOSTS = Set *[]* in dev env mode. NB: You need to allow more than only localhost as the selenium, when runnig test generates radom server adresses. 
 
 Example:
 
@@ -86,7 +86,7 @@ Statement to remove:
 
         django_heroku.settings(locals())
 
-NB: This statement ius purely when deploying the app on Heroku server.
+NB: This statement is purely when deploying the app on Heroku server.
 
 ### 3.8. Apply DB migrations.
 Run migration to setup the DB correctly.
