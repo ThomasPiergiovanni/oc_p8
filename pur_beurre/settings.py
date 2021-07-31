@@ -134,4 +134,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 AUTH_USER_MODEL = "authentication.CustomUser"
 
 # Remove the following line in dev mode
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
