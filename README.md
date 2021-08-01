@@ -42,7 +42,7 @@ If not, you can download it and install it from the [postgresql official website
 
 ### 3.4. Create DB.
 Create database.
-> createdb -U yourusername --maintenance-db=dbnamethatyouwant
+> createdb -h localhost -p 5432 -U yourusername yourdatabasename
 
 ### 3.5. Create & activate a virtual environment (recommended).
 In order to avoid system conflicts:
