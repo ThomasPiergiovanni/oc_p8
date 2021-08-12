@@ -74,11 +74,20 @@ class SupersubManager():
         """ Method that gets more or equaly healthy Product (i.e. subs)
         based on form input.
         """
-        return (
-            Product.objects.filter(category_id=product.category_id)
-            .filter(nutriscore_grade__lte=product.nutriscore_grade)
-            .exclude(id__exact=product.id).order_by('id')
-        )
+        if product.nutriscore_grade in 'a':
+            return (
+                Product.objects.filter(category_id=product.category_id)
+                .filter(nutriscore_grade__lte=product.nutriscore_grade)
+                .exclude(id__exact=product.id)
+                .order_by('id').order_by('nutriscore_grade')[:36]
+            )
+        else:
+            return (
+                Product.objects.filter(category_id=product.category_id)
+                .filter(nutriscore_grade__lte=product.nutriscore_grade)
+                .exclude(nutriscore_grade__exact=product.nutriscore_grade)
+                .order_by('id').order_by('nutriscore_grade')[:36]
+            )
 
     def _add_vars_to_session(self, request, match_prod):
         """Method that adds product and subs into session vars.
