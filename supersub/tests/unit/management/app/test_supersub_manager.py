@@ -29,6 +29,7 @@ class SupersubManagerTest(TestCase):
         cls.prod1 = Product.objects.get(pk=1)
         cls.prod2 = Product.objects.get(pk=2)
         cls.prod3 = Product.objects.get(pk=3)
+        cls.prod4 = Product.objects.get(pk=4)
         cls.prods_list = cls.emulate_prods_list(cls.prod1, cls.prod2)
         cls.prods_ids = cls.emulate_prods_ids_list(cls.prod1, cls.prod2)
         cls.request_GET = RequestFactory().get('', data={'page': 1})
@@ -139,6 +140,18 @@ class SupersubManagerTest(TestCase):
         prods = self.manager._SupersubManager__get_session_prods(self.prod1)
         self.assertEqual(prods[0].id, 2)
 
+    def test__get_prods_no_a_with_prod_id(self):
+        prods = (
+            self.manager._SupersubManager__get_prods_no_a(self.prod3)
+        )
+        self.assertEqual(prods[2].id, 1)
+
+    def test__get_prods_a_with_prod_id(self):
+        prods = (
+            self.manager._SupersubManager__get_prods_a(self.prod2)
+        )
+        self.assertEqual(prods[0].id, 4)
+
     def test__get_session_prods_ids_with_prods_list(self):
         prods_ids = (
             self.manager
@@ -153,7 +166,7 @@ class SupersubManagerTest(TestCase):
         )
         self.manager._add_vars_to_session(self.request_POST, self.prod1)
         self.assertEqual(self.request_POST.session['prod_id'], 1)
-        self.assertEqual(self.request_POST.session['prods_ids'], [2])
+        self.assertEqual(self.request_POST.session['prods_ids'][0], 2)
 
     def test__delete_session_vars_with_none(self):
         setattr(

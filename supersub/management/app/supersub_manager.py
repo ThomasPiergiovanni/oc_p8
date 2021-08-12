@@ -75,19 +75,31 @@ class SupersubManager():
         based on form input.
         """
         if product.nutriscore_grade in 'a':
-            return (
-                Product.objects.filter(category_id=product.category_id)
-                .filter(nutriscore_grade__lte=product.nutriscore_grade)
-                .exclude(id__exact=product.id)
-                .order_by('id').order_by('nutriscore_grade')[:36]
-            )
+            return self.__get_prods_a(product)
         else:
-            return (
-                Product.objects.filter(category_id=product.category_id)
-                .filter(nutriscore_grade__lte=product.nutriscore_grade)
-                .exclude(nutriscore_grade__exact=product.nutriscore_grade)
-                .order_by('id').order_by('nutriscore_grade')[:36]
-            )
+            return self.__get_prods_no_a(product)
+
+    def __get_prods_a(self, product):
+        """Method that gets products when the selected product is from
+        nutriscore a.
+        """
+        return (
+            Product.objects.filter(category_id=product.category_id)
+            .filter(nutriscore_grade__lte=product.nutriscore_grade)
+            .exclude(id__exact=product.id)
+            .order_by('id').order_by('nutriscore_grade')[:60]
+        )
+
+    def __get_prods_no_a(self, product):
+        """Method that gets products when the selected product is NOT from
+        nutriscore a.
+        """
+        return (
+            Product.objects.filter(category_id=product.category_id)
+            .filter(nutriscore_grade__lte=product.nutriscore_grade)
+            .exclude(nutriscore_grade__exact=product.nutriscore_grade)
+            .order_by('id').order_by('nutriscore_grade')[:60]
+        )
 
     def _add_vars_to_session(self, request, match_prod):
         """Method that adds product and subs into session vars.
